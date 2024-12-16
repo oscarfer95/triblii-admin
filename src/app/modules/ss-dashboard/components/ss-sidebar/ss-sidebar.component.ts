@@ -75,7 +75,7 @@ export class SsSidebarComponent implements OnInit, OnDestroy {
       .subscribe((userDataModel: UserDataModel) => {
         if (userDataModel.accountId) {
           this.userDataModel = userDataModel;
-          this.menuItems = generateMenuItems(this.userDataModel.permissions);
+          this.menuItems = generateMenuItems(this.userDataModel.permissions, this.userDataModel.role);
         }
 
         this._cdr.markForCheck();

@@ -21,7 +21,7 @@
               </span>
 
               <input type="text" pInputText class="w-full flex flex-grow-1" placeholder="Ejm: starbucks"
-                formControlName="slug" [ngClass]="{ 'p-error': !isSlugAvailable }" />
+                formControlName="slug" [ngClass]="{ 'p-error': !isSlugAvailable }" [disabled]="userDataModel?.role === 'MAINTAINER'"/>
             </section>
 
             <small *ngIf="form.get('slug')?.hasError('pattern') ||

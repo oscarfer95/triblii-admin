@@ -88,8 +88,9 @@ export class SsCataloguePage implements OnInit, OnDestroy {
       .subscribe((userDataModel: UserDataModel) => {
         if (userDataModel.accountId) {
           this.userDataModel = userDataModel;
+
+          this._cdr.markForCheck();
         }
-        this._cdr.markForCheck();
       });
   }
 

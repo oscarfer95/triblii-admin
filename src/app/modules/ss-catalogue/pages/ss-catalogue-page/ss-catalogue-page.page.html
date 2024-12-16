@@ -125,7 +125,7 @@
         <ss-catalogue-form [userDataModel]="userDataModel" (saveEvent)="updateCatalogueList()"></ss-catalogue-form>
       </p-card>
 
-      <p-card *ngIf="activeTab.label === 'Ajustes' && (userDataModel?.entity) && userDataModel?.role === 'ADMIN'"
+      <p-card *ngIf="activeTab.label === 'Ajustes' && (userDataModel?.entity)"
         styleClass="p-card-shadow border-round-xl lg:w-full mt-3 fadein animation-duration-400">
         <ss-custom-settings-form [userDataModel]="userDataModel"
           (saveEvent)="updateCatalogueList()"></ss-custom-settings-form>

@@ -19,16 +19,15 @@
     </section>
 
     <section class="overflow-auto mt-5">
-      <article *ngIf="menuItems"
-               class="ss-sidebar-menu">
+      <article class="ss-sidebar-menu">
         <ul>
           <li *ngFor="let menuItem of menuItems"
               class="mb-2"
               (click)="onClickMenuButton()">
             <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
-               [routerLink]="menuItem.url"
+               [routerLink]="menuItem?.url"
                routerLinkActive="ss-sidebar-menu__button--active">
-              <i class="{{ menuItem.icon }} text-xl"></i> {{ menuItem.label }}
+              <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
             </a>
           </li>
         </ul>

@@ -5,26 +5,46 @@ export const menuOptions: { [key: string]: { icon: string; label: string; url: s
   hotels: { icon: 'pi pi-building', label: 'Hoteles', url: 'items/hotels' },
   foods: { icon: 'bi bi-cup-straw', label: 'Comidas', url: 'items/foods' },
   events: { icon: 'pi pi-calendar', label: 'Eventos', url: 'items/events' },
-  users: { icon: 'pi pi-users', label: 'Usuarios', url: 'users' },
   stats: { icon: 'pi pi-chart-bar', label: 'Estadísticas', url: 'stats' },
-  account: { icon: 'pi pi-user', label: 'Cuenta', url: 'account' },
+  users: { icon: 'pi pi-users', label: 'Usuarios', url: 'users' },
+  account: { icon: 'pi pi-user', label: 'Cuenta', url: 'account' }
 };
 
-export function generateMenuItems(items: string[]): any[] {
-  const defaultOptions = ['home', ...items, 'account', 'stats'];
+export function generateMenuItems(permissions: string[], role: string): any[] {
+  const defaultOptions = ['home', 'stats', 'account'];
 
-  if (items.length === 0 || (items.length === 1 && items[0] === 'all')) {
-    return Object.values(menuOptions);
+  // Caso 1: Sin permisos (array vacío)
+  if (permissions.length === 0) {
+    const baseMenu = [...defaultOptions];
+    if (role === 'ADMIN') {
+      baseMenu.splice(baseMenu.length - 1, 0, 'users');
+    }
+    return baseMenu
+      .filter((key) => menuOptions[key])
+      .map((key) => menuOptions[key]);
   }
 
-  const result = [...defaultOptions];
+  // Caso 2: Permisos es ['all']
+  if (permissions.length === 1 && permissions[0] === 'all') {
+    const fullMenuKeys = Object.keys(menuOptions).filter((key) => key !== 'users');
 
-  items
-    .filter((item) => menuOptions[item] && !defaultOptions.includes(item))
-    .forEach((item) => result.push(item));
+    if (role === 'ADMIN') {
+      fullMenuKeys.splice(fullMenuKeys.length - 1, 0, 'users');
+    }
 
-  return result.map((key) => menuOptions[key]);
+    return fullMenuKeys.map((key) => menuOptions[key]);
+  }
+
+  const mixedOptions = ['home', ...permissions, 'stats', 'account'];
+  if (role === 'ADMIN' && !mixedOptions.includes('users')) {
+    mixedOptions.splice(mixedOptions.length - 1, 0, 'users');
+  }
+
+  return mixedOptions
+    .filter((key) => menuOptions[key])
+    .map((key) => menuOptions[key]);
 }
+
 
 export function getMenuItemById(id: string): any | null {
   return menuOptions[id] || null;
