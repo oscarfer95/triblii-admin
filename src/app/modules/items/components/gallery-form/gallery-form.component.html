@@ -1,0 +1,57 @@
+<article class="w-full ss-gallery-form">
+  <header class="flex flex-column gap-2">
+    <section class="flex flex-column md:flex-row justify-content-between gap-3">
+      <p class="ss-txt--black text-lg font-semibold">
+        Sube fotos aquí
+      </p>
+
+      <section class="w-auto">
+        <tt-file-input class="bg-white"
+                       [fileLimit]="5"
+                       [label]="'Agregar imágen'"
+                       [cssClass]="'ss-button--outline'"
+                       (error)="showErrorMessage($event)"
+                       (uploadedFile)="addImageFileUrl($event)">
+        </tt-file-input>
+      </section>
+    </section>
+    
+    <span class="ss-txt--black-lighten text-md font-light">
+      No olvides guardar tus cambios, las imágenes que subas solo serán almacenadas de esa manera.
+    </span>
+  </header>
+
+  <p-divider class="p-divider--grey"
+             styleClass="my-5">
+  </p-divider>
+
+  <section *ngIf="uploadImageUrlList.size > 0"
+           class="ss-gallery-form__item-container py-3">
+    <article *ngFor="let imageUrl of uploadImageUrlList"
+             class="ss-gallery-form__item w-8rem h-8rem md:w-12rem md:h-12rem relative">
+      <button class="ss-gallery-form__trash-button absolute p-button-rounded ss-bg--red ss-txt--white z-1"
+              pButton
+              icon="pi pi-trash"
+              type="button"
+              (click)="removeImageUrl(imageUrl)">
+      </button>
+
+      <section class="w-full h-full flex justify-content-center align-items-center overflow-hidden shadow-3 border-round-xl">
+        <p-image alt="Image"
+                 width="100"
+                 height="100"
+                 [preview]="true"
+                 [src]="imageUrl">
+        </p-image>
+      </section>
+    </article>
+  </section>
+
+  <section *ngIf="uploadImageUrlList.size === 0"
+           class="w-full py-6">
+    <ss-announcement [iconName]="'pi-images'"
+                     [spin]="false"
+                     [text]="'Aún no subiste ninguna imágen'">
+    </ss-announcement>
+  </section>
+</article>

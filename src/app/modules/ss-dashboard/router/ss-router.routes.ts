@@ -1,7 +1,8 @@
-import {Routes} from '@angular/router';
+import { ItemsModule } from './../../items/items.module';
+import { Routes } from '@angular/router';
 
-import {SsDashboardPage} from '../pages/ss-dashboard/ss-dashboard.page';
-import {SsAnnouncementComponent} from '../../ss-shared/components/ss-announcement/ss-announcement.component';
+import { SsDashboardPage } from '../pages/ss-dashboard/ss-dashboard.page';
+import { SsAnnouncementComponent } from '../../ss-shared/components/ss-announcement/ss-announcement.component';
 
 export const TT_DASHBOARD_ROUTES: Routes = [
   {
@@ -15,8 +16,8 @@ export const TT_DASHBOARD_ROUTES: Routes = [
       },
       {
         path: 'items',
-        loadChildren: () => import('../../ss-products/ss-products.module')
-          .then((module: any) => module.SsProductsModule)
+        loadChildren: () => import('../../items/items.module')
+          .then((module: any) => module.ItemsModule)
       },
       {
         path: 'account',
@@ -32,11 +33,6 @@ export const TT_DASHBOARD_ROUTES: Routes = [
         path: 'stats',
         loadChildren: () => import('../../ss-statistics/ss-statistics.module')
           .then((module: any) => module.SsStatisticsModule)
-      },
-      {
-        path: 'locations',
-        loadChildren: () => import('../../ss-locations/ss-locations.module')
-          .then((module: any) => module.SsLocationModule)
       },
       {
         path: 'coming-soon',

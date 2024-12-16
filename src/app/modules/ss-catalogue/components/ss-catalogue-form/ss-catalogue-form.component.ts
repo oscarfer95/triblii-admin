@@ -1,14 +1,11 @@
-import {MessageService} from 'primeng/api';
-import {SearchCountryField, CountryISO} from 'ngx-intl-tel-input';
+import { MessageService } from 'primeng/api';
+import { SearchCountryField, CountryISO } from 'ngx-intl-tel-input';
 
-import {EventEmitter, ChangeDetectionStrategy, Component, Input, OnInit, Output, ViewEncapsulation, ChangeDetectorRef} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {firstValueFrom} from 'rxjs';
+import { EventEmitter, ChangeDetectionStrategy, Component, Input, OnInit, Output, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 
-import {SsCatalogueRepositoryService} from 'src/app/modules/ss-shared/services/ss-catalogues.repository-service';
-import {ConfigList} from 'src/framework/repository/config-list.model';
-import {CategoriesRepositoryService} from 'src/app/modules/ss-shared/services/ss-category.repository-service';
-import {SsLoaderService} from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
 import { EntitiesRepositoryService } from 'src/app/modules/ss-shared/services/entities.repository-service';
 
 @Component({
@@ -24,17 +21,17 @@ export class SsCatalogueFormComponent implements OnInit {
 
   public form!: FormGroup;
 
-	SearchCountryField = SearchCountryField;
-	CountryISO = CountryISO;
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
 
   @Input()
   public userDataModel!: any;
 
   constructor(private _entitiesRepositoryService: EntitiesRepositoryService,
-              private _loaderService: SsLoaderService,
-              private _toastService: MessageService,
-              private _formBuilder: FormBuilder,
-              private _cdr: ChangeDetectorRef) {
+    private _loaderService: SsLoaderService,
+    private _toastService: MessageService,
+    private _formBuilder: FormBuilder,
+    private _cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -47,7 +44,7 @@ export class SsCatalogueFormComponent implements OnInit {
 
   public saveForm(): any {
     this._loaderService.show = true;
-    const entity = {...this.form.value};
+    const entity = { ...this.form.value };
     // enitity.updatedAt = Date.now(); agregar logs
 
     return firstValueFrom(this._entitiesRepositoryService.update(entity, this.userDataModel.entity.id)).then(() => {

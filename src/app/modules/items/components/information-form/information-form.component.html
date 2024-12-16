@@ -1,0 +1,57 @@
+<article [formGroup]="form" class="sm:p-3">
+  <section class="w-full flex flex-column sm:flex-row justify-content-between gap-3">
+    <section class="w-full xl:w-7">
+      <div class="font-semibold mb-2">
+        Nombre
+      </div>
+
+      <input class="w-full xl:w-11" type="text" pInputText placeholder="Escribe un nombre para el producto..."
+        formControlName="name" />
+
+      <div class="mt-3 md:mt-6 mb-2 font-semibold">
+        Breve descripción
+      </div>
+
+      <textarea class="w-full xl:w-11 max-h-8rem" pInputTextarea formControlName="description"
+        placeholder="Escribe la descripción del producto aquí..." [rows]="5"></textarea>
+    </section>
+
+    <section class="w-full xl:w-4">
+      <div class="font-semibold mb-2">
+        Foto de portada
+      </div>
+
+      <section *ngIf="!item?.coverUrl"
+        class="w-full py-8 mt-2 xl:mt-0 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2">
+        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" (onSelect)="uploadPhoto($event)">
+        </p-fileUpload>
+
+        <span class="ss-txt--black-lighten">
+          Subir imágen
+        </span>
+      </section>
+
+      <section *ngIf="item?.coverUrl"
+        class="w-full py-6 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2 relative">
+        <img class="w-auto h-auto max-h-15rem max-w-full" [src]="item?.coverUrl" alt="Product Photo">
+
+        <i class="pi pi-times-circle absolute top-0 right-0 text-2xl ss-txt--red cursor-pointer mr-1 mt-1"
+          (click)="removeImage()">
+        </i>
+      </section>
+    </section>
+  </section>
+
+  <section>
+    <div class="my-3 md:mt-6 font-semibold">
+      Contenido
+    </div>
+
+    <p-editor [style]="{'height':'15rem'}" formControlName="content" placeholder="Ingresa datos aquí, ejm:
+    - Fecha de creación
+    - Historia
+    - Dimensiones: 54.5mm x 35mm x 11mm
+    - Datos curiosos">
+    </p-editor>
+  </section>
+</article>

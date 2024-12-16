@@ -6,7 +6,8 @@
       </div>
 
       <input type="text" pInputText class="w-full md:w-9" placeholder="Ejm: TarjetaTech SRL."
-        formControlName="name" />
+             formControlName="name"
+             [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}"/>
     </section>
 
     <section>
@@ -15,7 +16,8 @@
       </div>
 
       <textarea type="text" class="w-full md:w-9 max-h-5rem" pInputTextarea formControlName="description"
-        placeholder="Escribe una breve descripción..." [rows]="2"></textarea>
+        placeholder="Escribe una breve descripción..." [rows]="2" 
+        [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}"></textarea>
     </section>
 
     <section>
@@ -26,7 +28,8 @@
       <ngx-intl-tel-input [cssClass]="'custom-ngx-input'" [preferredCountries]="[CountryISO.Bolivia]"
         [enableAutoCountrySelect]="true" [enablePlaceholder]="false" [customPlaceholder]="'Ingresa tu número'"
         [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-        [phoneValidation]="true" formControlName="phone">
+        [phoneValidation]="true" formControlName="phone"
+        [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}">
       </ngx-intl-tel-input>
     </section>
   </section>
