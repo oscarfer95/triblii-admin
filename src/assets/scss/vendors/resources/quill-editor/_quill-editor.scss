@@ -1,0 +1,16 @@
+.p-editor-container .p-editor-toolbar.ql-snow {
+  border: 1px solid var(--#{$app-prefix}-color-grey);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.p-editor-container .p-editor-content.ql-snow {
+  border: 1px solid var(--#{$app-prefix}-color-grey);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+}
+
+.ql-snow .ql-tooltip.ql-flip {
+  transform: translate(140px, 60px) !important;
+}

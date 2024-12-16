@@ -1,0 +1,42 @@
+<article class="h-full flex flex-column justify-content-center gap-4">
+  <section class="flex flex-column">
+    <form class="flex flex-column gap-5" [formGroup]="logInForm">
+      <span>
+        <label class="ss-txt--black font-semibold">
+          Correo electrónico
+        </label>
+
+        <input class="w-full mt-2"
+               type="text"
+               pInputText
+               formControlName="email">
+
+        <small *ngIf="logInForm.get('email')?.hasError('required') && logInForm.get('email')?.touched || logInForm.get('email')?.hasError('email')"
+               class="p-error block mt-3">
+          Ingresa un correo electrónico válido.
+        </small>
+      </span>
+
+      <span>
+        <label class="ss-txt--black font-semibold">
+          Contraseña
+        </label>
+
+        <p-password styleClass="p-password p-component p-inputwrapper p-input-icon-right mt-2"
+                    type="password"
+                    formControlName="password"
+                    [toggleMask]="true"
+                    [feedback]="false">
+        </p-password>
+      </span>
+
+      <button class="ss-button ss-button--primary w-full mt-3"
+              [ngClass]="{'ss-button--disabled': logInForm.invalid}"
+              [disabled]="logInForm.invalid"
+              (click)="login()">
+        Iniciar sesión
+      </button>
+    </form>
+  </section>
+</article>
+

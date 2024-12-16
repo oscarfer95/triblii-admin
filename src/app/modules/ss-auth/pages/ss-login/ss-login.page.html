@@ -1,0 +1,48 @@
+<article class="ss-bg--primary flex justify-content-center align-items-center h-full">
+  <section class="w-full md:w-5 lg:w-4 h-full ss-bg--white shadow-3">
+    <section class="px-6 h-full flex flex-column justify-content-center"
+             data-aos="fade-right">
+      <section>
+        <section class="flex align-items-center gap-3">
+          <img class="max-w-4rem max-h-4rem"
+               src="assets/ssLogo.svg"
+               alt="ShoppyStore logo"/>
+
+          <h1 class="ss-txt-title font-semibold text-2xl md:text-3xl">
+            Tri
+
+            <span class="font-light">
+              Blii
+            </span>
+          </h1>
+        </section>
+
+        <ss-login-form></ss-login-form>
+
+        <section class="flex justify-content-center">
+          <span class="cursor-pointer ss-txt--black-lighten text-center"
+                (click)="openResetPasswordModal()">
+            ¿Olvidaste tu contraseña?
+          </span>
+        </section>
+      </section>
+    </section>
+  </section>
+
+  <section class="hidden md:flex md:w-7 lg:w-8 h-full overflow-hidden relative">
+      <swiper [config]="swiperConfig"
+              class="overflow-hidden relative">
+        <ng-template swiperSlide
+                     *ngFor="let image of images">
+          <section class="w-full h-full overflow-hidden relative">
+            <img class="h-full"
+                 [src]="image.src"
+                 alt="Login background">
+
+            <section class="absolute top-0 left-0 right-0 bottom-0 w-full h-full ss-bg-gradient--primary-radial opacity-50">
+            </section>
+          </section>
+        </ng-template>
+      </swiper>
+  </section>
+</article>

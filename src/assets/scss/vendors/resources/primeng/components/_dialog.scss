@@ -1,0 +1,31 @@
+.p-dialog {
+  min-width: 25vw;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.p-dialog-header-close-icon {
+  color: var(--#{$app-prefix}-color-primary) !important;
+}
+
+.p-dialog-center-content {
+  .p-dialog-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+//
+// Media Queries
+//
+@media screen and (max-width: map-get($breakpoints, 'md')) {
+  .p-dialog,
+  .p-dynamic-dialog {
+    min-width: 100vw;
+    height: 100vh !important;
+    max-height: 100% !important;
+    border-radius: 0;
+    overflow: auto;
+  }
+}

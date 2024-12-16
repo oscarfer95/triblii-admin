@@ -1,0 +1,129 @@
+<article>
+  <p-table #dt
+           [value]="itemList"
+           styleClass="p-datatable-gridlines"
+           class="fadein animation-duration-700"
+           selectionMode="single"
+           responsiveLayout="scroll"
+           [globalFilterFields]="['name','location.state','location.city','location.country','location.address']"
+           [paginator]="true"
+           [rows]="25">
+    <ng-template pTemplate="caption">
+      <section class="w-full flex flex-wrap-reverse justify-content-between gap-3">
+        <section class="w-full sm:w-auto">
+          <div class="p-input-icon-left w-full">
+            <i class="pi pi-search"></i>
+
+            <input class="bg-transparent w-full md:w-20rem"
+                   pInputText
+                   type="text"
+                   placeholder="Buscar por nombre"
+                   (input)="applyFilterGlobal($event, 'contains')"/>
+          </div>
+        </section>
+
+        <section *ngIf="userData.actions.create" class="w-full sm:w-auto flex align-items-center justify-content-end">
+          <button class="ss-button -mr-2 ss-button--small ss-button--without-shadow ss-button--without-animation"
+                  (click)="addItem()">
+            <i class="pi pi-plus text-sm mr-2"></i>
+
+            <span class="font-semibold">
+              Nuevo
+            </span>
+          </button>
+        </section>
+      </section>
+    </ng-template>
+
+    <ng-template *ngIf="itemList.length > 0"
+                 pTemplate="header">
+      <tr class="w-full">
+        <th class="text-center"
+            [style.border-top-left-radius]="'10px'"> # </th>
+
+        <th>
+          Nombre
+        </th>
+
+        <th class="text-center"
+            [style.border-top-right-radius]="'10px'">
+          Acciones
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template *ngIf="itemList.length > 0"
+                 pTemplate="body"
+                 let-item>
+      <tr class="ss-txt--black-lighten">
+        <td class="text-center cursor-pointer"
+            routerLink='/dashboard/items/{{moduleId}}/{{item.id}}'>
+          <span class="p-column-title"> # {{ itemList.indexOf(item) + 1 }} </span>
+          <span>
+            {{ itemList.indexOf(item) + 1 }}
+          </span>
+        </td>
+
+        <td class="cursor-pointer"
+            routerLink='/dashboard/items/{{moduleId}}/{{item.id}}'>
+            <section class="flex gap-1 align-items-center">
+              <img *ngIf="item?.coverUrl"
+                   [src]="item?.coverUrl"
+                   alt="Prodcut image"
+                   class="max-h-2rem max-w-2rem">
+
+              <span>
+                {{item.name}}
+              </span>
+
+              <i *ngIf="item.isFeatured"
+                 class="pi pi-star-fill text-sm ss-txt--warning ml-3">
+              </i>
+            </section>
+        </td>
+
+        <td>
+          <section class="flex gap-3 md:gap-5 py-3 lg:py-0 justify-content-center">
+            <i *ngIf="userData.actions.read"
+               class="pi pi-link text-xl cursor-pointer ss-txt--black-lighten"
+               (click)="copyItemLink(item.id)">
+            </i>
+
+            <i *ngIf="userData.actions.update"
+               class="pi pi-pencil text-xl cursor-pointer ss-txt--black-lighten"
+               routerLink='/dashboard/items/{{moduleId}}/{{item.id}}'>
+            </i>
+
+            <i *ngIf="userData.actions.delete"
+               class="pi pi-trash text-xl cursor-pointer ss-txt--red"
+               (click)="confirmDeleteProduct(item)">
+            </i>
+          </section>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">
+          <div class="w-full bg-white h-30rem">
+            <ss-announcement [iconName]="'pi-info-circle'"
+                             [text]="'No hay elementos disponibles'"
+                             [spin]="false">
+            </ss-announcement>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <section *ngIf="itemList.length === 0"
+           data-aos="fade-up"
+           data-aos-delay="600"
+           class="w-full py-8 h-30rem flex align-items-center justify-content-center">
+    <ss-announcement [iconName]="'pi-inbox'"
+                     [text]="'Aún no has añadido ningún producto'"
+                     [spin]="false">
+    </ss-announcement>
+  </section>
+</article>

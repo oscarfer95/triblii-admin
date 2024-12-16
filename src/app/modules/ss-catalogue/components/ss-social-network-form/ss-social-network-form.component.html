@@ -1,0 +1,30 @@
+<article *ngIf="form"
+         [formGroup]="form"
+         class="flex flex-column gap-4">
+  <div *ngFor="let socialNetwork of catalogue?.socialNetworks"
+       class="p-inputgroup mb-4">
+      <span class="p-inputgroup-addon">
+        <i *ngIf="getLogoIconName(socialNetwork.icon) === 'tiktok'"
+           class="bi bi-{{getLogoIconName(socialNetwork.icon)}}">
+        </i>
+
+        <i *ngIf="getLogoIconName(socialNetwork.icon) !== 'tiktok'"
+           class="pi pi-{{getLogoIconName(socialNetwork.icon)}}">
+        </i>
+      </span>
+
+      <input type="text"
+             pInputText
+             [placeholder]="socialNetwork.name"
+             [formControlName]="socialNetwork.name">
+  </div>
+
+  <section class="flex justify-content-end">
+    <button class="ss-button fadein"
+            [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
+            [disabled]="form.invalid || !form.touched"
+            (click)="saveForm()">
+      Guardar cambios
+    </button>
+  </section>
+</article>

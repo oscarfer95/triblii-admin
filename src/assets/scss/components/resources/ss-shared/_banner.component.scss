@@ -1,0 +1,10 @@
+.without-background-overlay {
+  background: radial-gradient(circle, var(--#{$app-prefix}-color-primary) 15%, rgb(15, 15, 15) 100%);
+  opacity: .8;
+}
+
+.background-overlay {
+  background: var(--#{$app-prefix}-color-black);
+  opacity: .6;
+  transition: opacity .4s ease-in-out;
+}

@@ -1,0 +1,102 @@
+//----------------------------------------------------------
+// HELPERS
+//----------------------------------------------------------
+
+// FONT COLORS
+@each $name, $color in $colors {
+  .#{$app-prefix}-txt--#{$name + ""} {
+    color: var(--#{$app-prefix}-color-#{$name + ""}) !important;
+  }
+}
+
+// FONT WEIGHT
+%#{$app-prefix}-font-title {
+  font-family: var(--#{$app-prefix}-font-family-title);
+}
+
+%#{$app-prefix}-font-text {
+  font-family: var(--#{$app-prefix}-font-family-text);
+}
+
+@mixin font-weight {
+  &--bold {
+    font-weight: 700;
+  }
+
+  &--semibold {
+    font-weight: 600;
+  }
+
+  &--regular {
+    font-weight: 400;
+  }
+
+  &--light {
+    font-weight: 300;
+  }
+
+  &--italic {
+    font-style: italic;
+  }
+}
+
+.#{$app-prefix}-txt-title {
+  @extend %#{$app-prefix}-font-title;
+  @include font-weight;
+
+  font-size: 1.25rem;
+  color: var(--#{$app-prefix}-color-black);
+  font-weight: 400;
+  line-height: 1.25;
+
+  &--small {
+    font-size: 1rem !important;
+  }
+
+  &--big {
+    font-size: 1.875rem !important;
+  }
+
+  &--extra-big {
+    font-size: 4rem !important;
+  }
+}
+
+.#{$app-prefix}-txt-body {
+  @extend %#{$app-prefix}-font-text;
+  @include font-weight;
+
+  font-size: 1rem;
+  color: var(--#{$app-prefix}-color-black);
+  font-weight: 400;
+  line-height: 1.5;
+
+  &--small {
+    font-size: 0.75rem !important;
+  }
+
+  &--big {
+    font-size: 1.25rem;
+  }
+}
+
+// BACKGROUND COLORS
+@each $name, $color in $colors {
+  .#{$app-prefix}-bg--#{$name + ""} {
+    background-color: var(--#{$app-prefix}-color-#{$name + ""}) !important;
+  }
+}
+
+// MAIN PADDINGS
+.#{$app-prefix}-main-padding {
+  padding: var(--#{$app-prefix}-main-padding);
+}
+
+.#{$app-prefix}-main-admin-padding {
+  padding: var(--#{$app-prefix}-main-admin-padding);
+}
+
+// MAIN PADDINGS
+.#{$app-prefix}-bg-gradient--primary-radial {
+  background: linear-gradient(135deg, hsla(240, 65%, 28%, 1) 0%, hsla(115, 38%, 54%, 1) 100%, hsla(0, 0%, 100%, 1) 100%);
+}

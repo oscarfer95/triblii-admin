@@ -1,0 +1,47 @@
+.p-inputtext {
+  color: var(--#{$app-prefix}-color-black);
+  border: none;
+  border-radius: 3px;
+  border-bottom: 1px solid var(--#{$app-prefix}-color-grey);
+  padding-left: 5px;
+  background: var(--#{$app-prefix}-color-grey-lighten);
+}
+
+.p-inputtext::placeholder {
+  color: var(--#{$app-prefix}-color-black-lighten);
+}
+
+.p-inputtext:enabled:focus {
+  box-shadow: none;
+}
+
+.p-float-label input:focus ~ label,
+.p-float-label input.p-filled ~ label,
+.p-float-label textarea:focus ~ label,
+.p-float-label textarea.p-filled ~ label,
+.p-float-label .p-inputwrapper-focus ~ label,
+.p-float-label .p-inputwrapper-filled ~ label {
+  color: var(--#{$app-prefix}-color-primary);
+  top: 0rem;
+}
+
+.p-inputnumber-buttons-horizontal .p-inputnumber-input {
+  text-align: center;
+}
+
+.p-multiselect {
+  width: 100%;
+  border: 1px solid var(--#{$app-prefix}-color-grey);
+}
+
+.p-inputgroup-addon {
+  background: var(--#{$app-prefix}-color-white);
+  color: var(--#{$app-prefix}-color-black);
+  border: none;
+  min-width: 2.357rem;
+
+  i {
+    font-size: 2rem;
+    margin-right: .5rem;
+  }
+}

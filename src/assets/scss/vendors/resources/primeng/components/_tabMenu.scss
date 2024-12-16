@@ -1,0 +1,15 @@
+.p-tabmenu .p-tabmenu-nav {
+  background: transparent;
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+  background: transparent;
+  font-weight: 400;
+  color: var(--#{$app-prefix}-color-black-lighten);
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+  background: transparent;
+  color: var(--#{$app-prefix}-color-primary);
+  border-bottom: 4px solid var(--#{$app-prefix}-color-primary);
+}

@@ -1,0 +1,21 @@
+.p-galleria .p-galleria-thumbnail-container {
+  background: transparent;
+  padding: 2rem 0.5rem 0 !important;
+}
+
+.p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-prev,
+.p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-next {
+  margin: 0;
+  background-color: transparent;
+  color: var(--#{$app-prefix}-color-primary);
+  transition: none;
+  border-radius: 50%;
+
+  &:hover {
+    color: var(--#{$app-prefix}-color-primary);
+  }
+}
+
+.p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-item-content:focus {
+  box-shadow: none;
+}

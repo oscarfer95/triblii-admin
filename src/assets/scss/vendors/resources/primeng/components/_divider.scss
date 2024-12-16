@@ -1,0 +1,28 @@
+.p-divider.p-divider-horizontal:before {
+  border-top: 2px rgba(var(--#{$app-prefix}-color-primary-rgb), 0.8);
+}
+
+.p-divider.p-divider-vertical:before {
+  border-left: 2px rgba(var(--#{$app-prefix}-color-primary-rgb), 0.8);
+}
+
+.p-divider--grey {
+  .p-divider.p-divider-horizontal:before,
+  .p-divider.p-divider-vertical:before {
+    border-color: rgba(var(--#{$app-prefix}-color-grey-rgb), 0.3);
+  }
+}
+
+.p-divider--white {
+  .p-divider.p-divider-horizontal:before,
+  .p-divider.p-divider-vertical:before {
+    border-color: rgba(var(--#{$app-prefix}-color-white-rgb), 0.5);
+  }
+}
+
+.p-divider--red {
+  .p-divider.p-divider-horizontal:before,
+  .p-divider.p-divider-vertical:before {
+    border-color: rgba(var(--#{$app-prefix}-color-red-rgb), 0.5);
+  }
+}

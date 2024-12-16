@@ -1,0 +1,95 @@
+<article [formGroup]="form" class="sm:p-3">
+  <section class="w-full">
+    <h4>
+      Categorías
+    </h4>
+
+    <div class="w-full mt-2 mb-3 ss-txt--black-lighten text-sm">
+      Asocia tu producto a una o más categorías, así tus clientes podrán encontrar rapidamente lo que buscan
+    </div>
+
+    <section *ngIf="categories">
+      <p-multiSelect class="w-full"
+                     [options]="categories"
+                     optionLabel="name"
+                     display="chip"
+                     optionValue="id"
+                     formControlName="categories"
+                     placeholder="Selecciona una categoría"
+                     (onChange)="markAsTouched(); getTags()">
+      </p-multiSelect>
+    </section>
+  </section>
+
+  <section class="w-full mt-5">
+    <h4>
+      Tags
+    </h4>
+
+    <div class="w-full mt-2 mb-3 ss-txt--black-lighten text-sm">
+      Asocia tu producto a uno o más tags, estos sirven para segmentar aun más tu producto, por ejemplo tu producto es para/un: hombre, mujer, repuesto, accesorio, deportivo, etc.
+    </div>
+
+    <section *ngIf="tags">
+      <p-multiSelect [options]="tags"
+                     class="w-full"
+                     optionLabel="name"
+                     display="chip"
+                     optionValue="id"
+                     formControlName="tags"
+                     placeholder="Selecciona los tags">
+      </p-multiSelect>
+    </section>
+  </section>
+
+  <p-divider class="p-divider--grey"
+             styleClass="my-5">
+  </p-divider>
+
+  <section class="w-full flex gap-3">
+    <section>
+      <p-inputSwitch formControlName="isFeatured">
+      </p-inputSwitch>
+    </section>
+
+    <section>
+      <h4>
+        <i class="pi pi-star-fill text-sm ss-txt--warning mr-2">
+        </i>
+
+        Destacado
+      </h4>
+
+      <div class="w-10 mt-2 ss-txt--black-lighten text-sm">
+        Cuando esta opción esta activa, el producto sale en la sección de destacados de tu catálogo.
+      </div>
+    </section>
+  </section>
+
+  <p-divider class="p-divider--grey"
+             styleClass="my-5">
+  </p-divider>
+
+  <section class="w-full flex gap-3 mb-3">
+    <section>
+      <p-inputSwitch formControlName="available">
+      </p-inputSwitch>
+    </section>
+
+    <section>
+      <h4>
+        <i *ngIf="!form.get('available').value" class="pi pi-ban text-sm ss-txt--red mr-2">
+        </i>
+
+        <i *ngIf="form.get('available').value" class="pi pi-check text-sm ss-txt--green mr-2">
+        </i>
+
+        Activo
+      </h4>
+
+      <div class="w-10 mt-2 ss-txt--black-lighten text-sm">
+        Cuando esta opción esta activa, todos pueden ver la información.
+      </div>
+    </section>
+  </section>
+</article>

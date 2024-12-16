@@ -1,0 +1,25 @@
+.#{$app-prefix}-admin-sidebar {
+
+  &__logout-button {
+    background-color: rgba(var(--#{$app-prefix}-color-red-rgb), 0.1) !important;
+    color: var(--#{$app-prefix}-color-red) !important;
+  }
+}
+
+.#{$app-prefix}-sidebar-menu {
+  &__button {
+
+    &--active {
+      background-color: rgba(var(--#{$app-prefix}-color-primary-rgb), 0.1) !important;
+      color: var(--#{$app-prefix}-color-primary) !important;
+      border-left: 3px solid var(--#{$app-prefix}-color-primary) !important;
+      border-top-left-radius: 0px !important;
+      border-bottom-left-radius: 0px !important;
+    }
+
+    &.#{$app-prefix}-button--clear:hover {
+      background-color: rgba(var(--#{$app-prefix}-color-primary-rgb), 0.1) !important;
+      color: var(--#{$app-prefix}-color-primary) !important;
+    }
+  }
+}

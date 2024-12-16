@@ -1,0 +1,24 @@
+<article>
+  <h3 class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-3">
+    <i class="pi pi-palette mr-3 ss-txt--primary text-xl"></i> Color de marca
+  </h3>
+
+  <section>
+    <section class="flex align-items-center gap-3">
+      <p-colorPicker class="ss-custom-color-picker"
+                     format="hex"
+                     [(ngModel)]="customColor"
+                     [ngModelOptions]="{standalone: true}"
+                     (onHide)="getColor()">
+      </p-colorPicker>
+
+      <input type="text"
+             [(ngModel)]="customColor"
+             (ngModelChange)="validateHexColor($event)"
+             maxlength="7"
+             pInputText
+             class="ss-txt--black-lighten border-none text-xl border-bottom-1 pb-1"
+             placeholder="#FFFFFF"/>
+    </section>
+  </section>
+</article>

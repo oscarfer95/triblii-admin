@@ -1,0 +1,41 @@
+.p-confirm-dialog	{
+  min-width: fit-content !important;
+  height: min-content !important;
+
+  .p-dialog-header-close {
+    color: var(--#{$app-prefix}-color-primary) !important;
+  }
+
+  button,
+  .p-button {
+    border-radius: 10px;
+
+    &:focus,
+    &:active {
+      border: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.p-confirm-popup {
+  border-radius: 10px;
+
+  button,
+  .p-button {
+    border-radius: 10px;
+
+    &:focus,
+    &:active {
+      border: none;
+      box-shadow: none;
+    }
+  }
+}
+
+@media screen and (max-width: map-get($breakpoints, 'md')) {
+  .p-dialog.p-confirm-dialog {
+    height: auto !important;
+    border-radius: 10px;
+  }
+}

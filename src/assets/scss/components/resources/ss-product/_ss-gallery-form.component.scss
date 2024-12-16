@@ -1,0 +1,31 @@
+
+.#{$app-prefix}-gallery-form {
+  $root: &;
+
+  &__item-container {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, 12rem);
+    grid-gap: 2rem;
+    justify-content: space-between;
+
+    #{$root}__item {
+      #{$root}__trash-button {
+        right: -16px;
+        top: -16px;
+      }
+    }
+  }
+}
+
+//
+// Media Queries
+//
+@media screen and (max-width: 576px) {
+  .#{$app-prefix}-gallery-form {
+    $root: &;
+
+    &__item-container {
+      justify-content: center;
+    }
+  }
+}

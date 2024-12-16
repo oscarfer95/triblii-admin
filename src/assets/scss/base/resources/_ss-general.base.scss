@@ -1,0 +1,57 @@
+//----------------------------------------------------------
+// GENERAL STYLES
+//----------------------------------------------------------
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 6px;
+    margin-right: 1rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(var(--#{$app-prefix}-color-black-rgb), .13);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(var(--#{$app-prefix}-color-primary-rgb), .4);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--#{$app-prefix}-color-primary-rgb), .8);
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    background: var(--#{$app-prefix}-color-primary);
+  }
+
+  input:focus-visible {
+    outline: none;
+  }
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  background-color: var(--#{$app-prefix}-color-grey-lighten);
+  font-family: var(--#{$app-prefix}-font-family-text);
+
+  @include fluid-type(font-size,
+    var(--#{$app-prefix}-font-min-vw),
+    var(--#{$app-prefix}-font-max-vw),
+    var(--#{$app-prefix}-font-min-size),
+    var(--#{$app-prefix}-font-max-size)
+  );
+
+  body {
+    height: 100%;
+    width: 100%;
+  }
+}

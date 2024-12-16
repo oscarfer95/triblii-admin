@@ -1,0 +1,17 @@
+.p-sidebar {
+  .p-sidebar-close {
+    color: var(--#{$app-prefix}-color-primary) !important;
+  }
+
+  .p-sidebar-content {
+    height: 100%;
+  }
+
+  .p-sidebar-header {
+    display: none;
+  }
+}
+
+.p-sidebar-top {
+  height: auto !important;
+}

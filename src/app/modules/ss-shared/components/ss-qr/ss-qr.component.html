@@ -1,0 +1,41 @@
+<article class="w-full flex flex-column align-items-center">
+  <section class="w-10 mx-auto flex justify-content-center">
+    <qrcode [qrdata]="qrData?.link"
+            [width]="250"
+            [errorCorrectionLevel]="'M'"
+            [alt]="'Catalogue QR'"
+            (qrCodeURL)="onChangeURL($event)">
+    </qrcode>
+
+    <div *ngIf="!qrData"
+         class="relative">
+      <p-skeleton class="flex align-items-center justify-content-center w-full mb-4"
+                  size="200px"
+                  borderRadius="6px">
+      </p-skeleton>
+
+      <i class="pi pi-image text-4xl ss-txt--black-lighten absolute top-0 w-full h-full flex justify-content-center align-items-center"></i>
+    </div>
+  </section>
+
+  <section class="flex flex-column align-items-start gap-3 mb-3">
+    <div class="flex gap-3 align-items-center cursor-pointer">
+      <i class="pi pi-download text-2xl ss-txt--primary"></i>
+
+      <a class="ss-txt-body ss-txt-body--big ss-txt--black-lighten no-underline"
+         [href]="qrCodeDownloadLink"
+         download>
+        Descargar
+      </a>
+    </div>
+
+    <div class="flex gap-3 align-items-center cursor-pointer">
+      <i class="pi pi-share-alt text-2xl ss-txt--primary"></i>
+
+      <span class="ss-txt-body ss-txt-body--big  ss-txt--black-lighten"
+            (click)="sharedLink()">
+        Compartir
+      </span>
+    </div>
+  </section>
+</article>

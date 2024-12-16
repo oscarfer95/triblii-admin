@@ -1,0 +1,18 @@
+<article class="w-full h-full flex flex-column align-items-center justify-content-center">
+  <section class="flex flex-column align-items-center justify-content-center"
+           data-aos="fade-up">
+    <i class="pi {{ iconName }} text-8xl ss-txt--grey mb-4 animation-duration-3000"
+       [ngClass]="{'pi-spin': spin}">
+    </i>
+
+    <p class="w-full ss-txt--black-lighten ss-txt-body--light ss-txt-body--big text-center">
+      {{ text }}
+
+      <span *ngFor="let item of [1,1,1], index as i"
+            class="ss-txt--black ss-txt-title--big scalein animation-iteration-infinite animation-duration-2000 animation-delay-{{i+1}}00"
+            [ngClass]="{'hidden': !spin}">
+        .
+      </span>
+    </p>
+  </section>
+</article>

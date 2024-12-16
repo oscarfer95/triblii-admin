@@ -1,0 +1,57 @@
+<aside class="ss-admin-sidebar flex flex-column justify-content-between h-full relative">
+  <section class="mt-4">
+    <section class="flex flex-column align-items-center justify-content-center mx-auto gap-3">
+      <section *ngIf="!userDataModel?.entity?.photoUrl"
+               class="shadow-1 w-8rem h-8rem fadein flex justify-content-center align-items-center border-circle bg-gray-100">
+        <i class="pi pi-image text-6xl my-6 fadein"></i>
+      </section>
+
+      <img *ngIf="userDataModel?.entity?.photoUrl"
+           class="w-8rem max-h-8rem fadein"
+           [src]="userDataModel.entity.photoUrl"
+           alt="Store photo"
+           loading="lazy">
+
+      <span *ngIf="userDataModel?.entity?.name"
+            class="fadein ss-txt-title--bold fadein">
+        {{ userDataModel?.entity?.name }}
+      </span>
+    </section>
+
+    <section class="overflow-auto mt-5">
+      <article *ngIf="menuItems"
+               class="ss-sidebar-menu">
+        <ul>
+          <li *ngFor="let menuItem of menuItems"
+              class="mb-2"
+              (click)="onClickMenuButton()">
+            <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
+               [routerLink]="menuItem.url"
+               routerLinkActive="ss-sidebar-menu__button--active">
+              <i class="{{ menuItem.icon }} text-xl"></i> {{ menuItem.label }}
+            </a>
+          </li>
+        </ul>
+      </article>
+    </section>
+  </section>
+
+  <footer>
+    <p-divider class="p-divider--grey"></p-divider>
+
+    <button class="ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full"
+            (click)="openHelpDesk()">
+      <i class="pi pi-desktop text-xl"></i>
+      Servicio al cliente
+    </button>
+
+    <p-divider class="p-divider--grey"
+               styleClass="my-3">
+    </p-divider>
+
+    <button class="ss-admin-sidebar__logout-button ss-button justify-content-start gap-2 w-full"
+            (click)="logout()">
+      <i class="pi pi-sign-out text-xl ss-txt--red"></i> Cerrar sesión
+    </button>
+  </footer>
+</aside>

@@ -1,0 +1,21 @@
+.p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+  background-color: var(--#{$app-prefix}-color-primary);
+}
+
+.p-carousel .p-carousel-indicators .p-carousel-indicator button {
+  background-color: var(--#{$app-prefix}-color-grey);
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+}
+
+.p-carousel .p-carousel-content .p-carousel-prev,
+.p-carousel .p-carousel-content .p-carousel-next {
+  color: var(--#{$app-prefix}-color-primary);
+
+  &:hover {
+    color: var(--#{$app-prefix}-color-primary) !important;
+    border-radius: 50%;
+    background-color: var(--#{$app-prefix}-color-grey-lighten);
+  }
+}

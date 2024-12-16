@@ -1,0 +1,141 @@
+<article *ngIf="bannerList"
+         class="w-full h-full ss-main-admin-padding py-6 flex flex-column md:flex-row md:justify-content-between gap-6">
+  <section class="w-full xl:w-7 h-full flex flex-column px-3 md:px-0 pt-6 md:pt-0">
+    <section class="w-full hidden lg:flex justify-content-between"
+             data-aos="fade-up">
+      <header class="hidden lg:flex ss-txt-title ss-txt-title--big ss-txt-title--regular justify-content-between align-items-center">
+        <section>
+          <i class="pi pi-images text-3xl ss-txt--black-lighten mr-2"></i> Banners
+        </section>
+      </header>
+
+      <button class="ss-button ss-button--small ss-button--without-shadow ss-button--without-animation"
+              (click)="addBanner()">
+        <i class="pi pi-plus text-sm mr-2"></i>
+
+        <span class="font-semibold">
+          Agregar banner
+        </span>
+      </button>
+    </section>
+
+    <p-divider class="p-divider--grey"
+               styleClass="my-3 hidden lg:flex"
+               data-aos="fade-up"
+               data-aos-delay="200">
+    </p-divider>
+
+    <section *ngIf="this.bannerList"
+             class="w-full flex flex-column md:flex-row justify-content-between align-items-end md:align-items-center"
+             data-aos="fade-up"
+             data-aos-delay="400">
+      <p class="ss-txt--black-lighten">
+        Agrega banners publicitarios, estos aparecerán en tu página.
+      </p>
+
+      <span class="white-space-nowrap ss-txt--black-lighten">
+        {{ this.bannerList?.length }} / 5
+      </span>
+    </section>
+
+    <section *ngIf="bannerList.length > 0"
+             data-aos="fade-up"
+             data-aos-delay="600">
+      <swiper [config]="swiperConfig"
+              class="overflow-hidden">
+        <ng-template swiperSlide
+                     *ngFor="let banner of bannerList">
+          <section class="w-10 shadow-1 cursor-pointer border-round-2xl p-3 md:p-5 flex flex-column-reverse md:flex-row md:align-items-center mx-auto bg-primary-200 my-6 bg-cover relative"
+                   [style.background-image]="'url('+ banner.backgroundUrl +')'">
+            <section class="w-full md:w-8 h-full flex flex-column z-2"
+                     routerLink="/dashboard/banners/{{ banner.id }}">
+              <h4 class="ss-txt-title ss-txt--white font-bold mb-2">
+                {{ banner.title }}
+              </h4>
+
+              <p class="mb-3 ss-txt--white">
+                {{ banner.description }}
+              </p>
+
+              <button class="w-fit ss-button ss-button--small my-3">
+                {{ banner.buttonLabel }}
+              </button>
+            </section>
+
+            <section *ngIf="banner.pngUrl"
+                     class="w-full md:w-4 flex justify-content-center mx-auto mb-3 z-2"
+                     routerLink="/dashboard/banners/{{ banner.id }}">
+              <img [src]="banner.pngUrl"
+                   class="w-auto md:mb-0 md:w-9 my-3 h-auto max-h-15rem"
+                   alt="banner png image">
+            </section>
+
+            <section *ngIf="banner?.backgroundUrl !== ''"
+                     routerLink="/dashboard/banners/{{ banner.id }}"
+                     class="w-full h-full absolute right-0 top-0 left-0 bottom-0 z-1 background-overlay border-round-2xl">
+            </section>
+
+            <section *ngIf="banner?.backgroundUrl === ''"
+                     routerLink="/dashboard/banners/{{ banner.id }}"
+                     class="w-full h-full absolute top-0 left-0 z-1 without-background-overlay border-round-2xl">
+            </section>
+
+            <section class="absolute top-0 right-0 z-5 -mr-2 -mt-2">
+              <button pButton
+                      type="button"
+                      icon="pi pi-trash"
+                      class="p-button-rounded ss-bg--red ss-txt--white"
+                      (click)="confirmDeleteProduct(banner)">
+              </button>
+            </section>
+          </section>
+        </ng-template>
+      </swiper>
+    </section>
+
+    <section *ngIf="bannerList.length === 0"
+             data-aos="fade-up"
+             data-aos-delay="600"
+             class="py-8">
+      <ss-announcement [iconName]="'pi-inbox'"
+                       [text]="'Aún no has añadido ningún banner'"
+                       [spin]="false">
+      </ss-announcement>
+    </section>
+  </section>
+
+ <section class="w-full xl:w-4 h-full hidden xl:flex flex-column gap-6"
+          data-aos="fade-up">
+   <section *ngFor="let item of [1], index as i"
+           class="w-full h-15rem shadow-2 border-round-xl fadein animation-duration-400 p-5 py-6 flex flex-column gap-3 justify-content-between bg-cover"
+           data-aos="fade-up"
+           data-aos-delay="200"
+           [style.background-image]="'url(https://firebasestorage.googleapis.com/v0/b/random-storage-a7496.appspot.com/o/image%2032.png?alt=media&token=52c830d0-95d1-4089-adc2-9df9c9134da1)'">
+     <h3 class="ss-txt-title font-normal ss-txt--white text-xl">
+       Recomendación
+     </h3>
+
+     <p class="ss-txt-body ss-txt--grey-lighten text-md mb-3">
+      Puedes adminitrar tu tienda desde cualquier dispositivo
+     </p>
+
+     <section class="flex gap-3">
+       <i class="pi pi-mobile text-5xl ss-txt--primary mb-4 animation-duration-3000"></i>
+       <i class="pi pi-tablet text-5xl ss-txt--primary mb-4 animation-duration-3000"></i>
+       <i class="pi pi-desktop text-5xl ss-txt--primary mb-4 animation-duration-3000"></i>
+     </section>
+   </section>
+ </section>
+
+  <section class="fixed bottom-0 right-0 mr-4 mb-4 lg:hidden">
+    <button class="border-circle p-3 border-none ss-bg--primary ss-txt--white cursor-pointer"
+            routerLink="/dashboard/banners/new">
+      <i class="pi pi-plus"></i>
+    </button>
+  </section>
+</article>
+
+<ss-announcement *ngIf="bannerList === null"
+                 [iconName]="'pi-spinner'"
+                 [text]="'Cargando banners'">
+</ss-announcement>

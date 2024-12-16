@@ -1,0 +1,26 @@
+.iti {
+  margin-top: .5rem;
+
+  input:focus-visible {
+    outline: none !important;
+  }
+}
+
+.iti input,
+.iti input[type=text],
+.iti input[type=tel] {
+  border: none;
+  border-bottom: 1px solid var(--#{$app-prefix}-color-grey);
+  padding: .5rem 0;
+  color: var(--#{$app-prefix}-color-black);
+  font-size: 1rem;
+  letter-spacing: 1px;
+  font-family: var(--#{$app-prefix}-font-family-text);
+  background: var(--#{$app-prefix}-color-grey-lighten);
+  border-radius: 3px;
+}
+
+.iti__flag {
+  border-radius: 3px;
+  transform: scale(1.3);
+}

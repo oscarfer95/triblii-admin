@@ -1,0 +1,16 @@
+<nav class="ss-main-padding flex align-items-center py-2 fixed top-0 w-full z-5 ss-bg--white shadow-1">
+  <article class="flex w-full align-items-center">
+    <ul class="list-none w-full flex justify-content-between">
+      <li (click)="onClickMenuButton()"
+          class="cursor-pointer">
+        <i class="pi pi-bars text-2xl ss-txt--primary">
+        </i>
+      </li>
+
+      <li class="cursor-pointer"
+          (click)="logout()">
+        <i class="pi pi-sign-out text-2xl ss-txt--red"></i>
+      </li>
+    </ul>
+  </article>
+</nav>

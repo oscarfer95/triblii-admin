@@ -1,0 +1,49 @@
+<article *ngIf="banner"
+         class="w-full h-full ss-main-admin-padding pt-6 relative">
+  <header class="w-full xl:w-10 pt-4 pb-2 sticky z-5 ss-bg--grey-lighten relative top-0 flex align-items-center"
+           data-aos="fade-up"
+           data-aos-delay="200"
+           [style.height]="'65px'">
+    <section (click)="location.back()"
+           class="flex align-items-center cursor-pointer">
+      <i class="pi pi-angle-left mr-2 text-2xl ss-txt--black-lighten"></i>
+
+      <small class="ss-txt-title ss-txt-title--regular">
+        Volver
+      </small>
+    </section>
+
+    <button *ngIf="bannerForm"
+            class="hidden lg:flex ss-button absolute right-0 bottom-0 mb-3"
+            [ngClass]="{'ss-button--disabled': isFormValid()}"
+            [disabled]="isFormValid()"
+            (click)="saveForm()">
+      Guardar cambios
+    </button>
+  </header>
+
+  <section class="py-4 px-1"
+           data-aos="fade-up"
+           data-aos-delay="400">
+    <section class="w-full xl:w-10 flex-column gap-3">
+      <p-card styleClass="p-card-shadow border-round-xl lg:w-full py-3 fadein animation-duration-400 px-3">
+        <ss-banner-form [form]="bannerForm"
+                        [banner]="banner">
+        </ss-banner-form>
+
+        <button *ngIf="bannerForm"
+                class="w-full lg:hidden ss-button mt-3"
+                [ngClass]="{'ss-button--disabled': isFormValid()}"
+                [disabled]="isFormValid()"
+                (click)="saveForm()">
+          Guardar cambios
+        </button>
+      </p-card>
+    </section>
+  </section>
+</article>
+
+<ss-announcement *ngIf="banner === null"
+                 [iconName]="'pi-spinner'"
+                 [text]="'Cargando'">
+</ss-announcement>

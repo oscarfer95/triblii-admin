@@ -1,0 +1,26 @@
+.#{$app-prefix}-admin-wrapper {
+
+  &__content-container {
+    width: 100%;
+  }
+}
+
+.#{$app-prefix}-wrapper {
+  margin-top: 55px;
+}
+
+//
+// Media Queries
+//
+@media screen and (min-width: map-get($breakpoints, 'lg')) {
+  .#{$app-prefix}-admin-wrapper {
+
+    &__sidebar-container {
+      width: 20rem;
+    }
+
+    &__content-container {
+      width: calc(100% - 20rem);
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.#{$app-prefix}-custom-color-picker {
+  .p-inputtext {
+    border-bottom: none;
+    border-radius: 25px;
+    padding: 20px;
+    box-shadow: var(--#{$app-prefix}-shadow);
+
+    &:enabled:focus,
+    &:enabled:hover {
+      border-color: var(--#{$app-prefix}-color-grey) !important;
+    }
+  }
+
+  .p-colorpicker-panel {
+    z-index: 10 !important;
+
+    &:before {
+      content: "";
+      width: 146px;
+      height: 230px;
+      position: absolute;
+      top: -21% !important;
+      // left: -4%;
+      pointer-events: none;
+      z-index: 9 !important;
+    }
+  }
+}

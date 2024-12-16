@@ -1,0 +1,34 @@
+<section class="w-full lg:w-20rem bg-gray-100 border-round-xl p-2 flex justify-content-between align-items-center gap-1"
+  [ngClass]="{'lg:p-3 shadow-1': edit}">
+  <section class="w-11 flex flex-column gap-2">
+    <section class="w-full flex align-items-center gap-2">
+      <i class="pi pi-map-marker text-lg ss-txt--primary"></i>
+
+      <section
+        class="w-full max-w-18rem sm:max-w-28rem overflow-hidden text-overflow-ellipsis white-space-nowrap text-sm">
+        {{data?.address}}
+      </section>
+    </section>
+
+    <section class="w-full">
+      <div class="flex gap-2 align-items-center">
+        <div *ngIf="data?.locationType"
+          class="w-fit ss-bg--primary text-white border-round-xl flex align-items-center justify-content-center text-sm">
+          <small class="py-1 px-2">{{getLocationTypeText(data?.locationType)}}</small>
+        </div>
+
+        <small># {{data?.number}}</small>
+      </div>
+    </section>
+  </section>
+
+  <section class="w-1 flex justify-content-end cursor-pointer">
+    <i *ngIf="edit" class="pi pi-ellipsis-v text-lg ss-txt--black-lighten" (click)="op.toggle($event)"></i>
+
+    <p-overlayPanel #op>
+      <ng-template pTemplate>
+        <p-menu [model]="items"></p-menu>
+      </ng-template>
+    </p-overlayPanel>
+  </section>
+</section>

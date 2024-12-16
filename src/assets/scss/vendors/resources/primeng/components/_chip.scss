@@ -1,0 +1,51 @@
+.p-chip--warning {
+  .p-chip {
+    background-color: rgba(var(--#{$app-prefix}-color-warning-rgb), .1);
+    border: 1px solid var(--#{$app-prefix}-color-warning);
+  }
+
+  .p-chip .p-chip-icon {
+    color: var(--#{$app-prefix}-color-warning);
+  }
+
+  .p-chip .p-chip-text {
+    color: var(--#{$app-prefix}-color-black-lighten);
+  }
+}
+
+.p-chip--green {
+  .p-chip {
+    background-color: rgba(var(--#{$app-prefix}-color-green-rgb), .1);
+    border: 1px solid var(--#{$app-prefix}-color-green);
+  }
+
+  .p-chip .p-chip-icon {
+    color: var(--#{$app-prefix}-color-green);
+  }
+
+  .p-chip .p-chip-text {
+    color: var(--#{$app-prefix}-color-green);
+  }
+}
+
+.p-chip--red {
+  .p-chip {
+    background-color: rgba(var(--#{$app-prefix}-color-red-rgb), .1);
+    border: 1px solid var(--#{$app-prefix}-color-red);
+  }
+
+  .p-chip .p-chip-icon {
+    color: var(--#{$app-prefix}-color-red);
+  }
+
+  .p-chip .p-chip-text {
+    color: var(--#{$app-prefix}-color-red);
+  }
+}
+
+.#{$app-prefix}-chip-location-selected {
+  .p-chip {
+    background: var(--#{$app-prefix}-color-black);
+    color: var(--#{$app-prefix}-color-white);
+  }
+}

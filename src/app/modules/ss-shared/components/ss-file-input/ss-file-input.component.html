@@ -1,0 +1,69 @@
+<article class="tt-file-input-preview h-full flex flex-column">
+  <ng-template [ngIf]="mode === 'button'"
+               [ngIfElse]="dropZoneMode">
+    <button class="ss-button ss-button--small ss-button--without-shadow ss-button--without-animation {{ cssClass }}"
+            [ngClass]="{ 'ss-button--disabled': uploadInProgress }"
+            [disabled]="uploadInProgress"
+            (click)="fileInput.click()">
+      <ng-template [ngIf]="!uploadInProgress"
+                   [ngIfElse]="uploadPercentage">
+        <i class="pi pi-plus text-sm mr-2"></i>
+
+        <span class="font-semibold">
+          {{ label }}
+        </span>
+      </ng-template>
+
+      <ng-template #uploadPercentage>
+        <i class="pi pi-spin pi-spinner"></i>
+        &nbsp;Subiendo {{ uploadPercent | number: '1.0-0' }} %
+      </ng-template>
+    </button>
+  </ng-template>
+
+  <ng-template #dropZoneMode>
+    <p-progressBar *ngIf="uploadInProgress"
+                   styleClass="h-1rem border-round-2xl"
+                   [showValue]="false"
+                   [value]="uploadPercent">
+    </p-progressBar>
+
+    <section class="h-full"
+             ssDropZone
+             (click)="fileInput.click()"
+             (dragging)="onDraggingFiles($event)"
+             (dropped)="onDroppedFiles($event)">
+      <section class="w-full h-full tt-txt-body tt-txt--black-lighten flex justify-content-center">
+        <section *ngIf="!draggingFiles && !uploadInProgress"
+                 class="flex flex-column align-items-center justify-content-center">
+          <i class="pi pi-image text-6xl"></i>
+
+          <span class="my-3">
+            {{ label }}
+          </span>
+        </section>
+
+        <section *ngIf="draggingFiles && !uploadInProgress"
+                 class="flex flex-column align-items-center justify-content-center">
+          <i class="pi pi-upload text-4xl fadeoutup animation-iteration-infinite animation-duration-1000"></i>
+        </section>
+
+        <section *ngIf="uploadInProgress"
+                 class="flex flex-column align-items-center justify-content-center">
+          <span class="my-3 tt-txt-body text-2xl tt-txt--black-lighten">
+            {{ uploadPercent | number:'1.0-0' }} %
+          </span>
+        </section>
+      </section>
+    </section>
+  </ng-template>
+
+  <section class="hidden">
+    <input #fileInput
+           [accept]="acceptedTypes"
+           hidden
+           multiple
+           type="file"
+           (change)="onSelectFiles($event)">
+  </section>
+</article>
