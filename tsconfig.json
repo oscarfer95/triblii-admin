@@ -26,7 +26,6 @@
     "noImplicitAny": false,
     "types": ["node"],
     "paths": {
-      "leaflet": ["./node_modules/@types/leaflet"]
     },
     "typeRoots": [
       "./node_modules/@types"

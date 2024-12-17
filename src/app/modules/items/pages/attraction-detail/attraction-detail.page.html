@@ -45,7 +45,7 @@
 
     <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Ubicación' }">
       <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
-        <app-location-form [item]="item.location"></app-location-form>
+        <app-location-form [itemLocation]="item.location"></app-location-form>
       </p-card>
     </section>
 

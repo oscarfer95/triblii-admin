@@ -12,13 +12,11 @@ export class LocationFormComponent implements OnInit {
   public locationMap!: LocationMapComponent;
 
   @Input()
-  edit: boolean = false;
-
-  @Input()
-  public item: any;
+  public itemLocation: any;
 
   public location: any | null = null;
   public isAddressLoading: boolean = false;
+  public auxReady: boolean = false;
 
   public locationForm!: FormGroup;
 
@@ -27,26 +25,26 @@ export class LocationFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this._initFields();
     this._initForm();
+
+    if (this.itemLocation.coords.lat) {
+      this._initFields();
+    }
   }
 
   private _initFields() {
-    if (this.item.coords.lat && this.item.coords.lng) {
-      this.location = {
-        latitude: Number(this.item.coords.lat),
-        longitude: Number(this.item.coords.lng)
-      };
-      this._cdr.markForCheck();
+    this.location = {
+      latitude: this.itemLocation.coords.lat,
+      longitude: this.itemLocation.coords.lng
     }
   }
 
   private _initForm() {
     this.locationForm = this._formBuilder.group({
-      location: [this.item?.location || this.location, [Validators.required]],
-      address: [this.item?.address || '', [Validators.required, Validators.minLength(5)]],
-      number: [this.item?.number || '', [Validators.maxLength(10)]],
-      reference: [this.item?.reference || '', [Validators.maxLength(50)]]
+      location: [this.itemLocation?.location || null, [Validators.required]],
+      address: [this.itemLocation?.address || '', [Validators.required, Validators.minLength(5)]],
+      number: [this.itemLocation?.number || '', [Validators.maxLength(10)]],
+      reference: [this.itemLocation?.reference || '', [Validators.maxLength(50)]]
     });
   }
 
@@ -60,7 +58,6 @@ export class LocationFormComponent implements OnInit {
           longitude: coordinates.longitude
         };
         this._reverseGeocode();
-        this._cdr.markForCheck();
       }
     } catch (error) {
       console.error('Error getting location:', error);
@@ -92,12 +89,12 @@ export class LocationFormComponent implements OnInit {
       .then(data => {
         this._setAddressFieldForm(data.address.road);
         this.isAddressLoading = false;
-        this._cdr.markForCheck();
+        this._cdr.detectChanges();
       });
     } catch (error) {
       this._setAddressFieldForm('');
       this.isAddressLoading = false;
-      this._cdr.markForCheck();
+      this._cdr.detectChanges();
     }
   }
 

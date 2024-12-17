@@ -12,13 +12,13 @@
 
     <app-location-map *ngIf="location"
                       #locationMap
-                      [latitude]="location.latitude"
-                      [longitude]="location.longitude"
+                      [latitude]="location?.latitude"
+                      [longitude]="location?.longitude"
                       (mapCenterUpdated)="onMapCenterUpdated($event)">
     </app-location-map>
   </section>
 
-  <form [formGroup]="locationForm" *ngIf="(location)"
+  <form [formGroup]="locationForm" *ngIf="location"
     class="w-full flex flex-column gap-4 fadein animation-duration-500">
     <section class="flex flex-column">
       <section class="w-full flex align-items-center justify-content-between overflow-hidden">
