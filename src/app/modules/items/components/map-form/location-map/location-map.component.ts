@@ -1,52 +1,89 @@
-import { Component, AfterViewInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, ChangeDetectorRef, ViewEncapsulation, HostListener } from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
   selector: 'app-location-map',
-  templateUrl: './location-map.component.html'
+  templateUrl: './location-map.component.html',
+  encapsulation: ViewEncapsulation.None
 })
-export class LocationMapComponent implements AfterViewInit {
+export class LocationMapComponent implements AfterViewInit, OnChanges {
+
+  @Input() latitude!: number;
+  @Input() longitude!: number;
+  @Output() mapCenterUpdated = new EventEmitter<{ latitude: number; longitude: number }>();
 
   public mapId: string;
   private _map!: L.Map;
-  private readonly _baseMapURl: string = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
-
-  public currentLocationIcon = new L.Icon({
-    iconUrl: 'assets/images/pins/location.svg',
-    iconSize: [35, 35]
-  });
-
-  @Input()
-  public latitude!: number;
-
-  @Input()
-  public longitude!: number;
-
-  @Output()
-  public mapCenterUpdated: any = new EventEmitter();
+  private readonly _baseMapURL: string = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+  public mapInitialized: boolean = false;
+  public isLocked: boolean = true;
 
   constructor(private _cdr: ChangeDetectorRef) {
     this.mapId = 'locationMap';
   }
 
   ngAfterViewInit(): void {
-    this._initializeMap();
+    if (!this._map) {
+      this.initializeMap();
+    } else {
+      this.updateMapView();
+    }
   }
 
-  private _initializeMap(): void {
-    let latLng: L.LatLng = new L.LatLng(this.latitude, this.longitude);
-
-    this._map = new L.Map(this.mapId, { zoomAnimation: true, minZoom: 10 });
-    this._map.setView(latLng, 13);
-    // this._listenMapCenter();
-
-    L.tileLayer(this._baseMapURl).addTo(this._map);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.mapInitialized) {
+      if ((changes['latitude'] || changes['longitude']) && this.isValidCoords(this.latitude, this.longitude)) {
+        this.updateMapView();
+      }
+    }
   }
 
-  private _listenMapCenter(): void {
+  public unlockMap() {
+    this.isLocked = false;
+    this._refreshMap();
+  }
+
+  private initializeMap(defaultLat?: number, defaultLng?: number): void {
+    const lat = defaultLat !== undefined ? defaultLat : this.latitude;
+    const lng = defaultLng !== undefined ? defaultLng : this.longitude;
+
+    this._map = L.map(this.mapId, {
+      zoomAnimation: true,
+      minZoom: 2,
+      center: [lat, lng],
+      zoom: 18
+    });
+
+    L.tileLayer(this._baseMapURL).addTo(this._map);
+
     this._map.on('moveend', () => {
       const center = this._map.getCenter();
+      this._refreshMap();
       this.mapCenterUpdated.emit({ latitude: center.lat, longitude: center.lng });
     });
+
+    this._map.on('load', () => {
+      setTimeout(() => {
+        this._refreshMap();
+      }, 0);
+    });
+
+    this.mapInitialized = true;
+  }
+
+  private updateMapView(): void {
+    this._map.setView([this.latitude, this.longitude], 18);
+    this._refreshMap();
+  }
+
+  private _refreshMap(): void {
+    setTimeout(() => {
+      this._map.invalidateSize();
+      this._cdr.detectChanges();
+    }, 0);
+  }
+
+  private isValidCoords(lat: any, lng: any): boolean {
+    return typeof lat === 'number' && !isNaN(lat) && typeof lng === 'number' && !isNaN(lng);
   }
 }

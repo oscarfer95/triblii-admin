@@ -13,10 +13,7 @@ export class Attraction {
     city: string;
     country: string;
     state: string;
-    coords: {
-      lat: string;
-      lng: string;
-    };
+    coords: any | null
   };
   name: string;
   order: number;
@@ -38,10 +35,7 @@ export class Attraction {
       city: '',
       country: '',
       state: '',
-      coords: {
-        lat: '',
-        lng: ''
-      }
+      coords: null
     };
     this.name = '';
     this.order = 50;
