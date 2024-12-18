@@ -36,6 +36,7 @@ export class SsCataloguePage implements OnInit, OnDestroy {
     this.tabItems = [
       {label: 'Usuario', icon: 'pi pi-user'},
       {label: 'Entidad', icon: 'pi pi-id-card'},
+      {label: 'País', icon: 'pi pi-flag'},
       {label: 'Ajustes', icon: 'pi pi-cog'}
     ];
 
@@ -63,8 +64,12 @@ export class SsCataloguePage implements OnInit, OnDestroy {
         this.activeTab = this.tabItems[1];
         break;
 
-      case 'Ajustes':
+      case 'País':
         this.activeTab = this.tabItems[2];
+        break;
+
+      case 'Ajustes':
+        this.activeTab = this.tabItems[3];
           break;
     }
   }

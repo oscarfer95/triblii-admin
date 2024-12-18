@@ -69,7 +69,7 @@ export class LocationFormComponent implements OnInit {
           lng: coordinates.longitude
         });
 
-        this._reverseGeocode();
+        this.reverseGeocode();
       }
     } catch (error) {
       console.error('Error getting location:', error);
@@ -84,19 +84,10 @@ export class LocationFormComponent implements OnInit {
         lat: event.latitude,
         lng: event.longitude
       });
-      this._reverseGeocode();
     }
   }
 
-  private _setAddressFieldForm(address: string) {
-    this.form.patchValue({ address: address });
-  }
-
-  private _setLocationFieldForm(coords: any) {
-    this.form.patchValue({ coords: coords });
-  }
-
-  private _reverseGeocode(): void {
+  public reverseGeocode(): void {
     if (!this.location) return;
 
     this.isAddressLoading = true;
@@ -115,6 +106,14 @@ export class LocationFormComponent implements OnInit {
         this.isAddressLoading = false;
         this._cdr.markForCheck();
       });
+  }
+
+  private _setAddressFieldForm(address: string) {
+    this.form.patchValue({ address: address });
+  }
+
+  private _setLocationFieldForm(coords: any) {
+    this.form.patchValue({ coords: coords });
   }
 
   private _getBrowserLocation(): Promise<GeolocationCoordinates> {

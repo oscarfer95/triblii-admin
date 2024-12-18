@@ -14,7 +14,16 @@
     <section class="flex flex-column">
       <section class="w-full flex align-items-center justify-content-between overflow-hidden">
         <span class="font-semibold">Dirección</span>
-        <i *ngIf="isAddressLoading" class="pi pi-spin pi-spinner ss-txt--primary text-lg mr-1"></i>
+
+        <section>
+          <small *ngIf="!isAddressLoading"
+                 class="ss-txt--primary cursor-pointer font-italic underline mr-1"
+                 (click)="reverseGeocode()">
+            Obtener dirección
+          </small>
+
+          <i *ngIf="isAddressLoading" class="pi pi-spin pi-spinner ss-txt--primary text-lg mr-1"></i>
+        </section>
       </section>
       <input pInputText type="text" class="w-full" placeholder="Av. América y C. Adela Zamudio"
         formControlName="address" />
