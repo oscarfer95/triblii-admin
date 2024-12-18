@@ -1,4 +1,4 @@
-<article *ngIf="item" [formGroup]="form">
+<form [formGroup]="form">
   <p-accordion class="ss-accordion-information">
     <p-accordionTab [selected]="true">
       <ng-template pTemplate="header">
@@ -57,12 +57,11 @@
               Contenido
             </div>
 
-            <p-editor [style]="{'height':'15rem'}" formControlName="content" placeholder="Ingresa datos aquí, ejm:
-            - Fecha de creación
-            - Historia
-            - Dimensiones: 54.5mm x 35mm x 11mm
-            - Datos curiosos">
-            </p-editor>
+            <p-editor [formControlName]="'content'" [style]="{'height':'15rem'}" placeholder="Ingresa datos aquí, ejm: 
+            Fecha de creación
+            Historia
+            Dimensiones: 54.5mm x 35mm x 11mm
+            Datos curiosos , etc."></p-editor>
           </section>
         </section>
       </ng-template>
@@ -80,4 +79,4 @@
       </ng-template>
     </p-accordionTab>
   </p-accordion>
-</article>
+</form>

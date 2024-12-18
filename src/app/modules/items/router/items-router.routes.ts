@@ -11,13 +11,8 @@ export const ITEMS_ROUTES: Routes = [
     component: ItemsPage,
   },
   {
-    path: 'attractions/:id',
+    path: ':moduleId/:id',
     component: AttractionDetail,
-    canDeactivate: [CheckDirtyFormGuard]
-  },
-  {
-    path: 'restaurants/:id',
-    component: RestaurantDetail,
     canDeactivate: [CheckDirtyFormGuard]
   }
 ];

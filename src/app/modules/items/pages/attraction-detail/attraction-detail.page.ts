@@ -8,11 +8,13 @@ import { firstValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 
 import { SsDeleteManyFilesStorageService } from '../../../ss-shared/services/ss-delete-many-files-storage.service';
 import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
-import { AttractionsRepositoryService } from 'src/app/modules/ss-shared/services/attractions.repository-service';
 import { Attraction } from 'src/app/modules/ss-shared/models/attraction.model';
 import CanDeactivateComponent from '../../../ss-shared/models/router/can-deactivate-component';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/ss-auth/storage/user-data-model.service';
+import { RepositoryFactoryService } from 'src/app/modules/ss-shared/services/repository-factory.service';
+import { getTabItemsById } from 'src/app/modules/ss-shared/utils/tabs-config';
+import { createEmptyItemForm } from 'src/app/modules/ss-shared/utils/item-forms-config';
 
 @Component({
   selector: 'attraction-detail',
@@ -32,9 +34,11 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
   private _confirmDeactivate$: Subject<boolean>;
 
   private _unsubscribe: Subject<void>;
+  public moduleId: string;
+  private _service: any;
 
   constructor(private _deleteManyFilesStorageService: SsDeleteManyFilesStorageService,
-    private _attractionsRepositoryService: AttractionsRepositoryService,
+    private _repositoryService: RepositoryFactoryService,
     private _userDataModelService: UserDataModelService,
     private _confirmationService: ConfirmationService,
     private _activatedRoute: ActivatedRoute,
@@ -44,21 +48,6 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
     private _cdr: ChangeDetectorRef,
     private _router: Router,
     public location: Location) {
-    this.tabItems = [
-      { label: 'Información', icon: 'pi pi-book' },
-      { label: 'Opciones', icon: 'pi pi-fw pi-check-square' },
-      { label: 'Ubicación', icon: 'pi pi-map-marker' },
-      { label: 'Galería', icon: 'pi pi-fw pi-images' }
-    ];
-    this.activeTab = this.tabItems[0];
-
-    this.item = null;
-    this.itemForm = this._formBuilder.group({
-      galleryForm: this._formBuilder.group({}),
-      informationForm: this._formBuilder.group({}),
-      optionsForm: this._formBuilder.group({}),
-      locationForm: this._formBuilder.group({})
-    });
     this._itemFormSaved = false;
 
     this._confirmDeactivate$ = new Subject();
@@ -67,6 +56,7 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
   }
 
   ngOnInit(): void {
+    this._getModuleParam();
     this._getItem();
     this._userDataModelListener();
   }
@@ -92,48 +82,54 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
     return <FormGroup>this.itemForm.get('locationForm');
   }
 
-  public changeTab(target: any): void {
-    switch (target.innerText) {
-      case 'Información':
-        this.activeTab = this.tabItems[0];
-        break;
+  public changeTab(event: any): void {
+    const index = this.tabItems.findIndex(tab => tab.label === event.target.innerText);
 
-      case 'Opciones':
-        this.activeTab = this.tabItems[1];
-        break;
-
-      case 'Ubicación':
-        this.activeTab = this.tabItems[2];
-        break;
-
-      case 'Galería':
-        this.activeTab = this.tabItems[3];
-        break;
+    if (index !== -1) {
+      this.activeTab = this.tabItems[index];
     }
   }
 
   public saveForm(): void {
     this._loaderService.show = true;
-    const formValue: any = {
-      gallery: this.galleryForm.value.imageIdList,
-      ...this.informationForm.value,
-      ...this.optionsForm.value,
-      location: this.locationForm.value
-    };
+
+    const subFormNames = Object.keys(this.itemForm.controls);
+    const formValue: any = {};
+
+    for (const subFormName of subFormNames) {
+      const subFormValue = this.itemForm.get(subFormName)?.value;
+
+      if (subFormName === 'galleryForm') {
+        formValue['gallery'] = subFormValue.imageIdList;
+      } else if (subFormName === 'locationForm') {
+        formValue['location'] = subFormValue;
+      } else {
+        Object.assign(formValue, subFormValue);
+      }
+    }
+
+    // const formValue: any = {
+    //   gallery: this.galleryForm.value.imageIdList,
+    //   ...this.informationForm.value,
+    //   ...this.optionsForm.value,
+    //   location: this.locationForm.value
+    // };
     const item: any = { ...this.item, ...formValue };
 
-    if (item.id) {
-      delete item.id;
-      item.entitiesId.includes(this.userDataModel.entity.id) ? null : item.entitiesId.push(this.userDataModel.entity.id);
-      this._editItem(item);
-    } else {
-      item.entitiesId.push(this.userDataModel.entity.id);
-      this._createItem(item);
-    }
+    console.log(item);
+
+    // if (item.id) {
+    //   delete item.id;
+    //   item.entitiesId.includes(this.userDataModel.entity.id) ? null : item.entitiesId.push(this.userDataModel.entity.id);
+    //   this._editItem(item);
+    // } else {
+    //   item.entitiesId.push(this.userDataModel.entity.id);
+    //   this._createItem(item);
+    // }
   }
 
   private _editItem(item: any): void {
-    firstValueFrom(this._attractionsRepositoryService.update(item, this.item.id as string))
+    firstValueFrom(this._service.update(item, this.item.id as string))
       .then(() => {
         this._toastService.add({
           severity: 'success',
@@ -147,7 +143,7 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
 
         this._itemFormSaved = true;
         this._loaderService.show = false;
-        this._router.navigate([`/dashboard/items/attractions`]);
+        this._router.navigate([`/dashboard/items/${this.moduleId}`]);
       }).catch((error: any) => {
         this._toastService.add({
           severity: 'error',
@@ -163,7 +159,7 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
   }
 
   private _createItem(item: any): void {
-    firstValueFrom(this._attractionsRepositoryService.create(item))
+    firstValueFrom(this._service.create(item))
       .then(() => {
         this._toastService.add({
           severity: 'success',
@@ -177,7 +173,7 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
 
         this._itemFormSaved = true;
         this._loaderService.show = false;
-        this._router.navigate([`/dashboard/items/attractions`]);
+        this._router.navigate([`/dashboard/items/${this.moduleId}`]);
       }).catch((error: any) => {
         this._toastService.add({
           severity: 'error',
@@ -201,8 +197,9 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
   private _getItem(): void {
     if (this._activatedRoute.snapshot.params['id'] === 'new') {
       this.item = new Attraction();
+      // Falta iniciar otros modelos segun module id
     } else {
-      firstValueFrom(this._attractionsRepositoryService.getById(this._activatedRoute.snapshot.params['id']))
+      firstValueFrom(this._service.getById(this._activatedRoute.snapshot.params['id']))
         .then((item: any[]) => {
           this.item = item;
 
@@ -217,10 +214,29 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
         takeUntil(this._unsubscribe)
       )
       .subscribe((userDataModel: UserDataModel) => {
-        this.userDataModel = userDataModel;
+        if (userDataModel.accountId) {
+          this.userDataModel = userDataModel;
 
-        this._cdr.markForCheck();
+          this._cdr.markForCheck();
+        }
       });
+  }
+
+  private _getModuleParam() {
+    this._activatedRoute.params.subscribe((params) => {
+      this.moduleId = params['moduleId'];
+
+      this._initModuleConfig();
+    });
+  }
+
+  private _initModuleConfig() {
+    this._service = this._repositoryService.getServiceById(this.moduleId);
+    this.tabItems = getTabItemsById(this.moduleId);
+
+    this.itemForm = createEmptyItemForm(this.moduleId, this._formBuilder);
+    this.activeTab = this.tabItems[0];
+    this.item = null;
   }
 
   public isFormValid(): boolean {

@@ -64,9 +64,9 @@ export class InformationFormComponent implements OnInit, OnDestroy {
   }
 
   private _initForm(): void {
-    this.form.addControl('name', this._formBuilder.control(this.item.name, [Validators.required, Validators.min(1), Validators.max(40)]));
-    this.form.addControl('description', this._formBuilder.control(this.item.description, [Validators.required, Validators.min(1), Validators.max(200)]));
-    this.form.addControl('content', this._formBuilder.control(this.item.content));
-    this.form.addControl('coverUrl', this._formBuilder.control(this.item.coverUrl));
+    this.form?.addControl('name', this._formBuilder.control(this.item.name, [Validators.required, Validators.min(1), Validators.max(40)]));
+    this.form?.addControl('description', this._formBuilder.control(this.item.description, [Validators.required, Validators.min(1), Validators.max(200)]));
+    this.form?.addControl('content', this._formBuilder.control(this.item.content, [Validators.required]));
+    this.form?.addControl('coverUrl', this._formBuilder.control(this.item.coverUrl));
   }
 }

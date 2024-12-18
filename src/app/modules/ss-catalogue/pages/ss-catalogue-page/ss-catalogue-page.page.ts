@@ -36,7 +36,7 @@ export class SsCataloguePage implements OnInit, OnDestroy {
     this.tabItems = [
       {label: 'Usuario', icon: 'pi pi-user'},
       {label: 'Entidad', icon: 'pi pi-id-card'},
-      {label: 'País', icon: 'pi pi-flag'},
+      {label: 'País', icon: 'pi pi-map-marker'},
       {label: 'Ajustes', icon: 'pi pi-cog'}
     ];
 
