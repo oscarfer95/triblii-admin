@@ -1,4 +1,4 @@
-<article [formGroup]="form" class="sm:p-3">
+<article *ngIf="item" [formGroup]="form" class="sm:p-3">
   <section class="w-full flex flex-column sm:flex-row justify-content-between gap-3">
     <section class="w-full xl:w-7">
       <div class="font-semibold mb-2">

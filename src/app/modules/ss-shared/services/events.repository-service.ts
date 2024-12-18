@@ -8,17 +8,13 @@ import {FirebaseRepository} from '../../../../framework/repository/firebase.repo
 @Injectable({
   providedIn: 'root'
 })
-export class AttractionsRepositoryService extends FirebaseRepository<any> {
+export class EventsRepositoryService extends FirebaseRepository<any> {
   // TODO: CHANGE ANY TYPE OF FirebaseRepository< >
   constructor(private _angularFireStore: AngularFirestore) {
     super(_angularFireStore);
   }
 
   protected getCollectionName(): string {
-    return 'attractions';
-  }
-
-  public getByEntityId(id: string): Observable<any> {
-    return this.getByAttribute('entities', id);
+    return 'events';
   }
 }

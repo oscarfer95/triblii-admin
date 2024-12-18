@@ -8,13 +8,13 @@ import {FirebaseRepository} from '../../../../framework/repository/firebase.repo
 @Injectable({
   providedIn: 'root'
 })
-export class RestaurantsRepositoryService extends FirebaseRepository<any> {
+export class FoodsRepositoryService extends FirebaseRepository<any> {
   // TODO: CHANGE ANY TYPE OF FirebaseRepository< >
   constructor(private _angularFireStore: AngularFirestore) {
     super(_angularFireStore);
   }
 
   protected getCollectionName(): string {
-    return 'restaurants';
+    return 'foods';
   }
 }

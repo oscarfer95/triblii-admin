@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
-import { AttractionsRepositoryService } from 'src/app/modules/ss-shared/services/ss-products.repository-service';
+import { AttractionsRepositoryService } from 'src/app/modules/ss-shared/services/attractions.repository-service';
 import { ActivatedRoute } from '@angular/router';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/ss-auth/storage/user-data-model.service';
@@ -9,6 +9,9 @@ import { getMenuItemById } from 'src/app/modules/ss-shared/utils/get-side-bar-op
 import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
 import { ConfigList } from 'src/framework/repository/config-list.model';
 import { RestaurantsRepositoryService } from 'src/app/modules/ss-shared/services/restaurants.repository-service';
+import { HotelsRepositoryService } from 'src/app/modules/ss-shared/services/hotels.repository-service';
+import { FoodsRepositoryService } from 'src/app/modules/ss-shared/services/foods.repository-service';
+import { EventsRepositoryService } from 'src/app/modules/ss-shared/services/events.repository-service';
 
 @Component({
   selector: 'items-page',
@@ -20,7 +23,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   public itemList: any[] | null;
 
   private _unsubscribe: Subject<void>;
-  private _itemsService: any;
+  public itemsService: any;
   public collectionUIData: any;
   public moduleId: string;
 
@@ -28,10 +31,13 @@ export class ItemsPage implements OnInit, OnDestroy {
 
   constructor(private _attractionsRepositoryService: AttractionsRepositoryService,
               private _restaurantsRepositoryService: RestaurantsRepositoryService,
-    private _userDataModelService: UserDataModelService,
-    private _activatedRoute: ActivatedRoute,
-    private _loaderService: SsLoaderService,
-    private _cdr: ChangeDetectorRef) {
+              private _hotelsRepositoryService: HotelsRepositoryService,
+              private _foodsRepositoryService: FoodsRepositoryService,
+              private _eventsRepositoryService: EventsRepositoryService,
+              private _userDataModelService: UserDataModelService,
+              private _activatedRoute: ActivatedRoute,
+              private _loaderService: SsLoaderService,
+              private _cdr: ChangeDetectorRef) {
     this.itemList = null;
     this._unsubscribe = new Subject<void>();
   }
@@ -45,27 +51,33 @@ export class ItemsPage implements OnInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
-  private _getItems(): void {
-    this._loaderService.show = true;
-
-    const configList: ConfigList = {
-      queryList: [
-        {
-          field: 'entitiesId',
-          operation: 'array-contains-any',
-          value: [this.userDataModel.entity.id]
-        }
-      ]
-    };
-
-    if (this.userDataModel.entity.id) {
-      firstValueFrom(this._itemsService.getByQuerys(configList))
-        .then((items: any[]) => {
-          this.itemList = items;
-
-          this._cdr.markForCheck();
-          this._loaderService.show = false;
-        });
+  private async _getItems(): Promise<void> {
+    try {
+      this._loaderService.show = true;
+  
+      if (!this.userDataModel?.entity?.id) {
+        console.warn('El ID de la entidad no está disponible.');
+        this._loaderService.show = false;
+        return;
+      }
+  
+      const configList: ConfigList = {
+        queryList: [
+          {
+            field: 'entitiesId',
+            operation: 'array-contains-any',
+            value: [this.userDataModel.entity.id]
+          }
+        ]
+      };
+  
+      const items: any = await firstValueFrom(this.itemsService.getByQuerys(configList));
+      this.itemList = items;
+    } catch (error) {
+      console.error('Error al obtener los ítems:', error);
+    } finally {
+      this._cdr.markForCheck();
+      this._loaderService.show = false;
     }
   }
 
@@ -77,7 +89,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   }
 
   private _setCollectionConfig() {
-    this._itemsService = this._getItemsServiceByParam(this.moduleId);
+    this.itemsService = this._getItemsServiceById(this.moduleId);
     this.collectionUIData = this._getCollectionUIData(this.moduleId);
     this.itemList = null;
 
@@ -88,7 +100,7 @@ export class ItemsPage implements OnInit, OnDestroy {
     return getMenuItemById(id);
   }
 
-  private _getItemsServiceByParam(id: string): any {
+  private _getItemsServiceById(id: string): any {
     let service: any;
 
     switch (id) {
@@ -100,15 +112,15 @@ export class ItemsPage implements OnInit, OnDestroy {
         break;
 
       case 'hotels':
-        service = this._attractionsRepositoryService;
+        service = this._hotelsRepositoryService;
         break;
 
       case 'foods':
-        service = this._attractionsRepositoryService;
+        service = this._foodsRepositoryService;
         break;
 
       case 'events':
-        service = this._attractionsRepositoryService;
+        service = this._eventsRepositoryService;
         break;
     }
 
@@ -116,7 +128,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   }
 
   public refreshList(): void {
-    this._getItems();
+    this._setCollectionConfig();
   }
 
   private _userDataModelListener() {
@@ -130,8 +142,6 @@ export class ItemsPage implements OnInit, OnDestroy {
 
           this._getParamCollection();
         }
-
-        this._cdr.markForCheck();
       });
   }
 }

@@ -1,13 +1,9 @@
 <article class="w-full flex flex-column gap-3 overflow-auto relative">
   <section class="fadein animation-duration-500">
     <button *ngIf="!location" class="w-full ss-button ss-bg--warning ss-txt--black" (click)="getLocation()">
-      <i class="bi bi-pin-map text-lg mr-2 font-semibold"></i>
+      <i class="bi bi-pin-map text-lg mr-3"></i>
       Activar ubicación
     </button>
-
-    <section *ngIf="location" class="fadein animation-duration-500 mb-2">
-      <small class="ss-txt--black-lighten">Arrastra el mapa para cambiar la ubicación</small>
-    </section>
 
     <app-location-map *ngIf="location" #locationMap [latitude]="location?.latitude" [longitude]="location?.longitude"
       (mapCenterUpdated)="onMapCenterUpdated($event)">

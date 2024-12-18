@@ -27,12 +27,14 @@ import { LocationFormComponent } from './components/map-form/location-form/locat
 import { LocationMapComponent } from './components/map-form/location-map/location-map.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { AccordionModule } from 'primeng/accordion';
+import { RestaurantDetail } from './pages/restaurant-detail/restaurant-detail.page';
 
 @NgModule({
   declarations: [
     GalleryFormComponent,
     ItemsPage,
     AttractionDetail,
+    RestaurantDetail,
     ItemsTableComponent,
     InformationFormComponent,
     OptionsFormComponent,

@@ -8,18 +8,18 @@ import { firstValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 
 import { SsDeleteManyFilesStorageService } from '../../../ss-shared/services/ss-delete-many-files-storage.service';
 import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
-import { AttractionsRepositoryService } from 'src/app/modules/ss-shared/services/attractions.repository-service';
-import { Attraction } from 'src/app/modules/ss-shared/models/attraction.model';
 import CanDeactivateComponent from '../../../ss-shared/models/router/can-deactivate-component';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/ss-auth/storage/user-data-model.service';
+import { RestaurantsRepositoryService } from 'src/app/modules/ss-shared/services/restaurants.repository-service';
+import { Restaurant } from 'src/app/modules/ss-shared/models/restaurant.model';
 
 @Component({
-  selector: 'attraction-detail',
-  templateUrl: './attraction-detail.page.html',
+  selector: 'restaurant-detail',
+  templateUrl: './restaurant-detail.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestroy {
+export class RestaurantDetail implements CanDeactivateComponent, OnInit, OnDestroy {
   public tabItems: MenuItem[];
   public activeTab: MenuItem;
 
@@ -34,7 +34,7 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
   private _unsubscribe: Subject<void>;
 
   constructor(private _deleteManyFilesStorageService: SsDeleteManyFilesStorageService,
-    private _attractionsRepositoryService: AttractionsRepositoryService,
+    private _restauransRepositoryService: RestaurantsRepositoryService,
     private _userDataModelService: UserDataModelService,
     private _confirmationService: ConfirmationService,
     private _activatedRoute: ActivatedRoute,
@@ -48,7 +48,9 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
       { label: 'Información', icon: 'pi pi-book' },
       { label: 'Opciones', icon: 'pi pi-fw pi-check-square' },
       { label: 'Ubicación', icon: 'pi pi-map-marker' },
-      { label: 'Galería', icon: 'pi pi-fw pi-images' }
+      { label: 'Galería', icon: 'pi pi-fw pi-images' },
+      { label: 'Horario', icon: 'pi pi-calendar' },
+      { label: 'Comidas', icon: 'pi pi-sitemap' }
     ];
     this.activeTab = this.tabItems[0];
 
@@ -109,6 +111,14 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
       case 'Galería':
         this.activeTab = this.tabItems[3];
         break;
+
+      case 'Horario':
+        this.activeTab = this.tabItems[4];
+        break;
+
+      case 'Comidas':
+        this.activeTab = this.tabItems[5];
+        break;
     }
   }
 
@@ -133,7 +143,7 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
   }
 
   private _editItem(item: any): void {
-    firstValueFrom(this._attractionsRepositoryService.update(item, this.item.id as string))
+    firstValueFrom(this._restauransRepositoryService.update(item, this.item.id as string))
       .then(() => {
         this._toastService.add({
           severity: 'success',
@@ -147,7 +157,7 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
 
         this._itemFormSaved = true;
         this._loaderService.show = false;
-        this._router.navigate([`/dashboard/items/attractions`]);
+        this._router.navigate([`/dashboard/items/restaurants`]);
       }).catch((error: any) => {
         this._toastService.add({
           severity: 'error',
@@ -163,7 +173,7 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
   }
 
   private _createItem(item: any): void {
-    firstValueFrom(this._attractionsRepositoryService.create(item))
+    firstValueFrom(this._restauransRepositoryService.create(item))
       .then(() => {
         this._toastService.add({
           severity: 'success',
@@ -177,7 +187,7 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
 
         this._itemFormSaved = true;
         this._loaderService.show = false;
-        this._router.navigate([`/dashboard/items/attractions`]);
+        this._router.navigate([`/dashboard/items/restaurants`]);
       }).catch((error: any) => {
         this._toastService.add({
           severity: 'error',
@@ -200,9 +210,9 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
 
   private _getItem(): void {
     if (this._activatedRoute.snapshot.params['id'] === 'new') {
-      this.item = new Attraction();
+      this.item = new Restaurant();
     } else {
-      firstValueFrom(this._attractionsRepositoryService.getById(this._activatedRoute.snapshot.params['id']))
+      firstValueFrom(this._restauransRepositoryService.getById(this._activatedRoute.snapshot.params['id']))
         .then((item: any[]) => {
           this.item = item;
 

@@ -16,7 +16,7 @@ import { firstValueFrom } from 'rxjs';
 
 import { SsDeleteManyFilesStorageService } from '../../../ss-shared/services/ss-delete-many-files-storage.service';
 import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
-import { AttractionsRepositoryService } from '../../../ss-shared/services/ss-products.repository-service';
+import { AttractionsRepositoryService } from '../../../ss-shared/services/attractions.repository-service';
 
 @Component({
   selector: 'items-table',
@@ -35,6 +35,9 @@ export class ItemsTableComponent implements OnInit {
   @Input()
   public moduleId!: string;
 
+  @Input()
+  public service!: any;
+
   @Output()
   public dataChanges: EventEmitter<void>;
 
@@ -42,7 +45,6 @@ export class ItemsTableComponent implements OnInit {
   public table!: Table;
 
   constructor(private _deleteManyFilesStorageService: SsDeleteManyFilesStorageService,
-    private _AttractionsRepositoryService: AttractionsRepositoryService,
     private _confirmationService: ConfirmationService,
     private _loaderService: SsLoaderService,
     private _toastService: MessageService,
@@ -120,7 +122,7 @@ export class ItemsTableComponent implements OnInit {
 
   private _deleteProduct(id: string): Promise<any> {
     return firstValueFrom(
-      this._AttractionsRepositoryService.delete(id)
+      this.service.delete(id)
     );
   }
 

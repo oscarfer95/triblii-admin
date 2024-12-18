@@ -23,9 +23,21 @@
   display: table-cell !important;
 }
 
+.hidden-column {
+  display: table-cell;
+}
+
+.column-border-left-top {
+  border-top-left-radius: 0px;
+}
+
+
 @media screen and (max-width: map-get($breakpoints, "lg")) {
-  // .p-datatable.p-datatable-gridlines .p-datatable-header {
-  //   background: var(--#{$app-prefix}-color-white);
-  //   border-bottom: 1px solid var(--#{$app-prefix}-color-grey);
-  // }
+  .hidden-column {
+    display: none;
+  }
+  
+  .column-border-left-top {
+    border-top-left-radius: 10px;
+  }
 }

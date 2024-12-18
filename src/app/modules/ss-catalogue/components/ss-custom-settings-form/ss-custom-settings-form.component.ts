@@ -100,7 +100,6 @@ export class SsCustomSettingsFormComponent implements OnInit {
   //   if (this.userDataModel.entity?.slug !== this.form.get('slug')?.value) {
   //     firstValueFrom(this._entitiesService.getByQuerys(configList))
   //     .then((entities: any) => {
-  //       console.log(entities);
 
   //       if (entities.length > 0 && entities[0].slug === this.form.get('slug')?.value) {
   //         this.isSlugAvailable = false;

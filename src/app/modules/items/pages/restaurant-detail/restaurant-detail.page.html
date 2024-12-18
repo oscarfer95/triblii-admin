@@ -1,0 +1,77 @@
+<article *ngIf="item" class="w-full h-screen flex flex-column ss-main-admin-padding pt-6 relative">
+  <header data-aos="fade-up">
+    <section class="flex align-items-center cursor-pointer px-2 lg:px-0 mt-3 md:mt-0 pb-1 lg:pb-2" (click)="location.back()">
+      <i class="pi pi-angle-left mr-2 text-2xl ss-txt--black-lighten">
+      </i>
+
+      <small *ngIf="item.name === ''" class="ss-txt-title ss-txt-title--regular">
+        Volver
+      </small>
+
+      <small *ngIf="item.name"
+        class="w-full md:w-7 overflow-hidden ss-txt-title ss-txt-title--regular text-overflow-ellipsis white-space-nowrap">
+        {{ item.name }}
+      </small>
+    </section>
+  </header>
+
+  <section class="w-full sticky z-5 ss-bg--grey-lighten relative top-0" data-aos="fade-up"
+    data-aos-delay="200">
+    <section class="w-full flex justify-content-between gap-3">
+      <p-tabMenu class="w-full border-bottom-1 border-black-alpha-10" [scrollable]="true" [model]="tabItems" [activeItem]="activeTab" (click)="changeTab($event.target)">
+      </p-tabMenu>
+
+      <section class="hidden xl:flex">
+        <ng-container
+          *ngTemplateOutlet="saveButtonTemplate; context: { isValid: isFormValid(), onClick: saveForm.bind(this) }">
+        </ng-container>
+      </section>
+    </section>
+  </section>
+
+  <section class="py-3 px-3 pb-8 md:pb-0 lg:px-0 fadein flex-grow-1">
+    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Información' }">
+      <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400" data-aos="fade-up"
+        data-aos-delay="400">
+        <information-form [form]="informationForm" [item]="item">
+        </information-form>
+      </p-card>
+    </section>
+
+    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Opciones' }">
+      <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
+        <options-form [form]="optionsForm" [item]="item" [moduleId]="'restaurants'">
+        </options-form>
+      </p-card>
+    </section>
+
+    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Ubicación' }">
+      <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
+        <app-location-form [form]="locationForm" [itemLocation]="item.location"></app-location-form>
+      </p-card>
+    </section>
+
+    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Galería' }">
+      <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
+        <gallery-form [form]="galleryForm" [item]="item">
+        </gallery-form>
+      </p-card>
+    </section>
+  </section>
+
+  <section class="w-full ss-bg--grey-lighten flex gap-3 xl:hidden sticky left-0 right-0 bottom-0 p-3 shadow-5">
+    <ng-container
+      *ngTemplateOutlet="saveButtonTemplate; context: { isValid: isFormValid(), onClick: saveForm.bind(this) }">
+    </ng-container>
+  </section>
+</article>
+
+<ss-announcement *ngIf="item === null" [iconName]="'pi-spinner'" [text]="'Cargando producto'">
+</ss-announcement>
+
+<ng-template #saveButtonTemplate let-isValid="isValid" let-onClick="onClick">
+  <button class="ss-button w-full" [ngClass]="{'ss-button--disabled': isValid}" [disabled]="isValid"
+    (click)="onClick()">
+    Guardar cambios
+  </button>
+</ng-template>

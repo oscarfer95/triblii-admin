@@ -15,7 +15,7 @@
                      display="chip"
                      optionValue="id"
                      formControlName="categories"
-                     placeholder="Selecciona una categoría"
+                     placeholder="Selecciona categorías"
                      (onChange)="markAsTouched(); getTags()">
       </p-multiSelect>
     </section>
@@ -37,7 +37,7 @@
                      display="chip"
                      optionValue="id"
                      formControlName="tags"
-                     placeholder="Selecciona los tags">
+                     placeholder="Selecciona tags">
       </p-multiSelect>
     </section>
   </section>
@@ -46,23 +46,19 @@
              styleClass="my-5">
   </p-divider>
 
-  <section class="w-full flex gap-3">
-    <section>
+  <section class="w-full flex flex-column gap-3 md:gap-2">
+    <section class="flex justify-content-between align-items-center">
+      <h4>
+        <i class="pi pi-star-fill text-sm ss-txt--warning mr-2"></i>
+        Destacado
+      </h4>
+
       <p-inputSwitch formControlName="isFeatured">
       </p-inputSwitch>
     </section>
 
-    <section>
-      <h4>
-        <i class="pi pi-star-fill text-sm ss-txt--warning mr-2">
-        </i>
-
-        Destacado
-      </h4>
-
-      <div class="w-10 mt-2 ss-txt--black-lighten text-sm">
-        Cuando esta opción esta activa, el producto sale en la sección de destacados de tu catálogo.
-      </div>
+    <section class="w-full ss-txt--black-lighten text-sm">
+      Cuando la opción está activa, el lugar aparecerá destacado en la plataforma.
     </section>
   </section>
 
@@ -70,13 +66,8 @@
              styleClass="my-5">
   </p-divider>
 
-  <section class="w-full flex gap-3 mb-3">
-    <section>
-      <p-inputSwitch formControlName="available">
-      </p-inputSwitch>
-    </section>
-
-    <section>
+  <section class="w-full flex flex-column gap-3 md:gap-2">
+    <section class="flex justify-content-between align-items-center">
       <h4>
         <i *ngIf="!form.get('available').value" class="pi pi-ban text-sm ss-txt--red mr-2">
         </i>
@@ -87,9 +78,12 @@
         Activo
       </h4>
 
-      <div class="w-10 mt-2 ss-txt--black-lighten text-sm">
-        Cuando esta opción esta activa, todos pueden ver la información.
-      </div>
+      <p-inputSwitch formControlName="available">
+      </p-inputSwitch>
+    </section>
+
+    <section class="w-full ss-txt--black-lighten text-sm">
+      Cuando la opción está activa, el lugar aparecerá en la plataforma.
     </section>
   </section>
 </article>

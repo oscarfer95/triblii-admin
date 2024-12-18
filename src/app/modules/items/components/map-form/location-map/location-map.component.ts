@@ -32,15 +32,19 @@ export class LocationMapComponent implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.mapInitialized) {
-      if ((changes['latitude'] || changes['longitude']) && this.isValidCoords(this.latitude, this.longitude)) {
+      if ((changes['latitude'] || changes['longitude']) && this._isValidCoords(this.latitude, this.longitude)) {
         this.updateMapView();
       }
     }
   }
 
   public unlockMap() {
+    if (!this._isValidCoords(this.latitude, this.longitude)) {
+      this._refreshMap();
+    } else {
+      this._map.invalidateSize();
+    }
     this.isLocked = false;
-    this._refreshMap();
   }
 
   private initializeMap(defaultLat?: number, defaultLng?: number): void {
@@ -49,7 +53,7 @@ export class LocationMapComponent implements AfterViewInit, OnChanges {
 
     this._map = L.map(this.mapId, {
       zoomAnimation: true,
-      minZoom: 2,
+      minZoom: 8,
       center: [lat, lng],
       zoom: 18
     });
@@ -83,7 +87,7 @@ export class LocationMapComponent implements AfterViewInit, OnChanges {
     }, 0);
   }
 
-  private isValidCoords(lat: any, lng: any): boolean {
+  private _isValidCoords(lat: any, lng: any): boolean {
     return typeof lat === 'number' && !isNaN(lat) && typeof lng === 'number' && !isNaN(lng);
   }
 }

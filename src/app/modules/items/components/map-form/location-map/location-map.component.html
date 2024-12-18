@@ -5,13 +5,17 @@
     <img src="assets/images/pins/location.svg" alt="Marker" style="height: 35px;">
   </div>
 
-  <div *ngIf="isLocked" class="w-full h-full absolute bg-black-alpha-30 z-4 flex justify-content-center align-items-end p-3">
+  <div *ngIf="isLocked" class="w-full h-full absolute bg-black-alpha-40 z-4 flex flex-column justify-content-end align-items-center p-3">
+    <section class="fadein animation-duration-500 mb-2">
+      <small class="ss-txt--white">Arrastra el mapa para cambiar la posición</small>
+    </section>
+
     <button class="ss-button ss-button--small ss-bg--warning ss-txt--white" pButton (click)="unlockMap()">
       Cambiar marcador
     </button>
   </div>
 
-  <div *ngIf="!isLocked" class="w-fit p-3 absolute bg-black-alpha-30 z-4 bottom-0 right-0 border-round-xl">
+  <div *ngIf="!isLocked" class="w-full p-3 absolute bg-black-alpha-30 z-4 bottom-0 left-0 right-0 border-round-xl flex justify-content-center">
     <button class="ss-button ss-button--small ss-bg--warning ss-txt--white" pButton (click)="isLocked = true">
       Confirmar
     </button>

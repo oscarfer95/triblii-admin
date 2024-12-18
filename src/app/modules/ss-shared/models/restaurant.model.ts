@@ -1,7 +1,7 @@
-export class Attraction {
+export class Restaurant {
   available: boolean;
   categories: string[];
-  content: string | null;
+  content: any | null;
   coverUrl: string;
   description: string;
   entitiesId: string[];
@@ -19,6 +19,7 @@ export class Attraction {
   order: number;
   rating: number;
   tags: string[];
+  schedule: any | null;
 
   constructor() {
     this.available = true;
@@ -41,6 +42,7 @@ export class Attraction {
     this.order = 50;
     this.rating = 3;
     this.tags = [];
+    this.schedule = null;
   }
 }
 
