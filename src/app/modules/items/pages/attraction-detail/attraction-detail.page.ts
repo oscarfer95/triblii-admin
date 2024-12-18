@@ -56,7 +56,8 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
     this.productForm = this._formBuilder.group({
       galleryForm: this._formBuilder.group({}),
       informationForm: this._formBuilder.group({}),
-      optionsForm: this._formBuilder.group({})
+      optionsForm: this._formBuilder.group({}),
+      locationForm: this._formBuilder.group({})
     });
     this._productFormSaved = false;
 
@@ -87,6 +88,10 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
     return <FormGroup>this.productForm.get('galleryForm');
   }
 
+  public get locationForm(): FormGroup {
+    return <FormGroup>this.productForm.get('locationForm');
+  }
+
   public changeTab(target: any): void {
     switch (target.innerText) {
       case 'Información':
@@ -112,9 +117,11 @@ export class AttractionDetail implements CanDeactivateComponent, OnInit, OnDestr
     const formValue: any = {
       gallery: this.galleryForm.value.imageIdList,
       ...this.informationForm.value,
-      ...this.optionsForm.value
+      ...this.optionsForm.value,
+      location: this.locationForm.value
     };
     const item: any = { ...this.item, ...formValue };
+    console.log(item);
 
     if (item.id) {
       delete item.id;

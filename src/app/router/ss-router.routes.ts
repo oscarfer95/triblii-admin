@@ -16,12 +16,12 @@ export const SS_MAIN_ROUTES: Routes = [
   },
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'dashboard/home',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: 'dashboard/home'
   }
 ];
 

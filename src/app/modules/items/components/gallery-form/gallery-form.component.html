@@ -1,6 +1,6 @@
 <article class="w-full ss-gallery-form">
   <header class="flex flex-column gap-2">
-    <section class="flex flex-column md:flex-row justify-content-between gap-3">
+    <section class="flex flex-row justify-content-between gap-3">
       <p class="ss-txt--black text-lg font-semibold">
         Sube fotos aquí
       </p>
@@ -8,17 +8,13 @@
       <section class="w-auto">
         <tt-file-input class="bg-white"
                        [fileLimit]="5"
-                       [label]="'Agregar imágen'"
+                       [label]="'Agregar'"
                        [cssClass]="'ss-button--outline'"
                        (error)="showErrorMessage($event)"
                        (uploadedFile)="addImageFileUrl($event)">
         </tt-file-input>
       </section>
     </section>
-    
-    <span class="ss-txt--black-lighten text-md font-light">
-      No olvides guardar tus cambios, las imágenes que subas solo serán almacenadas de esa manera.
-    </span>
   </header>
 
   <p-divider class="p-divider--grey"

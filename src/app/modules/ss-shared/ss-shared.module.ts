@@ -1,4 +1,3 @@
-import {AccordionModule} from 'primeng/accordion';
 import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import {ChartModule} from 'primeng/chart';
@@ -46,7 +45,6 @@ import {SsSanitizePipe} from './pipes/ss-sanitize.pipe';
     ChartModule
   ],
   exports: [
-    AccordionModule,
     ButtonModule,
     CardModule,
     ChartModule,

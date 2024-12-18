@@ -1,6 +1,6 @@
 <article *ngIf="item" class="w-full h-screen flex flex-column ss-main-admin-padding pt-6 relative">
   <header data-aos="fade-up">
-    <section class="flex align-items-center cursor-pointer px-2 lg:px-0 mt-3 md:mt-0" (click)="location.back()">
+    <section class="flex align-items-center cursor-pointer px-2 lg:px-0 mt-3 md:mt-0 pb-1 lg:pb-2" (click)="location.back()">
       <i class="pi pi-angle-left mr-2 text-2xl ss-txt--black-lighten">
       </i>
 
@@ -15,15 +15,17 @@
     </section>
   </header>
 
-  <section class="w-full py-2 sticky z-5 ss-bg--grey-lighten relative top-0 pl-3 lg:pl-0" data-aos="fade-up"
-    data-aos-delay="200" [style.top]="'40px'">
-    <p-tabMenu [model]="tabItems" [activeItem]="activeTab" (click)="changeTab($event.target)">
-    </p-tabMenu>
+  <section class="w-full sticky z-5 ss-bg--grey-lighten relative top-0" data-aos="fade-up"
+    data-aos-delay="200">
+    <section class="w-full flex justify-content-between gap-3">
+      <p-tabMenu class="w-full border-bottom-1 border-black-alpha-10" [scrollable]="true" [model]="tabItems" [activeItem]="activeTab" (click)="changeTab($event.target)">
+      </p-tabMenu>
 
-    <section class="hidden xl:flex absolute right-0 bottom-0 mb-3 my-2 mr-2">
-      <ng-container
-        *ngTemplateOutlet="saveButtonTemplate; context: { isValid: isFormValid(), onClick: saveForm.bind(this) }">
-      </ng-container>
+      <section class="hidden xl:flex">
+        <ng-container
+          *ngTemplateOutlet="saveButtonTemplate; context: { isValid: isFormValid(), onClick: saveForm.bind(this) }">
+        </ng-container>
+      </section>
     </section>
   </section>
 
@@ -45,7 +47,7 @@
 
     <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Ubicación' }">
       <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
-        <app-location-form [itemLocation]="item.location"></app-location-form>
+        <app-location-form [form]="locationForm" [itemLocation]="item.location"></app-location-form>
       </p-card>
     </section>
 

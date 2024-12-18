@@ -26,6 +26,7 @@ import { LocationCardComponent } from './components/map-form/location-card/locat
 import { LocationFormComponent } from './components/map-form/location-form/location-form.component';
 import { LocationMapComponent } from './components/map-form/location-map/location-map.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     LocationMapComponent
   ],
   imports: [
+    AccordionModule,
     CommonModule,
     RouterModule,
     ItemsRouterModule,

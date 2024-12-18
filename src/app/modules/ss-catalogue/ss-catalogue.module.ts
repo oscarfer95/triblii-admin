@@ -23,6 +23,7 @@ import {SsDangerZoneComponent} from './components/ss-danger-zone/ss-danger-zone.
 import {SsResetPasswordFormComponent} from './components/ss-reset-password-form/ss-reset-password-form.component';
 import {SsSocialNetworkFormComponent} from './components/ss-social-network-form/ss-social-network-form.component';
 import {SsCustomSettingsFormComponent} from './components/ss-custom-settings-form/ss-custom-settings-form.component';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {SsCustomSettingsFormComponent} from './components/ss-custom-settings-for
     SsCustomSettingsFormComponent
   ],
   imports: [
+    AccordionModule,
     CommonModule,
     SsCatalogueRouterModule,
     CardModule,

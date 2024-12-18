@@ -1,8 +1,6 @@
 <article class="w-full flex flex-column gap-3 overflow-auto relative">
   <section class="fadein animation-duration-500">
-    <button *ngIf="!location" 
-            class="w-full ss-button ss-bg--warning ss-txt--black" 
-            (click)="getLocation()">
+    <button *ngIf="!location" class="w-full ss-button ss-bg--warning ss-txt--black" (click)="getLocation()">
       <i class="bi bi-pin-map text-lg mr-2 font-semibold"></i>
       Activar ubicación
     </button>
@@ -11,44 +9,38 @@
       <small class="ss-txt--black-lighten">Arrastra el mapa para cambiar la ubicación</small>
     </section>
 
-    <app-location-map *ngIf="location"
-      #locationMap
-      [latitude]="location?.latitude"
-      [longitude]="location?.longitude"
+    <app-location-map *ngIf="location" #locationMap [latitude]="location?.latitude" [longitude]="location?.longitude"
       (mapCenterUpdated)="onMapCenterUpdated($event)">
     </app-location-map>
   </section>
 
-  <form [formGroup]="locationForm" *ngIf="location"
-    class="w-full flex flex-column gap-4 fadein animation-duration-500">
+  <form [formGroup]="form" *ngIf="location" class="w-full flex flex-column gap-4 fadein animation-duration-500">
     <section class="flex flex-column">
       <section class="w-full flex align-items-center justify-content-between overflow-hidden">
         <span class="font-semibold">Dirección</span>
         <i *ngIf="isAddressLoading" class="pi pi-spin pi-spinner ss-txt--primary text-lg mr-1"></i>
       </section>
-      <input pInputText 
-             type="text" 
-             class="w-full" 
-             placeholder="Av. América y C. Adela Zamudio"
-             formControlName="address" />
+      <input pInputText type="text" class="w-full" placeholder="Av. América y C. Adela Zamudio"
+        formControlName="address" />
     </section>
 
-    <section class="flex flex-column">
-      <span class="font-semibold">Número casa / departamento</span>
-      <input pInputText 
-             type="text" 
-             class="w-full" 
-             placeholder="3321 / 9C" 
-             formControlName="number" />
-    </section>
+    <details>
+      <summary class="mb-3 ss-txt--black-lighten cursor-pointer">
+        Opcional
+      </summary>
 
-    <section class="flex flex-column">
-      <span class="font-semibold">Referencia / Indicaciones</span>
-      <textarea class="w-full max-h-6rem" 
-                pInputTextarea 
-                formControlName="reference"
-                placeholder="Casa amarilla con rejas negras" 
-                [rows]="5"></textarea>
-    </section>
+      <section class="w-full flex flex-column gap-4">
+        <section class="flex flex-column">
+          <span class="font-semibold">Número / departamento</span>
+          <input pInputText type="text" class="w-full" placeholder="3321 / 9C" formControlName="number" />
+        </section>
+
+        <section class="flex flex-column">
+          <span class="font-semibold">Referencia / Indicaciones</span>
+          <textarea class="w-full max-h-6rem" pInputTextarea formControlName="reference"
+            placeholder="Casa amarilla con rejas negras" [rows]="5"></textarea>
+        </section>
+      </section>
+    </details>
   </form>
 </article>

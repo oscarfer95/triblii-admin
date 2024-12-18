@@ -1,16 +1,18 @@
-import { 
-  Component, 
-  OnInit, 
-  Input, 
-  ViewChild, 
-  ChangeDetectorRef 
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ChangeDetectorRef,
+  ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LocationMapComponent } from '../location-map/location-map.component';
 
 @Component({
   selector: 'app-location-form',
-  templateUrl: './location-form.component.html'
+  templateUrl: './location-form.component.html',
+  encapsulation: ViewEncapsulation.None
 })
 export class LocationFormComponent implements OnInit {
 
@@ -20,10 +22,11 @@ export class LocationFormComponent implements OnInit {
   @Input()
   public itemLocation: any;
 
+  @Input()
+  public form!: FormGroup;
+
   public location: any | null = null;
   public isAddressLoading: boolean = false;
-
-  public locationForm!: FormGroup;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -46,12 +49,10 @@ export class LocationFormComponent implements OnInit {
   }
 
   private _initForm() {
-    this.locationForm = this._formBuilder.group({
-      location: [this.itemLocation?.coords || null, [Validators.required]],
-      address: [this.itemLocation?.address || '', [Validators.required, Validators.minLength(5)]],
-      number: [this.itemLocation?.number || '', [Validators.maxLength(10)]],
-      reference: [this.itemLocation?.reference || '', [Validators.maxLength(50)]]
-    });
+    this.form.addControl('coords', this._formBuilder.control(this.itemLocation?.coords || null, [Validators.required]));
+    this.form.addControl('address', this._formBuilder.control(this.itemLocation?.address || '', [Validators.required, Validators.minLength(5)]));
+    this.form.addControl('number', this._formBuilder.control(this.itemLocation?.number || '', [Validators.maxLength(10)]));
+    this.form.addControl('reference', this._formBuilder.control(this.itemLocation?.reference || '', [Validators.maxLength(50)]));
   }
 
   public async getLocation() {
@@ -63,9 +64,12 @@ export class LocationFormComponent implements OnInit {
           latitude: coordinates.latitude,
           longitude: coordinates.longitude
         };
+        this._setLocationFieldForm({
+          lat: coordinates.latitude,
+          lng: coordinates.longitude
+        });
+
         this._reverseGeocode();
-        this._cdr.detectChanges();
-        this.locationMap.isLocked = false;
       }
     } catch (error) {
       console.error('Error getting location:', error);
@@ -75,12 +79,21 @@ export class LocationFormComponent implements OnInit {
   public onMapCenterUpdated(event: { latitude: number; longitude: number }): void {
     if (event.latitude !== this.location?.latitude || event.longitude !== this.location?.longitude) {
       this.location = event;
+
+      this._setLocationFieldForm({
+        lat: event.latitude,
+        lng: event.longitude
+      });
       this._reverseGeocode();
     }
   }
 
   private _setAddressFieldForm(address: string) {
-    this.locationForm.patchValue({ address: address });
+    this.form.patchValue({ address: address });
+  }
+
+  private _setLocationFieldForm(coords: any) {
+    this.form.patchValue({ coords: coords });
   }
 
   private _reverseGeocode(): void {
@@ -94,13 +107,13 @@ export class LocationFormComponent implements OnInit {
       .then(data => {
         this._setAddressFieldForm(data.address.road || '');
         this.isAddressLoading = false;
-        this._cdr.detectChanges();
+        this._cdr.markForCheck();
       })
       .catch(error => {
         console.error('Reverse geocoding error:', error);
         this._setAddressFieldForm('');
         this.isAddressLoading = false;
-        this._cdr.detectChanges();
+        this._cdr.markForCheck();
       });
   }
 

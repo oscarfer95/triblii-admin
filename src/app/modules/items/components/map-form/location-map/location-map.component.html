@@ -1,13 +1,19 @@
-<section class="w-full fadein animation-duration-500 flex bg-gray-500 border-round-xl h-20rem overflow-hidden relative">
+<section class="w-full fadein animation-duration-500 flex bg-gray-500 border-round-xl h-20rem overflow-hidden relative shadow-1">
   <div *ngIf="mapId" [id]="mapId" class="h-full w-full z-2"></div>
 
   <div class="absolute z-3" style="top: 50%; left: 50%; transform: translate(-50%, -100%);">
     <img src="assets/images/pins/location.svg" alt="Marker" style="height: 35px;">
   </div>
 
-  <div *ngIf="isLocked" class="w-full h-full absolute bg-black-alpha-50 z-4 flex justify-content-center align-items-center">
+  <div *ngIf="isLocked" class="w-full h-full absolute bg-black-alpha-30 z-4 flex justify-content-center align-items-end p-3">
     <button class="ss-button ss-button--small ss-bg--warning ss-txt--white" pButton (click)="unlockMap()">
-      Cambiar pin
+      Cambiar marcador
+    </button>
+  </div>
+
+  <div *ngIf="!isLocked" class="w-fit p-3 absolute bg-black-alpha-30 z-4 bottom-0 right-0 border-round-xl">
+    <button class="ss-button ss-button--small ss-bg--warning ss-txt--white" pButton (click)="isLocked = true">
+      Confirmar
     </button>
   </div>
 </section>

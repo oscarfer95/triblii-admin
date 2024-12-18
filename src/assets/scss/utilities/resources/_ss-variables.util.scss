@@ -35,7 +35,7 @@ $colors: (
 
   // Main paddings
   --#{$app-prefix}-main-padding: 0 8%;
-  --#{$app-prefix}-main-admin-padding: 0 8%;
+  --#{$app-prefix}-main-admin-padding: 0 5%;
 }
 
 //
@@ -45,7 +45,6 @@ $colors: (
   :root {
     // Main paddings
     --#{$app-prefix}-main-padding: 0 5%;
-    --#{$app-prefix}-main-admin-padding: 0 5%;
   }
 }
 

@@ -5,9 +5,6 @@ import {EventEmitter, ChangeDetectionStrategy, Component, Input, OnInit, Output,
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {firstValueFrom} from 'rxjs';
 
-import {SsCatalogueRepositoryService} from 'src/app/modules/ss-shared/services/ss-catalogues.repository-service';
-import {ConfigList} from 'src/framework/repository/config-list.model';
-import {CategoriesRepositoryService} from 'src/app/modules/ss-shared/services/ss-category.repository-service';
 import {SsLoaderService} from 'src/app/modules/ss-shared/services/ss-loader.service';
 import { EntitiesRepositoryService } from 'src/app/modules/ss-shared/services/entities.repository-service';
 
