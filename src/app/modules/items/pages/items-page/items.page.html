@@ -1,13 +1,11 @@
 <article *ngIf="itemList"
-         class="w-full h-full ss-main-admin-padding pt-6 flex flex-column flex-grow-1">
-  <header class="hidden lg:flex ss-txt-title ss-txt-title--big ss-txt-title--regular justify-content-between align-items-center"
+         class="w-full h-full ss-main-admin-padding pt-7 lg:pt-6 flex flex-column flex-grow-1">
+  <header class="w-full flex ss-txt-title ss-txt-title--big ss-txt-title--regular align-items-center px-3 lg:px-0"
           data-aos="fade-up">
-    <section>
-      <i class="{{collectionUIData.icon}} text-3xl ss-txt--black-lighten mr-2"></i> {{collectionUIData.label}}
-    </section>
+    <i class="{{collectionUIData.icon}} text-3xl ss-txt--primary mr-2"></i> {{collectionUIData.label}}
   </header>
 
-  <section class="w-full h-full md:mt-5 px-3 lg:px-0"
+  <section class="w-full h-full lg:mt-3 px-3 lg:px-0"
            data-aos="fade-up"
            data-aos-delay="200">
     <items-table [itemList]="itemList"

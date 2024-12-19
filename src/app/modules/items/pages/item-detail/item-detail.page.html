@@ -1,6 +1,6 @@
 <article *ngIf="item" class="w-full h-screen flex flex-column ss-main-admin-padding pt-6 relative">
   <header data-aos="fade-up">
-    <section class="flex align-items-center cursor-pointer px-2 lg:px-0 mt-3 md:mt-0 px-2 lg:px-0 mt-3 md:mt-0 pb-3" (click)="location.back()">
+    <section class="flex align-items-center cursor-pointer px-2 lg:px-0 mt-3 lg:mt-0 pb-3" (click)="location.back()">
       <i class="pi pi-angle-left mr-2 text-2xl ss-txt--black-lighten">
       </i>
 
@@ -18,7 +18,7 @@
   <section class="w-full sticky z-5 ss-bg--grey-lighten relative top-0" data-aos="fade-up"
     data-aos-delay="200">
     <section class="w-full flex justify-content-between gap-3">
-      <p-tabMenu class="w-full border-bottom-1 border-black-alpha-10" [scrollable]="true" [model]="tabItems" [activeItem]="activeTab" (click)="changeTab($event.target)">
+      <p-tabMenu class="w-full border-bottom-1 border-black-alpha-10 pl-3 lg:px-0" [scrollable]="true" [model]="tabItems" [activeItem]="activeTab" (click)="changeTab($event)">
       </p-tabMenu>
 
       <section class="hidden xl:flex">
@@ -30,29 +30,30 @@
   </section>
 
   <section class="py-3 px-3 pb-8 md:pb-0 lg:px-0 fadein flex-grow-1">
-    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Información' }">
-      <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400" data-aos="fade-up"
+    <section class="w-full flex-column gap-3 hidden"
+             [ngClass]="{ 'flex': activeTab.label === 'Información' }">
+      <p-card *ngIf="informationForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400" data-aos="fade-up"
         data-aos-delay="400">
         <information-form [form]="informationForm" [item]="item">
         </information-form>
       </p-card>
     </section>
 
-    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Opciones' }">
+    <section *ngIf="optionsForm" class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Opciones' }">
       <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
-        <options-form [form]="optionsForm" [item]="item" [moduleId]="'restaurants'">
+        <options-form [form]="optionsForm" [item]="item" [moduleId]="moduleId">
         </options-form>
       </p-card>
     </section>
 
-    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Ubicación' }">
+    <section *ngIf="locationForm" class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Ubicación' }">
       <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
         <app-location-form [form]="locationForm" [itemLocation]="item.location"></app-location-form>
       </p-card>
     </section>
 
     <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Galería' }">
-      <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
+      <p-card *ngIf="galleryForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
         <gallery-form [form]="galleryForm" [item]="item">
         </gallery-form>
       </p-card>
@@ -70,7 +71,7 @@
 </ss-announcement>
 
 <ng-template #saveButtonTemplate let-isValid="isValid" let-onClick="onClick">
-  <button class="ss-button w-full" [ngClass]="{'ss-button--disabled': isValid}" [disabled]="isValid"
+  <button *ngIf="itemForm" class="ss-button w-full" [ngClass]="{'ss-button--disabled': isValid}" [disabled]="isValid"
     (click)="onClick()">
     Guardar cambios
   </button>

@@ -127,7 +127,7 @@
 
       <p-card *ngIf="activeTab.label === 'País' && (userDataModel?.entity)"
               styleClass="border-round-xl lg:w-full mt-3 fadein animation-duration-400">
-        Pais ciudad estado
+        <country-form [userDataModel]="userDataModel"></country-form>
       </p-card>
 
       <p-card *ngIf="activeTab.label === 'Ajustes' && (userDataModel?.entity)"

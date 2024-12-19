@@ -42,6 +42,7 @@ html {
   width: 100%;
   background-color: var(--#{$app-prefix}-color-grey-lighten);
   font-family: var(--#{$app-prefix}-font-family-text);
+  color: var(--#{$app-prefix}-color-black);
 
   @include fluid-type(font-size,
     var(--#{$app-prefix}-font-min-vw),

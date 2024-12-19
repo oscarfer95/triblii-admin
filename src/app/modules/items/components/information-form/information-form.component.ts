@@ -18,6 +18,8 @@ export class InformationFormComponent implements OnInit, OnDestroy {
 
   @Input()
   public item!: any;
+  
+  public editorModules: any;
 
   constructor(private _ssUploadFileStorageService: SsUploadFileStorageService,
               private _loaderService: SsLoaderService,
@@ -62,11 +64,11 @@ export class InformationFormComponent implements OnInit, OnDestroy {
       ?.setValue('');
     this.form.markAsDirty();
   }
-
+  
   private _initForm(): void {
     this.form?.addControl('name', this._formBuilder.control(this.item.name, [Validators.required, Validators.min(1), Validators.max(40)]));
     this.form?.addControl('description', this._formBuilder.control(this.item.description, [Validators.required, Validators.min(1), Validators.max(200)]));
-    this.form?.addControl('content', this._formBuilder.control(this.item.content, [Validators.required]));
+    this.form?.addControl('content', this._formBuilder.control(this.item.content));
     this.form?.addControl('coverUrl', this._formBuilder.control(this.item.coverUrl));
   }
 }

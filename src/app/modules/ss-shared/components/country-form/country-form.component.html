@@ -1,0 +1,36 @@
+<article [formGroup]="form" class="sm:p-3">
+  <section class="w-full">
+    <h4>
+      País
+    </h4>
+
+    <div class="w-full mt-2 mb-3 ss-txt--black-lighten text-sm">
+      Elige un país, así los elementos que administras podrán asociarse a una ubicación.
+    </div>
+
+    <section *ngIf="categories">
+      <p-multiSelect class="w-full" [options]="categories" optionLabel="name" display="chip" optionValue="id"
+        placeholder="Selecciona un país" (onChange)="markAsTouched(); getTags()">
+      </p-multiSelect>
+    </section>
+  </section>
+
+  <section class="w-full mt-5">
+    <h4>
+      Ciudad
+    </h4>
+
+    <section *ngIf="tags">
+      <p-multiSelect [options]="tags" class="w-full" optionLabel="name" display="chip" optionValue="id"
+        placeholder="Selecciona una ciudad">
+      </p-multiSelect>
+    </section>
+  </section>
+
+  <section *ngIf="userDataModel?.role === 'ADMIN'" class="flex justify-content-end mt-5">
+    <button class="ss-button fadein" [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
+      [disabled]="form.invalid || !form.touched">
+      Guardar cambios
+    </button>
+  </section>
+</article>

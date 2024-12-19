@@ -1,82 +1,98 @@
 <form [formGroup]="form">
-  <p-accordion class="ss-accordion-information">
-    <p-accordionTab [selected]="true">
-      <ng-template pTemplate="header">
-        Básico
-      </ng-template>
+  <section class="md:p-3">
+    <section class="w-full flex flex-column sm:flex-row justify-content-between gap-3">
+      <section class="w-full xl:w-7">
+        <div class="font-semibold mb-2">
+          Nombre
+        </div>
 
-      <ng-template pTemplate="body">
-        <section class="px-3">
-          <section class="w-full flex flex-column sm:flex-row justify-content-between gap-3">
-            <section class="w-full xl:w-7">
-              <div class="font-semibold mb-2">
-                Nombre
-              </div>
+        <input class="w-full xl:w-11" type="text" pInputText placeholder="Ingresa un nombre" formControlName="name" />
 
-              <input class="w-full xl:w-11" type="text" pInputText placeholder="Escribe un nombre para el producto..."
-                formControlName="name" />
+        <div class="mt-3 md:mt-6 mb-2 font-semibold">
+          Breve descripción
+        </div>
 
-              <div class="mt-3 md:mt-6 mb-2 font-semibold">
-                Breve descripción
-              </div>
+        <textarea class="w-full xl:w-11 max-h-8rem" pInputTextarea formControlName="description"
+          placeholder="Ingresa el texto aquí..." [rows]="5"></textarea>
+      </section>
 
-              <textarea class="w-full xl:w-11 max-h-8rem" pInputTextarea formControlName="description"
-                placeholder="Escribe la descripción del producto aquí..." [rows]="5"></textarea>
-            </section>
+      <section class="w-full xl:w-5 flex flex-column md:align-items-end">
+        <section class="w-full">
+          <div class="font-semibold mb-2">
+            Foto de portada
+          </div>
 
-            <section class="w-full xl:w-4">
-              <div class="font-semibold mb-2">
-                Foto de portada
-              </div>
+          <section *ngIf="!item?.coverUrl"
+            class="w-full py-8 mt-2 xl:mt-0 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2">
+            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" (onSelect)="uploadPhoto($event)">
+            </p-fileUpload>
 
-              <section *ngIf="!item?.coverUrl"
-                class="w-full py-8 mt-2 xl:mt-0 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2">
-                <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" (onSelect)="uploadPhoto($event)">
-                </p-fileUpload>
-
-                <span class="ss-txt--black-lighten">
-                  Subir imágen
-                </span>
-              </section>
-
-              <section *ngIf="item?.coverUrl"
-                class="w-fit p-2 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2 relative">
-                <img class="w-auto h-auto max-h-15rem max-w-full" [src]="item?.coverUrl" alt="Product Photo">
-
-                <section class="absolute top-0 right-0 cursor-pointer mr-1 mt-1 ss-bg--white flex justify-content-center align-items-center border-circle"
-                         (click)="removeImage()">
-                  <i class="pi pi-times-circle text-2xl ss-txt--red">
-                  </i>
-                </section>
-              </section>
-            </section>
+            <span class="ss-txt--black-lighten">
+              Subir imágen
+            </span>
           </section>
 
-          <section>
-            <div class="my-3 font-semibold">
-              Contenido
-            </div>
+          <section *ngIf="item?.coverUrl"
+            class="w-fit p-2 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2 relative">
+            <img class="w-auto h-auto max-h-15rem max-w-full" [src]="item?.coverUrl" alt="Product Photo">
 
-            <p-editor [formControlName]="'content'" [style]="{'height':'15rem'}" placeholder="Ingresa datos aquí, ejm: 
-            Fecha de creación
-            Historia
-            Dimensiones: 54.5mm x 35mm x 11mm
-            Datos curiosos , etc."></p-editor>
+            <section
+              class="absolute top-0 right-0 cursor-pointer mr-1 mt-1 ss-bg--white flex justify-content-center align-items-center border-circle"
+              (click)="removeImage()">
+              <i class="pi pi-times-circle text-3xl ss-txt--red">
+              </i>
+            </section>
           </section>
         </section>
-      </ng-template>
-    </p-accordionTab>
+      </section>
+    </section>
 
-    <p-accordionTab>
-      <ng-template pTemplate="header">
-        Contacto
-      </ng-template>
+    <section>
+      <div class="mt-3 mb-2 font-semibold">
+        Contenido
+      </div>
 
-      <ng-template pTemplate="body">
-        <section class="px-3">
-          asd
-        </section>
-      </ng-template>
-    </p-accordionTab>
-  </p-accordion>
+      <p-editor [formControlName]="'content'" [style]="{'height':'15rem'}" placeholder="Ingresa datos aquí, ejm: 
+      - Fecha de creación
+      - Historia
+      - Dimensiones: 54.5mm x 35mm x 11mm
+      - Datos curiosos , etc.">
+        <ng-template pTemplate="header">
+          <span class="ql-formats">
+            <!-- Headers -->
+            <select class="ql-header">
+              <option value="1">Heading 1</option>
+              <option value="2">Heading 2</option>
+              <option value="3">Heading 3</option>
+              <option selected>Normal</option>
+            </select>
+
+            <!-- Bold, Italic, Underline, Strike -->
+            <button type="button" class="ql-bold" aria-label="Bold"></button>
+            <button type="button" class="ql-italic" aria-label="Italic"></button>
+            <button type="button" class="ql-underline" aria-label="Underline"></button>
+            <button type="button" class="ql-strike" aria-label="Strike"></button>
+
+            <!-- Blockquote -->
+            <button type="button" class="ql-blockquote" aria-label="Blockquote"></button>
+
+            <!-- Lists -->
+            <button type="button" class="ql-list" value="ordered" aria-label="Ordered List"></button>
+            <button type="button" class="ql-list" value="bullet" aria-label="Bullet List"></button>
+
+            <!-- Color and Background -->
+            <select class="ql-color"></select>
+            <select class="ql-background"></select>
+
+            <!-- Link and Image -->
+            <button type="button" class="ql-link" aria-label="Link"></button>
+            <!-- <button type="button" class="ql-image" aria-label="Image"></button> -->
+
+            <!-- Clean Formatting -->
+            <button type="button" class="ql-clean" aria-label="Clean"></button>
+          </span>
+        </ng-template>
+      </p-editor>
+    </section>
+  </section>
 </form>

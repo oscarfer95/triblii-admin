@@ -5,18 +5,12 @@
     </h4>
 
     <div class="w-full mt-2 mb-3 ss-txt--black-lighten text-sm">
-      Asocia tu producto a una o más categorías, así tus clientes podrán encontrar rapidamente lo que buscan
+      Asocia una o más categorías, así las personas podrán encontrar rápidamente lo que buscan.
     </div>
 
     <section *ngIf="categories">
-      <p-multiSelect class="w-full"
-                     [options]="categories"
-                     optionLabel="name"
-                     display="chip"
-                     optionValue="id"
-                     formControlName="categories"
-                     placeholder="Selecciona categorías"
-                     (onChange)="markAsTouched(); getTags()">
+      <p-multiSelect class="w-full" [options]="categories" optionLabel="name" display="chip" optionValue="id"
+        formControlName="categories" placeholder="Selecciona categorías" (onChange)="markAsTouched(); getTags()">
       </p-multiSelect>
     </section>
   </section>
@@ -27,23 +21,17 @@
     </h4>
 
     <div class="w-full mt-2 mb-3 ss-txt--black-lighten text-sm">
-      Asocia tu producto a uno o más tags, estos sirven para segmentar aun más tu producto, por ejemplo tu producto es para/un: hombre, mujer, repuesto, accesorio, deportivo, etc.
+      Asocia uno o más tags, estos sirven para segmentar aun más la búsqueda.
     </div>
 
     <section *ngIf="tags">
-      <p-multiSelect [options]="tags"
-                     class="w-full"
-                     optionLabel="name"
-                     display="chip"
-                     optionValue="id"
-                     formControlName="tags"
-                     placeholder="Selecciona tags">
+      <p-multiSelect [options]="tags" class="w-full" optionLabel="name" display="chip" optionValue="id"
+        formControlName="tags" placeholder="Selecciona tags">
       </p-multiSelect>
     </section>
   </section>
 
-  <p-divider class="p-divider--grey"
-             styleClass="my-5">
+  <p-divider class="p-divider--grey" styleClass="my-5">
   </p-divider>
 
   <section class="w-full flex flex-column gap-3 md:gap-2">
@@ -62,8 +50,7 @@
     </section>
   </section>
 
-  <p-divider class="p-divider--grey"
-             styleClass="my-5">
+  <p-divider class="p-divider--grey" styleClass="my-5">
   </p-divider>
 
   <section class="w-full flex flex-column gap-3 md:gap-2">
@@ -75,15 +62,25 @@
         <i *ngIf="form.get('available').value" class="pi pi-check text-sm ss-txt--green mr-2">
         </i>
 
-        Activo
+        <span *ngIf="form.get('available').value">
+          Activo
+        </span>        
+        
+        <span *ngIf="!form.get('available').value">
+          Inactivo
+        </span>
       </h4>
 
       <p-inputSwitch formControlName="available">
       </p-inputSwitch>
     </section>
 
-    <section class="w-full ss-txt--black-lighten text-sm">
+    <section *ngIf="form.get('available').value" class="w-full ss-txt--black-lighten text-sm fadein animation-duration-500">
       Cuando la opción está activa, el lugar aparecerá en la plataforma.
+    </section>    
+    
+    <section *ngIf="!form.get('available').value" class="w-full ss-txt--black-lighten text-sm fadein animation-duration-500">
+      Cuando la opción está desactivada, el lugar <strong>NO</strong> aparecerá en la plataforma.
     </section>
   </section>
 </article>

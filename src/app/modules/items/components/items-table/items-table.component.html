@@ -5,9 +5,9 @@
     [paginator]="true" [rows]="25"
     [responsiveLayout]="'scroll'">
     <ng-template pTemplate="caption">
-      <section class="w-full flex flex-wrap-reverse justify-content-between gap-3">
-        <section class="w-full sm:w-auto">
-          <div *ngIf="itemList.length > 0" class="p-input-icon-left w-full">
+      <section class="w-full flex justify-content-between gap-3">
+        <section class="w-full">
+          <div *ngIf="itemList.length > 0 && userData.actions.read" class="p-input-icon-left w-full">
             <i class="pi pi-search"></i>
 
             <input class="bg-transparent w-full md:w-20rem" pInputText type="text" placeholder="Buscar por nombre"
@@ -15,7 +15,7 @@
           </div>
         </section>
 
-        <section *ngIf="userData.actions.create" class="w-full sm:w-auto flex align-items-center justify-content-end">
+        <section *ngIf="userData.actions.create" class="w-fit flex align-items-center justify-content-end">
           <button class="ss-button -mr-2 ss-button--small ss-button--without-shadow ss-button--without-animation"
             (click)="addItem()">
             <i class="pi pi-plus text-sm mr-2"></i>

@@ -17,7 +17,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemsRouterModule } from './router/items-router-module';
 import { SsSharedModule } from '../ss-shared/ss-shared.module';
 import { ItemsPage } from './pages/items-page/items.page';
-import { AttractionDetail } from './pages/attraction-detail/attraction-detail.page';
 import { GalleryFormComponent } from './components/gallery-form/gallery-form.component';
 import { InformationFormComponent } from './components/information-form/information-form.component';
 import { OptionsFormComponent } from './components/options-form/options-form.component';
@@ -27,14 +26,13 @@ import { LocationFormComponent } from './components/map-form/location-form/locat
 import { LocationMapComponent } from './components/map-form/location-map/location-map.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { AccordionModule } from 'primeng/accordion';
-import { RestaurantDetail } from './pages/restaurant-detail/restaurant-detail.page';
+import { ItemDetail } from './pages/item-detail/item-detail.page';
 
 @NgModule({
   declarations: [
     GalleryFormComponent,
     ItemsPage,
-    AttractionDetail,
-    RestaurantDetail,
+    ItemDetail,
     ItemsTableComponent,
     InformationFormComponent,
     OptionsFormComponent,

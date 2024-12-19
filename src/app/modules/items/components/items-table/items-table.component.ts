@@ -132,7 +132,7 @@ export class ItemsTableComponent implements OnInit {
 
   public addItem(): void {
     if (this.itemList.length >= 50) {
-      // TODO: Cuando se agreguen suscripciones cambiar aqui el control de limite de productos
+      // TODO: Cuando se agreguen suscripciones cambiar aqui el control de limite de items
       this._toastService.add({
         severity: 'error',
         summary: 'Límite alzanzado',

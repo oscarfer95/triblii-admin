@@ -12,6 +12,7 @@
   background: rgba(var(--#{$app-prefix}-color-primary-rgb), .1) !important;
   color: var(--#{$app-prefix}-color-primary);
   border-bottom: 4px solid var(--#{$app-prefix}-color-primary);
+  border-top-left-radius: .5rem;
 }
 
 .p-tabmenu .p-tabmenu-nav-btn.p-link {
