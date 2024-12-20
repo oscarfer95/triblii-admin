@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
-import { CategoriesRepositoryService } from 'src/app/modules/ss-shared/services/ss-category.repository-service';
-import { SsTagRepositoryService } from 'src/app/modules/ss-shared/services/ss-tag.repository-service';
 import { ConfigList } from 'src/framework/repository/config-list.model';
+import { LocationService } from '../../services/ss-location.repository-service';
 
 @Component({
   selector: 'country-form',
@@ -12,32 +11,26 @@ import { ConfigList } from 'src/framework/repository/config-list.model';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CountryFormComponent implements OnInit, OnDestroy {
-
-  @Input()
-  public form!: FormGroup;
+export class CountryFormComponent implements OnInit {
 
   @Input()
   public userDataModel!: any;
 
-  public categories: any[];
-  public tags: any[];
+  public form!: FormGroup;
+  public countries: any[];
+  public cities: any[];
 
-  constructor(private _categoryRepositoryService: CategoriesRepositoryService,
-    private _tagRepositoryService: SsTagRepositoryService,
+  constructor(private _locationRepositoryService: LocationService,
     private _formBuilder: FormBuilder,
     private _cdr: ChangeDetectorRef) {
-    this.categories = [];
-    this.tags = [];
+    this.form = this._formBuilder.group({});
+    this.countries = [];
+    this.cities = [];
   }
 
   ngOnInit(): void {
-    // this._initForm();
-    // this._getCategories();
-    // this.getTags();
-  }
-
-  ngOnDestroy(): void {
+    this._initForm();
+    this._getCountries();
   }
 
   public markAsTouched(): void {
@@ -45,36 +38,11 @@ export class CountryFormComponent implements OnInit, OnDestroy {
   }
 
   private _initForm(): void {
-    this.form.addControl('categories', this._formBuilder.control(this.userDataModel?.entity, [Validators.required]));
-    this.form.addControl('tags', this._formBuilder.control(this.userDataModel?.entity, [Validators.required]));
+    this.form.addControl('countryIds', this._formBuilder.control(this.userDataModel?.entity?.countryId, [Validators.required]));
+    this.form.addControl('cityIds', this._formBuilder.control(this.userDataModel?.entity, [Validators.required]));
   }
 
-  private _getCategories(): void {
-    const configList: ConfigList = {
-      orderByConfigList: [
-        {
-          field: 'name',
-          direction: 'asc'
-        }
-      ],
-      // queryList: [
-      //   {
-      //     field: 'type',
-      //     operation: '==',
-      //     value: this.moduleId
-      //   }
-      // ]
-    };
-
-    firstValueFrom(this._categoryRepositoryService.getByQuerys(configList))
-      .then((categories: any[]) => {
-        this.categories = categories;
-
-        this._cdr.markForCheck();
-      });
-  }
-
-  public getTags(): void {
+  private _getCountries(): void {
     const configList: ConfigList = {
       orderByConfigList: [
         {
@@ -84,18 +52,41 @@ export class CountryFormComponent implements OnInit, OnDestroy {
       ],
       queryList: [
         {
-          field: 'categoryId',
-          operation: 'in',
-          value: this.form.get('categories')?.value.length > 0
-            ? [...this.form.get('categories')?.value]
-            : ['none']
+          field: 'parentId',
+          operation: '==',
+          value: ''
         }
       ]
     };
 
-    firstValueFrom(this._tagRepositoryService.getByQuerys(configList))
-      .then((tags: any[]) => {
-        this.tags = tags;
+    firstValueFrom(this._locationRepositoryService.getByQuerys(configList))
+      .then((countries: any[]) => {
+        this.countries = countries;
+
+        this._cdr.markForCheck();
+      });
+  }
+
+  public getCities(): void {
+    const configList: ConfigList = {
+      orderByConfigList: [
+        {
+          field: 'name',
+          direction: 'asc'
+        }
+      ],
+      queryList: [
+        {
+          field: 'parentId',
+          operation: 'in',
+          value: this.form.get('countryIds')?.value
+        }
+      ]
+    };
+
+    firstValueFrom(this._locationRepositoryService.getByQuerys(configList))
+      .then((cities: any[]) => {
+        this.cities = cities;
 
         this._cdr.markForCheck();
       });

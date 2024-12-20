@@ -8,9 +8,9 @@
       Elige un país, así los elementos que administras podrán asociarse a una ubicación.
     </div>
 
-    <section *ngIf="categories">
-      <p-multiSelect class="w-full" [options]="categories" optionLabel="name" display="chip" optionValue="id"
-        placeholder="Selecciona un país" (onChange)="markAsTouched(); getTags()">
+    <section>
+      <p-multiSelect [filter]="true" class="w-full" [options]="countries" optionLabel="name" display="chip" optionValue="id"
+        formControlName="countryIds" placeholder="Selecciona un país" [selectionLimit]="1" (onChange)="markAsTouched(); getCities()">
       </p-multiSelect>
     </section>
   </section>
@@ -20,14 +20,14 @@
       Ciudad
     </h4>
 
-    <section *ngIf="tags">
-      <p-multiSelect [options]="tags" class="w-full" optionLabel="name" display="chip" optionValue="id"
+    <section *ngIf="cities">
+      <p-multiSelect [options]="cities" class="w-full" optionLabel="name" display="chip" optionValue="id"
         placeholder="Selecciona una ciudad">
       </p-multiSelect>
     </section>
   </section>
 
-  <section *ngIf="userDataModel?.role === 'ADMIN'" class="flex justify-content-end mt-5">
+  <section *ngIf="userDataModel?.role === 'SUPERADMIN'" class="flex justify-content-end mt-5">
     <button class="ss-button fadein" [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
       [disabled]="form.invalid || !form.touched">
       Guardar cambios

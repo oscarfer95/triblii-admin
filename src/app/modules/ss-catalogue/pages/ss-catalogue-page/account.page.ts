@@ -1,22 +1,21 @@
-import {FileUpload} from 'primeng/fileupload';
-import {MenuItem} from 'primeng/api';
+import { FileUpload } from 'primeng/fileupload';
+import { MenuItem } from 'primeng/api';
 
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {firstValueFrom, Subject, takeUntil} from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
-import {SsCatalogueRepositoryService} from 'src/app/modules/ss-shared/services/ss-catalogues.repository-service';
-import {SsLoaderService} from 'src/app/modules/ss-shared/services/ss-loader.service';
-import {SsUploadFileStorageService} from 'src/app/modules/ss-shared/services/ss-upload-file-storage.service';
-import {UserDataModelService} from 'src/app/modules/ss-auth/storage/user-data-model.service';
+import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { SsUploadFileStorageService } from 'src/app/modules/ss-shared/services/ss-upload-file-storage.service';
+import { UserDataModelService } from 'src/app/modules/ss-auth/storage/user-data-model.service';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 import { EntitiesRepositoryService } from 'src/app/modules/ss-shared/services/entities.repository-service';
 
 @Component({
-  selector: 'ss-catalogue-page',
-  templateUrl: './ss-catalogue-page.page.html',
+  selector: 'account-page',
+  templateUrl: './account.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SsCataloguePage implements OnInit, OnDestroy {
+export class AccountPage implements OnInit, OnDestroy {
 
   @ViewChild('inputPhoto')
   private _inputPhoto!: FileUpload;
@@ -29,15 +28,15 @@ export class SsCataloguePage implements OnInit, OnDestroy {
   private _unsubscribe: Subject<void>;
 
   constructor(private _entitiesRepositoryService: EntitiesRepositoryService,
-              private _ssUploadFileStorageService: SsUploadFileStorageService,
-              private _userDataModelService: UserDataModelService,
-              private _loaderService: SsLoaderService,
-              private _cdr: ChangeDetectorRef) {
+    private _ssUploadFileStorageService: SsUploadFileStorageService,
+    private _userDataModelService: UserDataModelService,
+    private _loaderService: SsLoaderService,
+    private _cdr: ChangeDetectorRef) {
     this.tabItems = [
-      {label: 'Usuario', icon: 'pi pi-user'},
-      {label: 'Entidad', icon: 'pi pi-id-card'},
-      {label: 'País', icon: 'pi pi-map-marker'},
-      {label: 'Ajustes', icon: 'pi pi-cog'}
+      { label: 'Usuario', icon: 'pi pi-user' },
+      { label: 'Entidad', icon: 'pi pi-id-card' },
+      { label: 'País', icon: 'pi pi-map-marker' },
+      { label: 'Ajustes', icon: 'pi pi-cog' }
     ];
 
     this.activeTab = this.tabItems[0];
@@ -70,11 +69,11 @@ export class SsCataloguePage implements OnInit, OnDestroy {
 
       case 'Ajustes':
         this.activeTab = this.tabItems[3];
-          break;
+        break;
     }
   }
 
-  public async updateCatalogueList(): Promise<any> {
+  public async updateEntity(): Promise<any> {
     this.userDataModel.entity = await this._getEntity();
 
     this._userDataModelService.userDataModel = this.userDataModel;
@@ -99,14 +98,6 @@ export class SsCataloguePage implements OnInit, OnDestroy {
       });
   }
 
-  public getPageLink(): string {
-    if (this.userDataModel.catalogueList[0]?.slug) {
-      return 'https://shoppystorebo.web.app/id/' + this.userDataModel.catalogueList[0]?.id;
-    } else {
-      return  '';
-    }
-  }
-
   public uploadPhoto(event: any): void {
     const files: FileList = <FileList>(event.currentFiles);
     const file: File = files[0];
@@ -122,12 +113,12 @@ export class SsCataloguePage implements OnInit, OnDestroy {
   }
 
   public updateEntityLogoUrl(photoUrl: string): void {
-    const entity = {photoUrl: photoUrl};
+    const entity = { photoUrl: photoUrl };
 
     firstValueFrom(this._entitiesRepositoryService.update(entity, this.userDataModel.entity.id))
       .then(() => {
         this._userDataModelService.userDataModel.entity.photoUrl = photoUrl;
-        this.updateCatalogueList();
+        this.updateEntity();
         this._inputPhoto.clear();
       });
   }
@@ -142,6 +133,10 @@ export class SsCataloguePage implements OnInit, OnDestroy {
 
       case 'MAINTAINER':
         roleString = 'Mantenedor';
+        break;
+
+      case 'SUPERADMIN':
+        roleString = 'Super Administrador';
         break;
     }
 

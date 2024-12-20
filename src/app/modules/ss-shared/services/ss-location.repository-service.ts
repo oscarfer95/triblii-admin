@@ -15,9 +15,9 @@ export class LocationService extends FirebaseRepository<any> {
   }
 
   public getCollectionName(): string {
-    return 'location';
+    return 'locations';
   }
-  
+
   public getByQuery(configList: ConfigList): Observable<any> {
     return this.getByQuerys(configList);
   }
