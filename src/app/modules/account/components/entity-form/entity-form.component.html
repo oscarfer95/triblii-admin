@@ -1,0 +1,44 @@
+<article *ngIf="form" [formGroup]="form" class="account flex flex-column relative">
+  <section class="flex flex-column gap-5">
+    <section>
+      <div class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+        <i class="pi pi-id-card mr-3 ss-txt--primary text-xl"></i> Nombre
+      </div>
+
+      <input type="text" pInputText class="w-full md:w-9" placeholder="Ejm: TarjetaTech SRL."
+             formControlName="name"
+             [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}"/>
+    </section>
+
+    <section>
+      <div class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+        <i class="pi pi-align-left mr-3 ss-txt--primary text-xl"></i> Descripción
+      </div>
+
+      <textarea type="text" class="w-full md:w-9 max-h-5rem" pInputTextarea formControlName="description"
+        placeholder="Escribe una breve descripción..." [rows]="2" 
+        [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}"></textarea>
+    </section>
+
+    <section>
+      <div class="font-semibold flex align-items-center ss-txt--black flex align-items-center">
+        <i class="pi pi-whatsapp mr-2 ss-txt--primary text-xl"></i> Número de celular
+      </div>
+
+      <ngx-intl-tel-input [cssClass]="'custom-ngx-input'" [preferredCountries]="[CountryISO.Bolivia]"
+        [enableAutoCountrySelect]="true" [enablePlaceholder]="false" [customPlaceholder]="'Ingresa tu número'"
+        [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+        [phoneValidation]="true" formControlName="phone"
+        [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}">
+      </ngx-intl-tel-input>
+    </section>
+  </section>
+
+  <section *ngIf="userDataModel.role === 'ADMIN'"
+           class="flex justify-content-end mt-5">
+    <button class="ss-button fadein" [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
+      [disabled]="form.invalid || !form.touched" (click)="saveForm()">
+      Guardar cambios
+    </button>
+  </section>
+</article>

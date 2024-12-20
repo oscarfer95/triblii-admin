@@ -4,7 +4,7 @@ import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { AttractionsRepositoryService } from 'src/app/modules/ss-shared/services/attractions.repository-service';
 import { ActivatedRoute } from '@angular/router';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
-import { UserDataModelService } from 'src/app/modules/ss-auth/storage/user-data-model.service';
+import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { getMenuItemById } from 'src/app/modules/ss-shared/utils/get-side-bar-options.utils';
 import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
 import { ConfigList } from 'src/framework/repository/config-list.model';

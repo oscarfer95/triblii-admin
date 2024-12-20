@@ -7,10 +7,10 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit
 import {firstValueFrom, Subject, takeUntil} from 'rxjs';
 
 import {SsBannerRepositoryService} from 'src/app/modules/ss-shared/services/ss-banner.repository-service';
-import {SsUserDataModel} from 'src/app/modules/ss-shared/models/ss-user-data-model.model';
-import {SsUserDataModelService} from 'src/app/modules/ss-auth/storage/ss-user-data-model.service';
 import { Router } from '@angular/router';
 import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
+import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 
 @Component({
   selector: 'ss-banners-page',
@@ -27,10 +27,10 @@ export class SsBannersPage implements OnInit, OnDestroy {
 
   private _unsubscribe: Subject<void>;
 
-  public userDataModel!: SsUserDataModel;
+  public userDataModel!: UserDataModel;
 
   constructor(private _bannerRepositoryService: SsBannerRepositoryService,
-              private _userDataModelService: SsUserDataModelService,
+              private _userDataModelService: UserDataModelService,
               private _confirmationService: ConfirmationService,
               private _loaderService: SsLoaderService,
               private _toastService: MessageService,
@@ -143,14 +143,14 @@ export class SsBannersPage implements OnInit, OnDestroy {
   }
 
   private _getBanners(): void {
-    if (this.userDataModel.catalogueList.length > 0) {
-      firstValueFrom(this._bannerRepositoryService.getByCatalogueId(this.userDataModel.catalogueList[0].id))
-        .then((banners: any[]) => {
-          this.bannerList = this._buildBannerList(banners);
+    // if (this.userDataModel.catalogueList.length > 0) {
+    //   firstValueFrom(this._bannerRepositoryService.getByCatalogueId(this.userDataModel.catalogueList[0].id))
+    //     .then((banners: any[]) => {
+    //       this.bannerList = this._buildBannerList(banners);
 
-          this._cdr.markForCheck();
-        });
-      }
+    //       this._cdr.markForCheck();
+    //     });
+    //   }
   }
 
   private _buildBannerList(products: any []): any [] {
@@ -168,7 +168,7 @@ export class SsBannersPage implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this._unsubscribe)
       )
-      .subscribe((userDataModel: SsUserDataModel) => {
+      .subscribe((userDataModel: UserDataModel) => {
         if (userDataModel) {
           this.userDataModel = userDataModel;
 

@@ -1,0 +1,56 @@
+import { AccordionModule } from 'primeng/accordion';
+import { CardModule } from 'primeng/card';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { DividerModule } from 'primeng/divider';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { ChipModule } from 'primeng/chip';
+
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+
+import { AccountRouterModule } from './router/account-router-module';
+import { AccountPage } from './pages/account-page/account.page';
+import { SsSharedModule } from '../ss-shared/ss-shared.module';
+import { EntityFormComponent } from './components/entity-form/entity-form.component';
+import { ColorPickerComponent } from './components/color-picker/color-picker.component';
+import { DangerZoneComponent } from './components/danger-zone/danger-zone.component';
+import { ResetPasswordFormComponent } from './components/reset-password-form/reset-password-form.component';
+import { EntitySettingsFormComponent } from './components/entity-settings-form/entity-settings-form.component';
+
+@NgModule({
+  declarations: [
+    AccountPage,
+    DangerZoneComponent,
+    ColorPickerComponent,
+    EntityFormComponent,
+    ResetPasswordFormComponent,
+    EntitySettingsFormComponent
+  ],
+  imports: [
+    AccordionModule,
+    CommonModule,
+    AccountRouterModule,
+    CardModule,
+    DividerModule,
+    TabMenuModule,
+    ColorPickerModule,
+    FormsModule,
+    InputTextModule,
+    InputSwitchModule,
+    ReactiveFormsModule,
+    MultiSelectModule,
+    NgxIntlTelInputModule,
+    SsSharedModule,
+    FileUploadModule,
+    HttpClientModule,
+    ChipModule
+  ]
+})
+export class AccountModule { }

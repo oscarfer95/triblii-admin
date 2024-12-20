@@ -11,7 +11,7 @@ export const SS_MAIN_ROUTES: Routes = [
   },
   {
     path: 'public',
-    loadChildren: () => import('../modules/ss-auth/ss-auth.module')
+    loadChildren: () => import('../modules/auth/ss-auth.module')
       .then(m => m.SsAuthModule)
   },
   {

@@ -21,8 +21,8 @@ export const TT_DASHBOARD_ROUTES: Routes = [
       },
       {
         path: 'account',
-        loadChildren: () => import('../../ss-catalogue/ss-catalogue.module')
-          .then((module: any) => module.SsCatalogueModule)
+        loadChildren: () => import('../../account/account.module')
+          .then((module: any) => module.AccountModule)
       },
       {
         path: 'banners',
@@ -31,7 +31,7 @@ export const TT_DASHBOARD_ROUTES: Routes = [
       },
       {
         path: 'stats',
-        loadChildren: () => import('../../ss-statistics/ss-statistics.module')
+        loadChildren: () => import('../../statistics/statistics.module')
           .then((module: any) => module.SsStatisticsModule)
       },
       {

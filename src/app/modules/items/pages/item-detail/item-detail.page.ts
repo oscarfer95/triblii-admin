@@ -10,7 +10,7 @@ import { SsDeleteManyFilesStorageService } from '../../../ss-shared/services/ss-
 import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
 import CanDeactivateComponent from '../../../ss-shared/models/router/can-deactivate-component';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
-import { UserDataModelService } from 'src/app/modules/ss-auth/storage/user-data-model.service';
+import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { RepositoryFactoryService } from 'src/app/modules/ss-shared/services/repository-factory.service';
 import { getTabItemsById } from 'src/app/modules/ss-shared/utils/tabs-config';
 import { createEmptyItemForm } from 'src/app/modules/ss-shared/utils/item-forms-config';
@@ -91,7 +91,7 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
   }
 
   public saveForm(): void {
-    // this._loaderService.show = true;
+    this._loaderService.show = true;
 
     const subFormNames = Object.keys(this.itemForm.controls);
     const formValue: any = {};
@@ -128,11 +128,11 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     if (item.id) {
       delete item.id;
       item.entitiesId.includes(this.userDataModel.entity.id) ? null : item.entitiesId.push(this.userDataModel.entity.id);
-      // this._editItem(item);
+      this._editItem(item);
       console.log(item);
     } else {
       item.entitiesId.push(this.userDataModel.entity.id);
-      // this._createItem(item);
+      this._createItem(item);
       console.log(item);
     }
   }

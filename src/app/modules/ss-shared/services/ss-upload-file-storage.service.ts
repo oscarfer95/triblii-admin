@@ -1,12 +1,11 @@
-import {AngularFireStorage} from '@angular/fire/compat/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
-import {Injectable, OnDestroy} from '@angular/core';
-import {finalize, firstValueFrom, Observable, Subject, takeUntil} from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { finalize, firstValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 
-import {SsUploadFileService} from '../components/ss-file-input/services/ss-upload-file.service';
-import {SsUserDataModelService} from '../../ss-auth/storage/ss-user-data-model.service';
-import {NumbersHelper} from '../helpers/numbers.helper';
-import { UserDataModelService } from '../../ss-auth/storage/user-data-model.service';
+import { SsUploadFileService } from '../components/ss-file-input/services/ss-upload-file.service';
+import { NumbersHelper } from '../helpers/numbers.helper';
+import { UserDataModelService } from '../../auth/storage/user-data-model.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +19,7 @@ export class SsUploadFileStorageService extends SsUploadFileService implements O
   private readonly _FILE_NAME_PREFIX = 'SS';
 
   constructor(private _userDataModelService: UserDataModelService,
-              private _angularFireStorage: AngularFireStorage) {
+    private _angularFireStorage: AngularFireStorage) {
     super();
 
     this._uploadPercent$ = new Subject<number>();
@@ -52,11 +51,11 @@ export class SsUploadFileStorageService extends SsUploadFileService implements O
       .pipe(
         takeUntil(this._unsubscribe),
         finalize(() => {
-            firstValueFrom(fileRef.getDownloadURL())
-              .then((fileUrl: string) => {
-                this._dataResponse$.next(fileUrl);
-              });
-          }
+          firstValueFrom(fileRef.getDownloadURL())
+            .then((fileUrl: string) => {
+              this._dataResponse$.next(fileUrl);
+            });
+        }
         )
       )
       .subscribe();

@@ -8,29 +8,35 @@
       Elige un país, así los elementos que administras podrán asociarse a una ubicación.
     </div>
 
-    <section>
-      <p-multiSelect [filter]="true" class="w-full" [options]="countries" optionLabel="name" display="chip" optionValue="id"
-        formControlName="countryIds" placeholder="Selecciona un país" [selectionLimit]="1" (onChange)="markAsTouched(); getCities()">
+    <section *ngIf="countries?.length > 0">
+      <p-multiSelect [filter]="true" class="w-full" [options]="countries" optionLabel="name" display="chip"
+        optionValue="id" formControlName="countryIds" placeholder="Selecciona un país" [selectionLimit]="1"
+        (onChange)="markAsTouched()">
       </p-multiSelect>
+    </section>
+
+    <section *ngIf="!countries">
+      <ng-container *ngTemplateOutlet="inputLoader"></ng-container>
     </section>
   </section>
 
   <section class="w-full mt-5">
     <h4>
-      Ciudad
+      Ciudad <span class="text-sm ss-txt--grey font-normal">(Opcional)</span>
     </h4>
 
-    <section *ngIf="cities">
-      <p-multiSelect [options]="cities" class="w-full" optionLabel="name" display="chip" optionValue="id"
-        placeholder="Selecciona una ciudad">
+    <section *ngIf="cities" class="mt-2">
+      <p-multiSelect [filter]="true" class="w-full" [options]="cities" optionLabel="name" display="chip"
+        optionValue="id" formControlName="cityIds" placeholder="Selecciona una ciudad">
       </p-multiSelect>
     </section>
-  </section>
 
-  <section *ngIf="userDataModel?.role === 'SUPERADMIN'" class="flex justify-content-end mt-5">
-    <button class="ss-button fadein" [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
-      [disabled]="form.invalid || !form.touched">
-      Guardar cambios
-    </button>
+    <section *ngIf="!cities">
+      <ng-container *ngTemplateOutlet="inputLoader"></ng-container>
+    </section>
   </section>
 </article>
+
+<ng-template #inputLoader>
+  <i class="pi pi-spin pi-spinner ss-txt--primary text-lg mr-1 mt-2"></i>
+</ng-template>

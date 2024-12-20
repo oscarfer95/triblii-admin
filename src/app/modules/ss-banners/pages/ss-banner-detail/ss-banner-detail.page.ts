@@ -6,12 +6,12 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Location} from '@angular/common';
 import {firstValueFrom, Subject, takeUntil} from 'rxjs';
 
-import {SsUserDataModelService} from 'src/app/modules/ss-auth/storage/ss-user-data-model.service';
-import {SsUserDataModel} from 'src/app/modules/ss-shared/models/ss-user-data-model.model';
 import {SsBannerRepositoryService} from 'src/app/modules/ss-shared/services/ss-banner.repository-service';
 import {SsBanner} from 'src/app/modules/ss-shared/models/ss-banner.model';
 import {BannerResponse} from 'src/app/modules/ss-shared/services/api/responses/banner.response';
 import {SsLoaderService} from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
+import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 
 @Component({
   selector: 'ss-banner-detail',
@@ -24,12 +24,12 @@ export class SsBannerDetail implements OnInit, OnDestroy {
 
   public bannerForm!: FormGroup;
 
-  public userDataModel!: SsUserDataModel;
+  public userDataModel!: UserDataModel;
 
   private _unsubscribe: Subject<void>;
 
   constructor(private _bannersRepositoryService: SsBannerRepositoryService,
-              private _userDataModelService: SsUserDataModelService,
+              private _userDataModelService: UserDataModelService,
               private _activatedRoute: ActivatedRoute,
               private _loaderService: SsLoaderService,
               private _toastService: MessageService,
@@ -82,7 +82,7 @@ export class SsBannerDetail implements OnInit, OnDestroy {
         console.error(error);
       });
     } else {
-      newBanner.catalogueId = this.userDataModel.catalogueList[0].id;
+      // newBanner.catalogueId = this.userDataModel.catalogueList[0].id;
 
       return firstValueFrom(this._bannersRepositoryService.create(newBanner)).then(() => {
         this._loaderService.show = false;
@@ -125,7 +125,7 @@ export class SsBannerDetail implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this._unsubscribe)
       )
-      .subscribe((userDataModel: SsUserDataModel) => {
+      .subscribe((userDataModel: UserDataModel) => {
         this.userDataModel = userDataModel;
 
         this._cdr.markForCheck();

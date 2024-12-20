@@ -2,8 +2,8 @@ import {ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, V
 import {Router} from '@angular/router';
 import {Subject, takeUntil} from 'rxjs';
 
-import {SsAuthService} from '../../../ss-auth/service/ss-auth.service';
-import {UserDataModelService} from 'src/app/modules/ss-auth/storage/user-data-model.service';
+import {SsAuthService} from '../../../auth/service/ss-auth.service';
+import {UserDataModelService} from 'src/app/modules/auth/storage/user-data-model.service';
 import {UserDataModel} from 'src/app/modules/ss-shared/models/user-data-model.model';
 import {generateMenuItems} from '../../../ss-shared/utils/get-side-bar-options.utils';
 

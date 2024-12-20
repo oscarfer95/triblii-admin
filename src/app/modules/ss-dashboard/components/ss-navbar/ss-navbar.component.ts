@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-import {SsAuthService} from 'src/app/modules/ss-auth/service/ss-auth.service';
+import {SsAuthService} from 'src/app/modules/auth/service/ss-auth.service';
 
 @Component({
   selector: 'ss-navbar',
