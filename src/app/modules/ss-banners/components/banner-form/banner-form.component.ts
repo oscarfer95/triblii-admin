@@ -5,12 +5,12 @@ import {firstValueFrom} from 'rxjs';
 import {SsUploadFileStorageService} from 'src/app/modules/ss-shared/services/ss-upload-file-storage.service';
 
 @Component({
-  selector: 'ss-banner-form',
-  templateUrl: './ss-banner-form.component.html',
+  selector: 'banner-form',
+  templateUrl: './banner-form.component.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SsBannerFormComponent implements OnInit, OnDestroy {
+export class BannerFormComponent implements OnInit, OnDestroy {
 
   @Input()
   public form!: FormGroup;

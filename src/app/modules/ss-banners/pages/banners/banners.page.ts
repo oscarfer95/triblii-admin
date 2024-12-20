@@ -13,11 +13,11 @@ import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-mod
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 
 @Component({
-  selector: 'ss-banners-page',
-  templateUrl: './ss-banners.page.html',
+  selector: 'banners-page',
+  templateUrl: './banners.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SsBannersPage implements OnInit, OnDestroy {
+export class BannersPage implements OnInit, OnDestroy {
 
   public bannerList: any[] | null;
 
