@@ -5,6 +5,7 @@ export const menuOptions: { [key: string]: { icon: string; label: string; url: s
   hotels: { icon: 'pi pi-building', label: 'Hoteles', url: 'items/hotels' },
   foods: { icon: 'bi bi-cup-straw', label: 'Comidas', url: 'items/foods' },
   events: { icon: 'pi pi-calendar', label: 'Eventos', url: 'items/events' },
+  banners: { icon: 'bi bi-tv', label: 'Banners', url: 'banners' },
   stats: { icon: 'pi pi-chart-bar', label: 'Estadísticas', url: 'stats' },
   users: { icon: 'pi pi-users', label: 'Usuarios', url: 'users' },
   locations: { icon: 'pi pi-map', label: 'Locaciones', url: 'locations' },

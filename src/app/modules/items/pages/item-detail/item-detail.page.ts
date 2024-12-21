@@ -129,11 +129,9 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
       delete item.id;
       item.entitiesId.includes(this.userDataModel.entity.id) ? null : item.entitiesId.push(this.userDataModel.entity.id);
       this._editItem(item);
-      console.log(item);
     } else {
       item.entitiesId.push(this.userDataModel.entity.id);
       this._createItem(item);
-      console.log(item);
     }
   }
 

@@ -9,7 +9,7 @@ import {ConfigList} from 'src/framework/repository/config-list.model';
 @Injectable({
   providedIn: 'root'
 })
-export class SsTagRepositoryService extends FirebaseRepository<any> {
+export class TagRepositoryService extends FirebaseRepository<any> {
   // TODO: CHANGE ANY TYPE OF FirebaseRepository< >
   constructor(private _angularFireStore: AngularFirestore) {
     super(_angularFireStore);

@@ -1,15 +1,15 @@
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Location} from '@angular/common';
-import {firstValueFrom, Subject, takeUntil} from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Location } from '@angular/common';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
-import {SsBannerRepositoryService} from 'src/app/modules/ss-shared/services/ss-banner.repository-service';
-import {SsBanner} from 'src/app/modules/ss-shared/models/ss-banner.model';
-import {BannerResponse} from 'src/app/modules/ss-shared/services/api/responses/banner.response';
-import {SsLoaderService} from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { BannerRepositoryService } from 'src/app/modules/ss-shared/services/banner.repository-service';
+import { SsBanner } from 'src/app/modules/ss-shared/models/ss-banner.model';
+import { BannerResponse } from 'src/app/modules/ss-shared/services/api/responses/banner.response';
+import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 
@@ -28,15 +28,15 @@ export class BannerDetail implements OnInit, OnDestroy {
 
   private _unsubscribe: Subject<void>;
 
-  constructor(private _bannersRepositoryService: SsBannerRepositoryService,
-              private _userDataModelService: UserDataModelService,
-              private _activatedRoute: ActivatedRoute,
-              private _loaderService: SsLoaderService,
-              private _toastService: MessageService,
-              private _formBuilder: FormBuilder,
-              private _cdr: ChangeDetectorRef,
-              private _router: Router,
-              public location: Location) {
+  constructor(private _bannersRepositoryService: BannerRepositoryService,
+    private _userDataModelService: UserDataModelService,
+    private _activatedRoute: ActivatedRoute,
+    private _loaderService: SsLoaderService,
+    private _toastService: MessageService,
+    private _formBuilder: FormBuilder,
+    private _cdr: ChangeDetectorRef,
+    private _router: Router,
+    public location: Location) {
     this.banner = null;
 
     this.bannerForm = this._formBuilder.group({});
@@ -57,7 +57,7 @@ export class BannerDetail implements OnInit, OnDestroy {
   public saveForm(): Promise<any> {
     this._loaderService.show = true;
     const formValue: any = { ...this.bannerForm.value };
-    const newBanner: BannerResponse = {...this.banner, ...formValue};
+    const newBanner: BannerResponse = { ...this.banner, ...formValue };
 
     if (newBanner.id) {
       return firstValueFrom(this._bannersRepositoryService.update(newBanner, newBanner.id)).then(() => {
@@ -111,11 +111,11 @@ export class BannerDetail implements OnInit, OnDestroy {
       this.banner = new SsBanner();
     } else {
       firstValueFrom(this._bannersRepositoryService.getById(this._activatedRoute.snapshot.params['id']))
-      .then((banner: BannerResponse) => {
-        this.banner = banner;
+        .then((banner: BannerResponse) => {
+          this.banner = banner;
 
-        this._cdr.markForCheck();
-      });
+          this._cdr.markForCheck();
+        });
     }
 
   }

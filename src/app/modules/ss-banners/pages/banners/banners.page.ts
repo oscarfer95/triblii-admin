@@ -1,16 +1,17 @@
 import SwiperCore, { EffectCards, SwiperOptions } from 'swiper';
 SwiperCore.use([EffectCards]);
 
-import {ConfirmationService, MenuItem, MessageService} from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {firstValueFrom, Subject, takeUntil} from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
-import {SsBannerRepositoryService} from 'src/app/modules/ss-shared/services/ss-banner.repository-service';
+import { BannerRepositoryService } from 'src/app/modules/ss-shared/services/banner.repository-service';
 import { Router } from '@angular/router';
 import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
+import { ConfigList } from 'src/framework/repository/config-list.model';
 
 @Component({
   selector: 'banners-page',
@@ -29,13 +30,13 @@ export class BannersPage implements OnInit, OnDestroy {
 
   public userDataModel!: UserDataModel;
 
-  constructor(private _bannerRepositoryService: SsBannerRepositoryService,
-              private _userDataModelService: UserDataModelService,
-              private _confirmationService: ConfirmationService,
-              private _loaderService: SsLoaderService,
-              private _toastService: MessageService,
-              private _cdr: ChangeDetectorRef,
-              private _router: Router) {
+  constructor(private _bannerRepositoryService: BannerRepositoryService,
+    private _userDataModelService: UserDataModelService,
+    private _confirmationService: ConfirmationService,
+    private _loaderService: SsLoaderService,
+    private _toastService: MessageService,
+    private _cdr: ChangeDetectorRef,
+    private _router: Router) {
     this.bannerList = null;
     this._unsubscribe = new Subject<void>();
 
@@ -52,21 +53,21 @@ export class BannersPage implements OnInit, OnDestroy {
 
     this.items = [
       {
-          icon: 'pi pi-pencil'
+        icon: 'pi pi-pencil'
       },
       {
-          icon: 'pi pi-refresh'
+        icon: 'pi pi-refresh'
       },
       {
-          icon: 'pi pi-trash'
+        icon: 'pi pi-trash'
       },
       {
-          icon: 'pi pi-upload',
-          routerLink: ['/fileupload']
+        icon: 'pi pi-upload',
+        routerLink: ['/fileupload']
       },
       {
-          icon: 'pi pi-external-link',
-          url: 'http://angular.io'
+        icon: 'pi pi-external-link',
+        url: 'http://angular.io'
       }
     ];
   }
@@ -142,19 +143,40 @@ export class BannersPage implements OnInit, OnDestroy {
     );
   }
 
-  private _getBanners(): void {
-    // if (this.userDataModel.catalogueList.length > 0) {
-    //   firstValueFrom(this._bannerRepositoryService.getByCatalogueId(this.userDataModel.catalogueList[0].id))
-    //     .then((banners: any[]) => {
-    //       this.bannerList = this._buildBannerList(banners);
+  private async _getBanners(): Promise<void> {
+    try {
+      this._loaderService.show = true;
 
-    //       this._cdr.markForCheck();
-    //     });
-    //   }
+      if (!this.userDataModel?.entity?.id) {
+        console.warn('El ID de la entidad no está disponible.');
+        this._loaderService.show = false;
+        return;
+      }
+
+      const configList: ConfigList = {
+        queryList: [
+          {
+            field: 'entitiesId',
+            operation: 'array-contains-any',
+            value: [this.userDataModel.entity.id]
+          }
+        ]
+      };
+
+      const items: any = await firstValueFrom(this._bannerRepositoryService.getByQuerys(configList));
+      console.log(items);
+
+      this.bannerList = items;
+    } catch (error) {
+      console.error('Error al obtener los ítems:', error);
+    } finally {
+      this._cdr.markForCheck();
+      this._loaderService.show = false;
+    }
   }
 
-  private _buildBannerList(products: any []): any [] {
-    const bannerList: any [] = [];
+  private _buildBannerList(products: any[]): any[] {
+    const bannerList: any[] = [];
 
     products.forEach((product: any) => {
       bannerList?.push(product);
@@ -169,7 +191,7 @@ export class BannersPage implements OnInit, OnDestroy {
         takeUntil(this._unsubscribe)
       )
       .subscribe((userDataModel: UserDataModel) => {
-        if (userDataModel) {
+        if (userDataModel?.entity?.id) {
           this.userDataModel = userDataModel;
 
           this._getBanners();

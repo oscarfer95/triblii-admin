@@ -1,5 +1,4 @@
 import {AngularFirestore} from '@angular/fire/compat/firestore';
-import {Observable} from 'rxjs';
 
 import {Injectable} from '@angular/core';
 
@@ -9,20 +8,12 @@ import {BannerResponse} from './api/responses/banner.response';
 @Injectable({
   providedIn: 'root'
 })
-export class SsBannerRepositoryService extends FirebaseRepository<BannerResponse> {
+export class BannerRepositoryService extends FirebaseRepository<BannerResponse> {
   constructor(private _angularFireStore: AngularFirestore) {
     super(_angularFireStore);
   }
 
   protected getCollectionName(): string {
-    return 'catalogue-banner';
-  }
-
-  public getByAccountId(catalogueId: string): Observable<BannerResponse []> {
-    return this.getByAttribute('catalogueId', catalogueId);
-  }
-
-  public getByCatalogueId(catalogueId: string): Observable<any> {
-    return this.getByAttribute('catalogueId', catalogueId);
+    return 'banners';
   }
 }
