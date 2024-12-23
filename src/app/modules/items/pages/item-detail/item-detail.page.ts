@@ -97,12 +97,22 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     const formValue: any = {};
 
     for (const subFormName of subFormNames) {
-      
+
       const subFormValue = this.itemForm.get(subFormName)?.value;
 
       switch (subFormName) {
         case 'galleryForm':
           formValue['gallery'] = subFormValue.imageIdList;
+          break;
+
+        case 'optionsForm':
+          formValue['categories'] = [
+            ...(subFormValue.categories || []),
+            ...(subFormValue.mainCategories || [])
+          ];
+
+          delete subFormValue.categories;
+          delete subFormValue.mainCategories;
           break;
 
         case 'locationForm':
@@ -271,7 +281,7 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
       rejectIcon: '',
       acceptIcon: '',
       accept: () => {
-        if (this.item.id) {
+        if (this.item?.id) {
           this._deleteUnconfirmedImagesOfUpdateForm();
         } else {
           this._deleteUnconfirmedImagesOfCreateForm();
@@ -297,10 +307,11 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
 
   private _deleteUnconfirmedImagesOfUpdateForm(): void {
     const { photoUrl, gallery } = this.item;
-    const confirmedOldImageUrlList: string[] = [photoUrl, ...gallery];
+
+    const confirmedOldImageUrlList: string[] = [photoUrl, ...(Array.isArray(gallery) ? gallery : [])];
 
     const { removedImageIdList, imageIdList } = this.galleryForm.value;
-    const actualImageUrlList: string[] = [...removedImageIdList, ...imageIdList];
+    const actualImageUrlList: string[] = [...removedImageIdList, ...(Array.isArray(imageIdList) ? imageIdList : [])];
     if (this.informationForm.value.photoUrl) {
       actualImageUrlList.push(this.informationForm.value.photoUrl);
     }

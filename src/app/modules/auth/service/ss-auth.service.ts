@@ -79,7 +79,6 @@ export class SsAuthService {
       userData.permissions = user.permissions;
       userData.actions = user.actions;
 
-      // Obtener la entidad asociada
       const entity = await this._getEntityById(user.entityId);
       userData.entity = entity;
 

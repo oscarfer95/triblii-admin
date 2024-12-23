@@ -1,7 +1,7 @@
 import SwiperCore, { EffectCards, SwiperOptions } from 'swiper';
 SwiperCore.use([EffectCards]);
 
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
@@ -32,7 +32,6 @@ export class BannersPage implements OnInit, OnDestroy {
 
   constructor(private _bannerRepositoryService: BannerRepositoryService,
     private _userDataModelService: UserDataModelService,
-    private _confirmationService: ConfirmationService,
     private _loaderService: SsLoaderService,
     private _toastService: MessageService,
     private _cdr: ChangeDetectorRef,
@@ -95,52 +94,8 @@ export class BannersPage implements OnInit, OnDestroy {
     }
   }
 
-  public confirmDeleteProduct(banner: any): void {
-    this._confirmationService.confirm({
-      message: 'Seguro que deseas eliminar este banner?',
-      header: 'Eliminar banner',
-      acceptLabel: 'Confirmar',
-      rejectLabel: 'Cancelar',
-      closeOnEscape: true,
-      dismissableMask: true,
-      rejectButtonStyleClass: 'ss-button--clear ss-txt--black-lighten',
-      acceptButtonStyleClass: 'ss-button--red',
-      rejectIcon: 'asd',
-      acceptIcon: 'asd',
-      accept: () => {
-        this._loaderService.show = true;
-
-        try {
-          this._deleteBanner(banner.id as string).then(() => {
-            this._toastService.add({
-              severity: 'success',
-              summary: 'Banner eliminado',
-              detail: 'El banner se eliminó correctamente',
-              life: 6000
-            });
-
-            this._getBanners();
-
-            this._loaderService.show = false;
-          });
-        } catch (error) {
-          this._toastService.add({
-            severity: 'error',
-            summary: 'Error al eliminar',
-            detail: 'Contacta con soporte',
-            life: 6000
-          });
-
-          this._loaderService.show = false;
-        }
-      }
-    });
-  }
-
-  private _deleteBanner(id: string): Promise<any> {
-    return firstValueFrom(
-      this._bannerRepositoryService.delete(id)
-    );
+  public updateAfterDelete() {
+    this._getBanners();
   }
 
   private async _getBanners(): Promise<void> {
@@ -164,7 +119,6 @@ export class BannersPage implements OnInit, OnDestroy {
       };
 
       const items: any = await firstValueFrom(this._bannerRepositoryService.getByQuerys(configList));
-      console.log(items);
 
       this.bannerList = items;
     } catch (error) {
@@ -173,16 +127,6 @@ export class BannersPage implements OnInit, OnDestroy {
       this._cdr.markForCheck();
       this._loaderService.show = false;
     }
-  }
-
-  private _buildBannerList(products: any[]): any[] {
-    const bannerList: any[] = [];
-
-    products.forEach((product: any) => {
-      bannerList?.push(product);
-    });
-
-    return bannerList;
   }
 
   private _userDataModelListener() {

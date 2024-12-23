@@ -7,12 +7,12 @@ import {FirebaseRepository} from '../../../../framework/repository/firebase.repo
 @Injectable({
   providedIn: 'root'
 })
-export class AttractionsRepositoryService extends FirebaseRepository<any> {
+export class UsersRepositoryService extends FirebaseRepository<any> {
   constructor(private _angularFireStore: AngularFirestore) {
     super(_angularFireStore);
   }
 
   protected getCollectionName(): string {
-    return 'attractions';
+    return 'users';
   }
 }

@@ -54,56 +54,65 @@ export class BannerDetail implements OnInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
-  public saveForm(): Promise<any> {
+  public async saveForm(): Promise<any> {
     this._loaderService.show = true;
     const formValue: any = { ...this.bannerForm.value };
-    const newBanner: BannerResponse = { ...this.banner, ...formValue };
+    const banner: any = { ...this.banner, ...formValue };
 
-    if (newBanner.id) {
-      return firstValueFrom(this._bannersRepositoryService.update(newBanner, newBanner.id)).then(() => {
-        this._loaderService.show = false;
-        this._toastService.add({
-          severity: 'success',
-          summary: 'Banner editado',
-          detail: 'El banner se editó correctamente',
-          life: 6000
-        });
-
-        this._router.navigate(['/dashboard/banners']);
-      }).catch((error: any) => {
-        this._loaderService.show = false;
-        this._toastService.add({
-          severity: 'error',
-          summary: 'Error editando banner',
-          detail: 'Ocurrio un error al guardar el banner',
-          life: 6000
-        });
-
-        console.error(error);
-      });
+    if (banner.id) {
+      delete banner.id;
+      banner.entitiesId.includes(this.userDataModel.entity.id) ? null : banner.entitiesId.push(this.userDataModel.entity.id);
+      this._editBanner(banner);
     } else {
-      // newBanner.catalogueId = this.userDataModel.catalogueList[0].id;
-
-      return firstValueFrom(this._bannersRepositoryService.create(newBanner)).then(() => {
-        this._loaderService.show = false;
-        this._toastService.add({
-          severity: 'success',
-          summary: 'Banner añadido',
-          detail: 'El banner se creó correctamente',
-          life: 6000
-        });
-
-        this._router.navigate(['/dashboard/banners']);
-      }).catch(() => {
-        this._loaderService.show = false;
-        this._toastService.add({
-          severity: 'error',
-          summary: 'Error creando banner',
-          detail: 'Ocurrio un error al crear el banner',
-          life: 6000
-        });
-      });
+      banner.entitiesId.push(this.userDataModel.entity.id);
+      this._createBanner(banner);
     }
+  }
+
+  private async _editBanner(banner: any): Promise<any> {
+    return firstValueFrom(this._bannersRepositoryService.update(banner, banner.id)).then(() => {
+      this._loaderService.show = false;
+      this._toastService.add({
+        severity: 'success',
+        summary: 'Banner editado',
+        detail: 'El banner se editó correctamente',
+        life: 6000
+      });
+
+      this._router.navigate(['/dashboard/banners']);
+    }).catch((error: any) => {
+      this._loaderService.show = false;
+      this._toastService.add({
+        severity: 'error',
+        summary: 'Error editando banner',
+        detail: 'Ocurrio un error al guardar el banner',
+        life: 6000
+      });
+
+      console.error(error);
+    });
+  }
+
+  private async _createBanner(banner: any): Promise<any> {
+    return firstValueFrom(this._bannersRepositoryService.create(banner)).then(() => {
+      this._loaderService.show = false;
+      this._toastService.add({
+        severity: 'success',
+        summary: 'Banner añadido',
+        detail: 'El banner se creó correctamente',
+        life: 6000
+      });
+
+      this._router.navigate(['/dashboard/banners']);
+    }).catch(() => {
+      this._loaderService.show = false;
+      this._toastService.add({
+        severity: 'error',
+        summary: 'Error creando banner',
+        detail: 'Ocurrio un error al crear el banner',
+        life: 6000
+      });
+    });
   }
 
   private _getBanner(): void {

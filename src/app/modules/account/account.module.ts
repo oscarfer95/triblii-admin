@@ -9,6 +9,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ChipModule } from 'primeng/chip';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +24,10 @@ import { ColorPickerComponent } from './components/color-picker/color-picker.com
 import { DangerZoneComponent } from './components/danger-zone/danger-zone.component';
 import { ResetPasswordFormComponent } from './components/reset-password-form/reset-password-form.component';
 import { EntitySettingsFormComponent } from './components/entity-settings-form/entity-settings-form.component';
+import { UsersPage } from './pages/users-page/users.page';
+import { UsersTableComponent } from './components/users-table/users-table.component';
+import { UserDetail } from './pages/user-detail/user-detail.page';
+import { UserFormComponent } from './components/user-form/user-form.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,11 @@ import { EntitySettingsFormComponent } from './components/entity-settings-form/e
     ColorPickerComponent,
     EntityFormComponent,
     ResetPasswordFormComponent,
-    EntitySettingsFormComponent
+    EntitySettingsFormComponent,
+    UsersPage,
+    UsersTableComponent,
+    UserDetail,
+    UserFormComponent
   ],
   imports: [
     AccordionModule,
@@ -50,7 +59,8 @@ import { EntitySettingsFormComponent } from './components/entity-settings-form/e
     SsSharedModule,
     FileUploadModule,
     HttpClientModule,
-    ChipModule
+    ChipModule,
+    DropdownModule
   ]
 })
 export class AccountModule { }

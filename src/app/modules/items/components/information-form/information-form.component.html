@@ -33,13 +33,13 @@
           </section>
 
           <section *ngIf="item?.coverUrl"
-            class="w-fit p-2 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2 relative">
-            <img class="w-auto h-auto max-h-15rem max-w-full" [src]="item?.coverUrl" alt="Product Photo">
+            class="w-fit p-2 md:p-3 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2 relative">
+            <img class="w-auto h-auto max-h-15rem max-w-full border-round-2xl ov overflow-hidden" [src]="item?.coverUrl" alt="Item cover photo">
 
             <section
-              class="absolute top-0 right-0 cursor-pointer mr-1 mt-1 ss-bg--white flex justify-content-center align-items-center border-circle"
+              class="absolute top-0 right-0 cursor-pointer mr-1 mt-1 ss-bg--red flex justify-content-center align-items-center border-circle p-2"
               (click)="removeImage()">
-              <i class="pi pi-times-circle text-3xl ss-txt--red">
+              <i class="pi pi-trash text-lg ss-txt--white">
               </i>
             </section>
           </section>
@@ -52,7 +52,7 @@
         Contenido
       </div>
 
-      <p-editor [formControlName]="'content'" [style]="{'height':'15rem'}" placeholder="Ingresa datos aquí, ejm: 
+      <p-editor formControlName="content" [style]="{'height':'15rem'}" placeholder="Ingresa datos aquí, ejm:
       - Fecha de creación
       - Historia
       - Dimensiones: 54.5mm x 35mm x 11mm

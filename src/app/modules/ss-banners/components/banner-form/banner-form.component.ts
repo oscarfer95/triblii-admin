@@ -45,12 +45,12 @@ export class BannerFormComponent implements OnInit, OnDestroy {
   }
 
   private _initForm(): void {
-    this.form.addControl('backgroundUrl', this._formBuilder.control(this.banner.backgroundUrl));
-    this.form.addControl('buttonLabel', this._formBuilder.control(this.banner.buttonLabel, [Validators.required, Validators.min(1), Validators.max(200)]));
-    this.form.addControl('buttonLink', this._formBuilder.control(this.banner.buttonLink, [Validators.required, Validators.minLength(1), Validators.maxLength(3500)]));
-    this.form.addControl('description', this._formBuilder.control(this.banner.description, [Validators.required, Validators.minLength(1), Validators.maxLength(100)]));
-    this.form.addControl('pngUrl', this._formBuilder.control(this.banner.pngUrl));
-    this.form.addControl('title', this._formBuilder.control(this.banner.title, Validators.required));
+    this.form.addControl('backgroundUrl', this._formBuilder.control(this.banner.backgroundUrl || ''));
+    this.form.addControl('buttonLabel', this._formBuilder.control(this.banner.buttonLabel || '', [Validators.required, Validators.min(1), Validators.max(200)]));
+    this.form.addControl('buttonLink', this._formBuilder.control(this.banner.buttonLink || '', [Validators.required, Validators.minLength(1), Validators.maxLength(3500)]));
+    this.form.addControl('description', this._formBuilder.control(this.banner.description || '', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]));
+    this.form.addControl('pngUrl', this._formBuilder.control(this.banner.pngUrl || ''));
+    this.form.addControl('title', this._formBuilder.control(this.banner.title || '', Validators.required));
   }
 
   public removeImage(field: string): void {

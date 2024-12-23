@@ -10,7 +10,6 @@ import {ConfigList} from 'src/framework/repository/config-list.model';
   providedIn: 'root'
 })
 export class CategoriesRepositoryService extends FirebaseRepository<any> {
-  // TODO: CHANGE ANY TYPE OF FirebaseRepository< >
   constructor(private _angularFireStore: AngularFirestore) {
     super(_angularFireStore);
   }

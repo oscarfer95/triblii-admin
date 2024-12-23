@@ -1,0 +1,36 @@
+<article
+  class="w-10 shadow-1 cursor-pointer border-round-2xl p-3 md:p-5 flex flex-column-reverse md:flex-row md:align-items-center mx-auto bg-primary-200 my-6 bg-cover relative"
+  [style.background-image]="'url('+ banner.backgroundUrl +')'">
+  <section class="w-full md:w-8 h-full flex flex-column z-2" routerLink="/dashboard/banners/{{ banner.id }}">
+    <h4 class="ss-txt-title ss-txt--white font-bold mb-2">
+      {{ banner.title }}
+    </h4>
+
+    <p class="mb-3 ss-txt--white">
+      {{ banner.description }}
+    </p>
+
+    <button class="w-fit ss-button ss-button--small my-3">
+      {{ banner.buttonLabel }}
+    </button>
+  </section>
+
+  <section *ngIf="banner.pngUrl" class="w-full md:w-4 flex justify-content-center mx-auto mb-3 z-2"
+    routerLink="/dashboard/banners/{{ banner.id }}">
+    <img [src]="banner.pngUrl" class="w-auto md:mb-0 md:w-9 my-3 h-auto max-h-15rem" alt="banner png image">
+  </section>
+
+  <section *ngIf="banner?.backgroundUrl !== ''" routerLink="/dashboard/banners/{{ banner.id }}"
+    class="w-full h-full absolute right-0 top-0 left-0 bottom-0 z-1 background-overlay border-round-2xl">
+  </section>
+
+  <section *ngIf="banner?.backgroundUrl === ''" routerLink="/dashboard/banners/{{ banner.id }}"
+    class="w-full h-full absolute top-0 left-0 z-1 without-background-overlay border-round-2xl">
+  </section>
+
+  <section class="absolute top-0 right-0 z-5 -mr-2 -mt-2">
+    <button pButton type="button" icon="pi pi-trash" class="p-button-rounded ss-bg--red ss-txt--white"
+      (click)="confirmDeleteProduct(banner)">
+    </button>
+  </section>
+</article>

@@ -1,6 +1,6 @@
 <article *ngIf="item" class="w-full h-screen flex flex-column ss-main-admin-padding pt-6 relative">
   <header data-aos="fade-up">
-    <section class="flex align-items-center cursor-pointer px-2 lg:px-0 mt-3 lg:mt-0 pb-3" (click)="location.back()">
+    <section class="w-fit flex align-items-center cursor-pointer px-2 lg:px-0 mt-3 lg:mt-0 pb-3" (click)="location.back()">
       <i class="pi pi-angle-left mr-2 text-2xl ss-txt--black-lighten">
       </i>
 
@@ -9,7 +9,7 @@
       </small>
 
       <small *ngIf="item.name"
-        class="w-full md:w-7 overflow-hidden ss-txt-title ss-txt-title--regular text-overflow-ellipsis white-space-nowrap">
+        class="max-w-23rem sm:max-w-30rem md:max-w-full overflow-hidden ss-txt-title ss-txt-title--regular text-overflow-ellipsis white-space-nowrap">
         {{ item.name }}
       </small>
     </section>
@@ -18,10 +18,10 @@
   <section class="w-full sticky z-5 ss-bg--grey-lighten relative top-0" data-aos="fade-up"
     data-aos-delay="200">
     <section class="w-full flex justify-content-between gap-3">
-      <p-tabMenu class="w-full border-bottom-1 border-black-alpha-10 pl-3 lg:px-0" [scrollable]="true" [model]="tabItems" [activeItem]="activeTab" (click)="changeTab($event)">
+      <p-tabMenu class="w-full xl:w-9 border-bottom-1 border-black-alpha-10 pl-3 lg:pl-0" [scrollable]="true" [model]="tabItems" [activeItem]="activeTab" (click)="changeTab($event)">
       </p-tabMenu>
 
-      <section class="hidden xl:flex">
+      <section class="xl:w-3 hidden xl:flex justify-content-end">
         <ng-container
           *ngTemplateOutlet="saveButtonTemplate; context: { isValid: isFormValid(), onClick: saveForm.bind(this) }">
         </ng-container>
@@ -60,7 +60,7 @@
     </section>
   </section>
 
-  <section class="w-full ss-bg--grey-lighten flex gap-3 xl:hidden sticky left-0 right-0 bottom-0 p-3 shadow-5">
+  <section class="w-full ss-bg--grey-lighten xl:hidden sticky left-0 right-0 bottom-0 p-3 lg:px-0 shadow-5 md:shadow-none">
     <ng-container
       *ngTemplateOutlet="saveButtonTemplate; context: { isValid: isFormValid(), onClick: saveForm.bind(this) }">
     </ng-container>
@@ -71,7 +71,7 @@
 </ss-announcement>
 
 <ng-template #saveButtonTemplate let-isValid="isValid" let-onClick="onClick">
-  <button *ngIf="itemForm" class="ss-button w-full" [ngClass]="{'ss-button--disabled': isValid}" [disabled]="isValid"
+  <button *ngIf="itemForm" class="ss-button w-full px-3" [ngClass]="{'ss-button--disabled': isValid}" [disabled]="isValid"
     (click)="onClick()">
     Guardar cambios
   </button>

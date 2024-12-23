@@ -16,26 +16,21 @@ import { firstValueFrom } from 'rxjs';
 
 import { SsDeleteManyFilesStorageService } from '../../../ss-shared/services/ss-delete-many-files-storage.service';
 import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { UsersRepositoryService } from 'src/app/modules/ss-shared/services/ss-users.repository-service';
 
 @Component({
-  selector: 'items-table',
-  templateUrl: './items-table.component.html',
+  selector: 'users-table',
+  templateUrl: './users-table.component.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemsTableComponent implements OnInit {
+export class UsersTableComponent implements OnInit {
 
   @Input()
-  public itemList!: any[];
+  public userList!: any[];
 
   @Input()
   public userData!: any;
-
-  @Input()
-  public moduleId!: string;
-
-  @Input()
-  public service!: any;
 
   @Output()
   public dataChanges: EventEmitter<void>;
@@ -43,7 +38,8 @@ export class ItemsTableComponent implements OnInit {
   @ViewChild('dt')
   public table!: Table;
 
-  constructor(private _deleteManyFilesStorageService: SsDeleteManyFilesStorageService,
+  constructor(private _usersRepositoryService: UsersRepositoryService,
+    private _deleteManyFilesStorageService: SsDeleteManyFilesStorageService,
     private _confirmationService: ConfirmationService,
     private _loaderService: SsLoaderService,
     private _toastService: MessageService,
@@ -54,26 +50,9 @@ export class ItemsTableComponent implements OnInit {
   public ngOnInit(): void {
   }
 
-  public copyItemLink(id: string): void {
-    let urlBase: string = 'https://triblii.web.app/';
-    let param: string = `${this.moduleId}/${id}?entity-selected=${this.userData.entity.id}`;
-
-    if (id) {
-      const link = urlBase + param;
-
-      navigator.clipboard.writeText(link)
-
-      this._toastService.add({
-        severity: 'success',
-        summary: 'Link copiado correctamente',
-        life: 3000
-      });
-    }
-  }
-
   public confirmDeleteItem(item: any): void {
     this._confirmationService.confirm({
-      message: 'Seguro que deseas eliminar este item?',
+      message: 'Seguro que deseas eliminar este usuario?',
       header: 'Eliminar',
       acceptLabel: 'Confirmar',
       rejectLabel: 'Cancelar',
@@ -87,11 +66,11 @@ export class ItemsTableComponent implements OnInit {
         this._loaderService.show = true;
 
         try {
-          this._deleteProduct(item.id as string).then(() => {
+          this._deleteUser(item.id as string).then(() => {
             this._toastService.add({
               severity: 'success',
               summary: 'Eliminado',
-              detail: 'El item se eliminó correctamente',
+              detail: 'El usuario se eliminó correctamente',
               life: 6000
             });
 
@@ -119,9 +98,9 @@ export class ItemsTableComponent implements OnInit {
     });
   }
 
-  private _deleteProduct(id: string): Promise<any> {
+  private _deleteUser(id: string): Promise<any> {
     return firstValueFrom(
-      this.service.delete(id)
+      this._usersRepositoryService.delete(id)
     );
   }
 
@@ -130,7 +109,7 @@ export class ItemsTableComponent implements OnInit {
   }
 
   public addItem(): void {
-    if (this.itemList.length >= 50) {
+    if (this.userList.length >= 50) {
       // TODO: Cuando se agreguen suscripciones cambiar aqui el control de limite de items
       this._toastService.add({
         severity: 'error',
@@ -139,7 +118,7 @@ export class ItemsTableComponent implements OnInit {
         life: 6000
       });
     } else {
-      this._router.navigate([`/dashboard/items/${this.moduleId}/new`]);
+      this._router.navigate([`/dashboard/account/users/new`]);
     }
   }
 }

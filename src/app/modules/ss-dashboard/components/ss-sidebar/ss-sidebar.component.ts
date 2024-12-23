@@ -62,11 +62,6 @@ export class SsSidebarComponent implements OnInit, OnDestroy {
     window.open(whatsAppBaseUrl + numberUrl + messageUrl + encodeURIComponent(message));
   }
 
-  public openCatalogueLink(): void {
-    // const linkUrl = 'https://shoppystorebo.web.app/'+ this.userDataModel?.catalogueList[0]?.slug;
-    // window.open(linkUrl);
-  }
-
   private _userDataModelListener() {
     this._userDataModelService.userDataModelListener()
       .pipe(

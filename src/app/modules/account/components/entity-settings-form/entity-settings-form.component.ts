@@ -85,7 +85,6 @@ export class EntitySettingsFormComponent implements OnInit {
   }
 
   // public validadeAvailableSlug(): void {
-  //   console.log('asd');
 
   //   const configList: ConfigList = {
   //     queryList: [

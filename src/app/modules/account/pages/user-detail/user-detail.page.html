@@ -1,0 +1,54 @@
+<article *ngIf="user" class="w-full h-screen flex flex-column ss-main-admin-padding pt-6 relative">
+  <header data-aos="fade-up">
+    <section class="w-fit flex align-items-center cursor-pointer px-2 lg:px-0 mt-3 lg:mt-0 pb-3" (click)="location.back()">
+      <i class="pi pi-angle-left mr-2 text-2xl ss-txt--black-lighten">
+      </i>
+
+      <small *ngIf="user.name === ''" class="ss-txt-title ss-txt-title--regular">
+        Volver
+      </small>
+
+      <small *ngIf="user.name"
+        class="max-w-23rem sm:max-w-30rem md:max-w-full overflow-hidden ss-txt-title ss-txt-title--regular text-overflow-ellipsis white-space-nowrap">
+        {{ user.name }}
+      </small>
+    </section>
+  </header>
+
+  <section class="w-full sticky z-5 ss-bg--grey-lighten relative top-0" data-aos="fade-up"
+    data-aos-delay="200">
+    <section class="w-full flex justify-content-end">
+      <section class="xl:w-3 hidden xl:flex justify-content-end">
+        <ng-container
+          *ngTemplateOutlet="saveButtonTemplate; context: { isValid: isFormValid(), onClick: saveForm.bind(this) }">
+        </ng-container>
+      </section>
+    </section>
+  </section>
+
+  <section class="py-3 px-3 pb-8 md:pb-0 lg:px-0 fadein flex-grow-1">
+    <section class="w-full flex flex-column gap-3">
+      <p-card *ngIf="itemForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400" data-aos="fade-up"
+        data-aos-delay="400">
+        <user-form [form]="itemForm" [user]="user" [userDataModel]="userDataModel">
+        </user-form>
+      </p-card>
+    </section>
+  </section>
+
+  <section class="w-full ss-bg--grey-lighten xl:hidden sticky left-0 right-0 bottom-0 p-3 lg:px-0 shadow-5 md:shadow-none">
+    <ng-container
+      *ngTemplateOutlet="saveButtonTemplate; context: { isValid: isFormValid(), onClick: saveForm.bind(this) }">
+    </ng-container>
+  </section>
+</article>
+
+<ss-announcement *ngIf="user === null" [iconName]="'pi-spinner'" [text]="'Cargando'">
+</ss-announcement>
+
+<ng-template #saveButtonTemplate let-isValid="isValid" let-onClick="onClick">
+  <button *ngIf="itemForm.controls['entityId'] && !itemForm.invalid" class="ss-button w-full px-3 fadein animation-duration-1000" [ngClass]="{'ss-button--disabled': isValid}" [disabled]="isValid"
+    (click)="onClick()">
+    Guardar cambios
+  </button>
+</ng-template>

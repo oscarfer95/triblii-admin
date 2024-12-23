@@ -7,25 +7,24 @@ export const menuOptions: { [key: string]: { icon: string; label: string; url: s
   events: { icon: 'pi pi-calendar', label: 'Eventos', url: 'items/events' },
   banners: { icon: 'bi bi-tv', label: 'Banners', url: 'banners' },
   stats: { icon: 'pi pi-chart-bar', label: 'Estadísticas', url: 'stats' },
-  users: { icon: 'pi pi-users', label: 'Usuarios', url: 'users' },
+  users: { icon: 'pi pi-users', label: 'Usuarios', url: 'account/users' },
   locations: { icon: 'pi pi-map', label: 'Locaciones', url: 'locations' },
-  account: { icon: 'pi pi-user', label: 'Cuenta', url: 'account' }
+  account: { icon: 'pi pi-user', label: 'Cuenta', url: 'account/user-entity' }
 };
 
 export function generateMenuItems(permissions: string[], role: string): any[] {
-  const defaultOptions = ['home', 'stats', 'account'];
+  const defaultOptions = ['home', 'account'];
 
-  // Caso 1: Sin permisos (array vacío)
+  // No PERMISSIONS
   if (permissions.length === 0) {
     const baseMenu = [...defaultOptions];
 
-    if (role === 'ADMIN') {
+    if (role === 'ADMIN' || role === 'SUPERADMIN') {
       baseMenu.splice(baseMenu.length - 1, 0, 'users');
     }
 
     if (role === 'SUPERADMIN') {
-      baseMenu.push('locations');
-      baseMenu.splice(baseMenu.length - 1, 0, 'users');
+      baseMenu.splice(baseMenu.length - 1, 0, 'locations');
     }
 
     return baseMenu
@@ -33,32 +32,31 @@ export function generateMenuItems(permissions: string[], role: string): any[] {
       .map((key) => menuOptions[key]);
   }
 
-  // Caso 2: Permisos es ['all']
+  // ALL PERMISSIONS
   if (permissions.length === 1 && permissions[0] === 'all') {
-    const excludedKeys = ['users', 'locations'];
+    const excludedKeys = ['users', 'locations', 'stats'];
     const fullMenuKeys = Object.keys(menuOptions).filter((key) => !excludedKeys.includes(key));
 
-    if (role === 'ADMIN') {
+    if (role === 'ADMIN' || role === 'SUPERADMIN') {
       fullMenuKeys.splice(fullMenuKeys.length - 1, 0, 'users');
+      fullMenuKeys.splice(fullMenuKeys.length - 2, 0, 'stats');
     }
 
-    if (role === 'SUPERADMIN' && !fullMenuKeys.includes('locations')) {
-      fullMenuKeys.push('locations');
-      fullMenuKeys.splice(fullMenuKeys.length - 1, 0, 'users');
+    if (role === 'SUPERADMIN') {
+      fullMenuKeys.splice(fullMenuKeys.length - 1, 0, 'locations');
     }
 
     return fullMenuKeys.map((key) => menuOptions[key]);
   }
 
-  // Caso 3: Permisos específicos
-  const mixedOptions = ['home', ...permissions, 'stats', 'account'];
+  const mixedOptions = ['home', ...permissions, 'account'];
 
-  if (role === 'ADMIN' && !mixedOptions.includes('users')) {
+  if (role === 'ADMIN' || role === 'SUPERADMIN') {
     mixedOptions.splice(mixedOptions.length - 1, 0, 'users');
   }
 
-  if (role === 'SUPERADMIN' && !mixedOptions.includes('locations')) {
-    mixedOptions.push('locations');
+  if (role === 'SUPERADMIN') {
+    mixedOptions.splice(mixedOptions.length - 1, 0, 'locations');
   }
 
   return mixedOptions

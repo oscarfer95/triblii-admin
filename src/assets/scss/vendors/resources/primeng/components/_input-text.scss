@@ -29,13 +29,18 @@
   text-align: center;
 }
 
-.p-multiselect {
+.p-multiselect, .p-dropdown {
   width: 100%;
   border: 1px solid var(--#{$app-prefix}-color-grey);
 }
 
+.p-multiselect.p-multiselect-chip .p-multiselect-token {
+  background: var(--#{$app-prefix}-color-warning);
+  color: var(--#{$app-prefix}-color-black);
+}
+
 .p-inputgroup-addon {
-  background: var(--#{$app-prefix}-color-white);
+  background: var(--#{$app-prefix}-color-black);
   color: var(--#{$app-prefix}-color-black);
   border: none;
   min-width: 2.357rem;

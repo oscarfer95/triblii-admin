@@ -20,9 +20,14 @@
       Sub categorías
     </h4>
 
-    <section *ngIf="categories && this.form.get('categories')?.value" class="mt-2">
+    <section *ngIf="categories.length > 0 && this.form.get('categories')?.value" class="mt-2">
       <p-multiSelect class="w-full" [options]="categories" optionLabel="name" display="chip" optionValue="id"
-        formControlName="categories" placeholder="Selecciona categorías" (onChange)="markAsTouched(); getTags()">
+        formControlName="categories" placeholder="Selecciona categorías" (onChange)="markAsTouched(); getTags(); verifyTags($event)">
+      </p-multiSelect>
+    </section>
+
+    <section *ngIf="categories.length === 0" class="mt-2">
+      <p-multiSelect class="w-full" placeholder="No existen categorías relacionadas" [disabled]="true">
       </p-multiSelect>
     </section>
   </section>
@@ -36,14 +41,19 @@
       Asocia uno o más tags, estos sirven para segmentar aun más la búsqueda.
     </div>
 
-    <section *ngIf="tags && this.form.get('tags')?.value">
+    <section *ngIf="tags.length > 0 && this.form.get('tags')?.value">
       <p-multiSelect [options]="tags" class="w-full" optionLabel="name" display="chip" optionValue="id"
         formControlName="tags" placeholder="Selecciona tags">
       </p-multiSelect>
     </section>
+
+    <section *ngIf="tags.length === 0">
+      <p-multiSelect class="w-full" placeholder="No existen tags relacionados" [disabled]="true">
+      </p-multiSelect>
+    </section>
   </section>
 
-  <p-divider class="p-divider--grey">
+  <p-divider class="p-divider--grey" styleClass="my-0">
   </p-divider>
 
   <section class="w-full flex flex-column gap-3 md:gap-2">
@@ -62,7 +72,7 @@
     </section>
   </section>
 
-  <p-divider class="p-divider--grey">
+  <p-divider class="p-divider--grey" styleClass="my-0">
   </p-divider>
 
   <section class="w-full flex flex-column gap-3 md:gap-2">
@@ -76,8 +86,8 @@
 
         <span *ngIf="form.get('available')?.value">
           Activo
-        </span>        
-        
+        </span>
+
         <span *ngIf="!form.get('available')?.value">
           Inactivo
         </span>
@@ -89,8 +99,8 @@
 
     <section *ngIf="form.get('available')?.value" class="w-full ss-txt--black-lighten text-sm fadein animation-duration-500">
       Cuando la opción está activa, el lugar aparecerá en la plataforma.
-    </section>    
-    
+    </section>
+
     <section *ngIf="!form.get('available')?.value" class="w-full ss-txt--black-lighten text-sm fadein animation-duration-500">
       Cuando la opción está desactivada, el lugar <strong>NO</strong> aparecerá en la plataforma.
     </section>

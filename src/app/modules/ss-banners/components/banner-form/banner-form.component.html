@@ -5,21 +5,15 @@
         Título
       </div>
 
-      <input class="w-full xl:w-11"
-             type="text"
-             pInputText
-             placeholder="Escribe el título de tu banner..."
-             formControlName="title"/>
+      <input class="w-full xl:w-11" type="text" pInputText placeholder="Escribe el título de tu banner..."
+        formControlName="title" />
 
       <div class="mt-6 font-semibold mb-2">
         Descripción
       </div>
 
-      <textarea class="w-full xl:w-11 max-h-8rem"
-                pInputTextarea
-                formControlName="description"
-                placeholder="Escribe la descripción del banner aquí..."
-                [rows]="4"></textarea>
+      <textarea class="w-full xl:w-11 max-h-8rem" pInputTextarea formControlName="description"
+        placeholder="Escribe la descripción del banner aquí..." [rows]="4"></textarea>
     </section>
 
     <section class="w-full xl:w-4">
@@ -28,11 +22,9 @@
       </div>
 
       <section *ngIf="banner?.backgroundUrl === ''"
-               class="w-full py-8 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2">
-        <p-fileUpload mode="basic"
-                      accept="image/png, image/webp"
-                      [maxFileSize]="1000000"
-                      (onSelect)="uploadPhoto($event, 'backgroundUrl')">
+        class="w-full py-8 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2">
+        <p-fileUpload mode="basic" accept="image/png, image/webp" [maxFileSize]="1000000"
+          (onSelect)="uploadPhoto($event, 'backgroundUrl')">
         </p-fileUpload>
 
         <span class="ss-txt--black-lighten">
@@ -41,20 +33,17 @@
       </section>
 
       <section *ngIf="banner?.backgroundUrl"
-               class="w-full p-3 py-6 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2 relative">
-        <img class="w-auto h-auto max-h-15rem max-w-full"
-             [src]="banner?.backgroundUrl"
-             alt="Product Photo">
+        class="w-full p-3 py-6 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2 relative">
+        <img class="w-auto h-auto max-h-15rem max-w-full" [src]="banner?.backgroundUrl" alt="Product Photo">
 
         <i class="pi pi-times-circle absolute top-0 right-0 text-2xl ss-txt--red cursor-pointer mr-1 mt-1"
-           (click)="removeImage('backgroundUrl')">
+          (click)="removeImage('backgroundUrl')">
         </i>
       </section>
     </section>
   </section>
 
-  <p-divider class="p-divider--grey"
-             styleClass="my-5">
+  <p-divider class="p-divider--grey" styleClass="my-5">
   </p-divider>
 
   <section class="w-full sm:flex justify-content-between gap-5">
@@ -63,34 +52,26 @@
         Texto del botón
       </div>
 
-      <input class="w-full xl:w-11"
-             type="text"
-             pInputText
-             placeholder="Ejm: Ver producto"
-             formControlName="buttonLabel"/>
+      <input class="w-full xl:w-11" type="text" pInputText placeholder="Ejm: Ver producto"
+        formControlName="buttonLabel" />
 
       <div class="mt-6 font-semibold mb-2">
         Link del botón
       </div>
 
-      <input class="w-full xl:w-11"
-             type="text"
-             pInputText
-             placeholder="Ejm: https://shopstore-oz.web.app/"
-             formControlName="buttonLink"/>
+      <input class="w-full xl:w-11" type="text" pInputText placeholder="Ejm: https://shopstore-oz.web.app/"
+        formControlName="buttonLink" />
     </section>
 
     <section class="w-full xl:w-4">
       <div class="font-semibold mb-3 mt-6 sm:mt-0">
-        Banner  <small class="ss-txt--grey font-normal">( png, webp )</small>
+        Banner <small class="ss-txt--grey font-normal">( png, webp )</small>
       </div>
 
       <section *ngIf="banner?.pngUrl === ''"
-               class="w-full py-8 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2">
-        <p-fileUpload mode="basic"
-                      accept="image/png, image/webp"
-                      [maxFileSize]="1000000"
-                      (onSelect)="uploadPhoto($event, 'pngUrl')">
+        class="w-full py-8 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2">
+        <p-fileUpload mode="basic" accept="image/png, image/webp" [maxFileSize]="1000000"
+          (onSelect)="uploadPhoto($event, 'pngUrl')">
         </p-fileUpload>
 
         <span class="ss-txt--black-lighten">
@@ -99,13 +80,11 @@
       </section>
 
       <section *ngIf="banner?.pngUrl"
-               class="w-full px-3 py-6 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2 relative">
-        <img class="w-auto h-auto max-h-15rem max-w-full"
-             [src]="banner?.pngUrl"
-             alt="Png banner image">
+        class="w-full px-3 py-6 ss-bg--grey-lighten border-round-2xl flex justify-content-center align-items-center border-2 border-dashed border-gray-100 flex-column gap-2 relative">
+        <img class="w-auto h-auto max-h-15rem max-w-full" [src]="banner?.pngUrl" alt="Png banner image">
 
         <i class="pi pi-times-circle absolute top-0 right-0 text-2xl ss-txt--red cursor-pointer mr-1 mt-1"
-           (click)="removeImage('pngUrl')">
+          (click)="removeImage('pngUrl')">
         </i>
       </section>
     </section>

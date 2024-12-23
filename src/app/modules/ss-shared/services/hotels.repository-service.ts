@@ -9,7 +9,6 @@ import {FirebaseRepository} from '../../../../framework/repository/firebase.repo
   providedIn: 'root'
 })
 export class HotelsRepositoryService extends FirebaseRepository<any> {
-  // TODO: CHANGE ANY TYPE OF FirebaseRepository< >
   constructor(private _angularFireStore: AngularFirestore) {
     super(_angularFireStore);
   }

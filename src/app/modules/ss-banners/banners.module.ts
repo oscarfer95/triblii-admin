@@ -15,12 +15,14 @@ import { SsSharedModule } from '../ss-shared/ss-shared.module';
 import { BannerFormComponent } from './components/banner-form/banner-form.component';
 import { BannerDetail } from './pages/banner-detail/banner-detail.page';
 import { BannersPage } from './pages/banners/banners.page';
+import { BannerCardComponent } from './components/banner-card/banner-card.component';
 
 @NgModule({
   declarations: [
     BannersPage,
     BannerDetail,
-    BannerFormComponent
+    BannerFormComponent,
+    BannerCardComponent
   ],
   imports: [
     CommonModule,

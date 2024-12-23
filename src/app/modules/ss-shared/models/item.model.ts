@@ -3,18 +3,18 @@ export class Item {
   description: string;
   coverUrl: string;
   content: any | null;
-  
+
   categories: string[];
   tags: string[];
   rating: number;
   order: number;
   isFeatured: boolean;
   available: boolean;
-  
+
   gallery: string[];
-  
+
   foods: string[];
-  
+
   entitiesId: string[];
 
   constructor() {
@@ -31,9 +31,9 @@ export class Item {
     this.available = true;
 
     this.gallery = [];
-    
+
     this.foods = [];
-    
+
     this.entitiesId = [];
   }
 
@@ -50,7 +50,7 @@ export class Item {
 
       case 'hotels':
         return new Hotel();
-        
+
       case 'foods':
         return new Food();
 
@@ -83,6 +83,7 @@ export class Attraction extends Item {
       state: '',
       coords: null,
     };
+    this.categories = ['recreation-musement'];
   }
 }
 
@@ -96,10 +97,11 @@ export class Restaurant extends Item {
     country: string;
     state: string;
     coords: any | null;
-  }; 
+  };
 
   constructor() {
     super();
+    this.categories = ['gastronomy'];
     this.schedule = null;
     this.delivery = null;
     this.location = {
@@ -119,6 +121,7 @@ export class Food extends Item {
   constructor() {
     super();
     this.priceRange = '';
+    this.categories = ['gastronomy'];
   }
 }
 
@@ -130,7 +133,7 @@ export class Event extends Item {
   isOnline: boolean;
   isRecurring: boolean;
   recurrenceType: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'unique';
-  
+
   // Unique
   startDate: Date | null;
   endDate: Date | null;
@@ -154,17 +157,17 @@ export class Event extends Item {
     country: string;
     state: string;
     coords: any | null;
-  }; 
+  };
 
   constructor() {
     super();
     this.price = '';
     this.capacity = 0;
-    this.endDate = new Date();  
+    this.endDate = new Date();
     this.isOnline = false;
     this.isRecurring = false;
     this.recurrenceType = 'unique';
-    
+
     this.startDate = null;
     this.endDate = null;
     this.recurrenceDays = null;
@@ -178,22 +181,24 @@ export class Event extends Item {
       state: '',
       coords: null,
     };
+
+    this.categories = ['experiences-activities', 'general-interest', 'recreation-musement'];
   }
 }
 
 // Hotels
 export class Hotel extends Item {
-  
+
   location: {
     address: string;
     city: string;
     country: string;
     state: string;
     coords: any | null;
-  }; 
+  };
 
   constructor() {
-    super();    
+    super();
     this.location = {
       address: '',
       city: '',
