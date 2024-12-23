@@ -14,9 +14,9 @@ import {
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
-import { SsDeleteManyFilesStorageService } from '../../../ss-shared/services/ss-delete-many-files-storage.service';
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
-import { UsersRepositoryService } from 'src/app/modules/ss-shared/services/ss-users.repository-service';
+import { DeleteManyFilesStorageService } from '../../../ss-shared/services/delete-many-files-storage.service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
+import { UsersRepositoryService } from 'src/app/modules/ss-shared/services/users.repository-service';
 
 @Component({
   selector: 'users-table',
@@ -39,9 +39,9 @@ export class UsersTableComponent implements OnInit {
   public table!: Table;
 
   constructor(private _usersRepositoryService: UsersRepositoryService,
-    private _deleteManyFilesStorageService: SsDeleteManyFilesStorageService,
+    private _deleteManyFilesStorageService: DeleteManyFilesStorageService,
     private _confirmationService: ConfirmationService,
-    private _loaderService: SsLoaderService,
+    private _loaderService: LoaderService,
     private _toastService: MessageService,
     private _router: Router) {
     this.dataChanges = new EventEmitter<void>();

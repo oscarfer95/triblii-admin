@@ -6,7 +6,7 @@ import {firstValueFrom} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SsDeleteManyFilesStorageService {
+export class DeleteManyFilesStorageService {
 
   constructor(private _angularFireStorage: AngularFireStorage) {
   }

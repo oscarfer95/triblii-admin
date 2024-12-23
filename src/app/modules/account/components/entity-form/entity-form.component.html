@@ -7,7 +7,7 @@
 
       <input type="text" pInputText class="w-full md:w-9" placeholder="Ejm: TarjetaTech SRL."
              formControlName="name"
-             [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}"/>
+             [ngClass]="{'pointer-events-none': userDataModel.role === 'MAINTAINER'}"/>
     </section>
 
     <section>
@@ -17,7 +17,7 @@
 
       <textarea type="text" class="w-full md:w-9 max-h-5rem" pInputTextarea formControlName="description"
         placeholder="Escribe una breve descripción..." [rows]="2" 
-        [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}"></textarea>
+        [ngClass]="{'pointer-events-none': userDataModel.role === 'MAINTAINER'}"></textarea>
     </section>
 
     <section>
@@ -29,12 +29,12 @@
         [enableAutoCountrySelect]="true" [enablePlaceholder]="false" [customPlaceholder]="'Ingresa tu número'"
         [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
         [phoneValidation]="true" formControlName="phone"
-        [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}">
+        [ngClass]="{'pointer-events-none': userDataModel.role === 'MAINTAINER'}">
       </ngx-intl-tel-input>
     </section>
   </section>
 
-  <section *ngIf="userDataModel.role === 'ADMIN'"
+  <section *ngIf="userDataModel.role === 'ADMIN' || userDataModel?.role === 'SUPERADMIN'"
            class="flex justify-content-end mt-5">
     <button class="ss-button fadein" [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
       [disabled]="form.invalid || !form.touched" (click)="saveForm()">

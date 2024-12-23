@@ -1,17 +1,17 @@
-export class SsBanner {
-  public id?: string;
+export class Banner {
   public backgroundUrl: string;
   public buttonLabel: string;
   public buttonLink: string;
-  public catalogueId: string;
+  public entitiesId: any[];
   public description: string;
   public isSponsored: boolean;
+  public available: boolean;
   public pngUrl: string;
   public title: string;
+  public order: number;
 
   constructor() {
-    this.id = '';
-    this.catalogueId = '';
+    this.entitiesId = [];
     this.backgroundUrl = '';
     this.description = '';
     this.buttonLabel = '';
@@ -19,5 +19,7 @@ export class SsBanner {
     this.pngUrl = '';
     this.title = '';
     this.isSponsored = false;
+    this.available = true;
+    this.order = Math.floor(Math.random() * (11)) + 45;
   }
 }

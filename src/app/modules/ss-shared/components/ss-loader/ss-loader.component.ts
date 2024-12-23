@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
-import {SsLoaderService} from '../../services/ss-loader.service';
+import {LoaderService} from '../../services/loader.service';
 
 @Component({
   selector: 'ss-loader',
@@ -8,7 +8,7 @@ import {SsLoaderService} from '../../services/ss-loader.service';
 })
 export class SsLoaderComponent implements OnInit {
 
-  constructor(public loaderService: SsLoaderService) {
+  constructor(public loaderService: LoaderService) {
   }
 
   ngOnInit(): void {

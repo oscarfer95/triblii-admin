@@ -22,18 +22,18 @@ import { NgModule } from '@angular/core';
 import { SsAnnouncementComponent } from './components/ss-announcement/ss-announcement.component';
 import { SsFileInputComponent } from './components/ss-file-input/ss-file-input.component';
 import { SsQrComponent } from './components/ss-qr/ss-qr.component';
-import { SsDropZoneDirective } from './directives/ss-drop-zone.directive';
-import { SsSanitizePipe } from './pipes/ss-sanitize.pipe';
+import { DropZoneDirective } from './directives/drop-zone.directive';
+import { SanitizePipe } from './pipes/sanitize.pipe';
 import { CountryFormComponent } from './components/country-form/country-form.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
     SsAnnouncementComponent,
-    SsDropZoneDirective,
+    DropZoneDirective,
     SsFileInputComponent,
     SsQrComponent,
-    SsSanitizePipe,
+    SanitizePipe,
     CountryFormComponent
   ],
   imports: [
@@ -62,7 +62,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ReactiveFormsModule,
     SkeletonModule,
     SsAnnouncementComponent,
-    SsDropZoneDirective,
+    DropZoneDirective,
     SsFileInputComponent,
     SsQrComponent,
     SwiperModule,
@@ -71,7 +71,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     CountryFormComponent
   ],
   providers: [
-    SsSanitizePipe
+    SanitizePipe
   ]
 })
 export class SsSharedModule {

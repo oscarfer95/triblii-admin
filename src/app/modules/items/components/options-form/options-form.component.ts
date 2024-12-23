@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
-import { CategoriesRepositoryService } from 'src/app/modules/ss-shared/services/ss-category.repository-service';
-import { TagRepositoryService } from 'src/app/modules/ss-shared/services/ss-tag.repository-service';
+import { CategoriesRepositoryService } from 'src/app/modules/ss-shared/services/category.repository-service';
+import { TagRepositoryService } from 'src/app/modules/ss-shared/services/tag.repository-service';
 import { ConfigList } from 'src/framework/repository/config-list.model';
 
 @Component({

@@ -77,11 +77,11 @@ export class SsFileInputComponent implements OnInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
-  public onDraggingFiles(dragging: boolean): void {
+  public onDraggingFiles(dragging: any): void {
     this.draggingFiles = dragging;
   }
 
-  public onDroppedFiles(files: FileList): void {
+  public onDroppedFiles(files: any): void {
     if (this._validLimit(files)) {
       Array.from(files)
         .forEach((file: File) => {

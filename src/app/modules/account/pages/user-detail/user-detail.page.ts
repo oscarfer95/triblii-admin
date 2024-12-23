@@ -6,11 +6,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { firstValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
 import CanDeactivateComponent from '../../../ss-shared/models/router/can-deactivate-component';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
-import { UsersRepositoryService } from 'src/app/modules/ss-shared/services/ss-users.repository-service';
+import { UsersRepositoryService } from 'src/app/modules/ss-shared/services/users.repository-service';
 import { User } from 'src/app/modules/ss-shared/models/user.model';
 
 @Component({
@@ -34,7 +34,7 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     private _userDataModelService: UserDataModelService,
     private _confirmationService: ConfirmationService,
     private _activatedRoute: ActivatedRoute,
-    private _loaderService: SsLoaderService,
+    private _loaderService: LoaderService,
     private _toastService: MessageService,
     private _formBuilder: FormBuilder,
     private _cdr: ChangeDetectorRef,
@@ -57,17 +57,18 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
   }
 
   public saveForm(): void {
-    console.log(this.itemForm.value);
-    let user = null;
+    this._loaderService.show = true;
+    const formValue: any = this.itemForm.value;
+    const user: any = { ...this.user, ...formValue };
 
-    // if (user.id) {
-    //   delete user.id;
-    //   user.entitiesId.includes(this.userDataModel.entity.id) ? null : user.entitiesId.push(this.userDataModel.entity.id);
-    //   this._editItem(user);
-    // } else {
-    //   user.entitiesId.push(this.userDataModel.entity.id);
-    //   this._createItem(user);
-    // }
+    if (user.id) {
+      delete user.id;
+      user.entitiesId?.includes(this.userDataModel.entity.id) ? null : user.entitiesId?.push(this.userDataModel.entity.id);
+      this._editUser(user);
+    } else {
+      user.entitiesId?.push(this.userDataModel.entity.id);
+      this._createUser(user);
+    }
   }
 
   private _editUser(user: any): void {
@@ -97,7 +98,7 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
       });
   }
 
-  private _createItem(user: any): void {
+  private _createUser(user: any): void {
     firstValueFrom(this._usersRepositoryService.create(user))
       .then(() => {
         this._toastService.add({

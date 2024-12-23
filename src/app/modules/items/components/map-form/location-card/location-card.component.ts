@@ -2,8 +2,8 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { OverlayPanel } from 'primeng/overlaypanel';
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
-import { LocationService } from 'src/app/modules/ss-shared/services/ss-location.repository-service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
+import { LocationService } from 'src/app/modules/ss-shared/services/location.repository-service';
 import { LocationFormComponent } from '../location-form/location-form.component';
 
 @Component({
@@ -26,7 +26,7 @@ export class LocationCardComponent implements OnInit {
 
   constructor(private _confirmationService: ConfirmationService,
               private _locationService: LocationService,
-              private _loaderService: SsLoaderService,
+              private _loaderService: LoaderService,
               private _dialogService: DialogService) {
   }
 

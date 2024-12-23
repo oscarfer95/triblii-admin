@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MessageService} from 'primeng/api';
 
 import {SsUploadFileService} from '../../../ss-shared/components/ss-file-input/services/ss-upload-file.service';
-import {SsUploadFileStorageService} from '../../../ss-shared/services/ss-upload-file-storage.service';
+import {UploadFileStorageService} from '../../../ss-shared/services/upload-file-storage.service';
 
 @Component({
   selector: 'gallery-form',
@@ -13,7 +13,7 @@ import {SsUploadFileStorageService} from '../../../ss-shared/services/ss-upload-
   providers: [
     {
       provide: SsUploadFileService,
-      useClass: SsUploadFileStorageService
+      useClass: UploadFileStorageService
     }
   ]
 })

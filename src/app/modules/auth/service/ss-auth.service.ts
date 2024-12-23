@@ -4,14 +4,14 @@ import {AsyncSubject, firstValueFrom, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 
 import {UserDataModel} from '../../ss-shared/models/user-data-model.model';
-import {UsersRepositoryService} from '../../ss-shared/services/ss-users.repository-service';
+import {UsersRepositoryService} from '../../ss-shared/services/users.repository-service';
 import {EntitiesRepositoryService} from '../../ss-shared/services/entities.repository-service';
 import {UserDataModelService} from '../storage/user-data-model.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SsAuthService {
+export class AuthService {
   private _auth: AsyncSubject<boolean>;
 
   constructor(private _entityRepositoryService: EntitiesRepositoryService,

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-import {SsAuthService} from 'src/app/modules/auth/service/ss-auth.service';
+import {AuthService} from 'src/app/modules/auth/service/ss-auth.service';
 
 @Component({
   selector: 'ss-navbar',
@@ -13,7 +13,7 @@ export class SsNavbarComponent implements OnInit, OnDestroy {
   @Output()
   public clickMenuButton: EventEmitter<void>;
 
-  constructor(private _ssAuthService: SsAuthService,
+  constructor(private _authService: AuthService,
               private _router: Router) {
     this.clickMenuButton = new EventEmitter();
   }
@@ -29,7 +29,7 @@ export class SsNavbarComponent implements OnInit, OnDestroy {
   }
 
   public logout(): void {
-    this._ssAuthService.logout()
+    this._authService.logout()
       .then(() => {
         this._router.navigate(['/public/login']);
       });

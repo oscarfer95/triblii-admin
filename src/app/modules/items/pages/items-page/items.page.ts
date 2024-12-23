@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { getMenuItemById } from 'src/app/modules/ss-shared/utils/get-side-bar-options.utils';
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
 import { ConfigList } from 'src/framework/repository/config-list.model';
 import { RestaurantsRepositoryService } from 'src/app/modules/ss-shared/services/restaurants.repository-service';
 import { HotelsRepositoryService } from 'src/app/modules/ss-shared/services/hotels.repository-service';
@@ -36,7 +36,7 @@ export class ItemsPage implements OnInit, OnDestroy {
               private _eventsRepositoryService: EventsRepositoryService,
               private _userDataModelService: UserDataModelService,
               private _activatedRoute: ActivatedRoute,
-              private _loaderService: SsLoaderService,
+              private _loaderService: LoaderService,
               private _cdr: ChangeDetectorRef) {
     this.itemList = null;
     this._unsubscribe = new Subject<void>();
@@ -61,15 +61,7 @@ export class ItemsPage implements OnInit, OnDestroy {
         return;
       }
   
-      const configList: ConfigList = {
-        queryList: [
-          {
-            field: 'entitiesId',
-            operation: 'array-contains-any',
-            value: [this.userDataModel.entity.id]
-          }
-        ]
-      };
+      const configList: ConfigList = this._getConfigList();
   
       const items: any = await firstValueFrom(this.itemsService.getByQuerys(configList));
       this.itemList = items;
@@ -79,6 +71,26 @@ export class ItemsPage implements OnInit, OnDestroy {
       this._cdr.markForCheck();
       this._loaderService.show = false;
     }
+  }
+
+  private _getConfigList() {
+    let configList: ConfigList;
+
+    if (this.userDataModel.role !== 'SUPERADMIN') {
+      configList = {
+        queryList: [
+          {
+            field: 'entitiesId',
+            operation: 'array-contains-any',
+            value: [this.userDataModel.entity.id]
+          }
+        ]
+      };
+    } else {
+      configList = {};
+    };
+
+    return configList;
   }
 
   private _getParamCollection() {

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, EventEmitter, OnInit, Output
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
 import { BannerRepositoryService } from 'src/app/modules/ss-shared/services/banner.repository-service';
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
 @Component({
   selector: 'banner-card',
   templateUrl: './banner-card.component.html',
@@ -19,7 +19,7 @@ export class BannerCardComponent implements OnInit {
 
   constructor(private _bannerRepositoryService: BannerRepositoryService,
               private _confirmationService: ConfirmationService,
-              private _loaderService: SsLoaderService,
+              private _loaderService: LoaderService,
               private _toastService: MessageService) {
     this.bannerDeleted = new EventEmitter<void>();
   }

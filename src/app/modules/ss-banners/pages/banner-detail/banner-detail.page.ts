@@ -7,9 +7,9 @@ import { Location } from '@angular/common';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
 import { BannerRepositoryService } from 'src/app/modules/ss-shared/services/banner.repository-service';
-import { SsBanner } from 'src/app/modules/ss-shared/models/ss-banner.model';
+import { Banner } from 'src/app/modules/ss-shared/models/banner.model';
 import { BannerResponse } from 'src/app/modules/ss-shared/services/api/responses/banner.response';
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 
@@ -31,7 +31,7 @@ export class BannerDetail implements OnInit, OnDestroy {
   constructor(private _bannersRepositoryService: BannerRepositoryService,
     private _userDataModelService: UserDataModelService,
     private _activatedRoute: ActivatedRoute,
-    private _loaderService: SsLoaderService,
+    private _loaderService: LoaderService,
     private _toastService: MessageService,
     private _formBuilder: FormBuilder,
     private _cdr: ChangeDetectorRef,
@@ -60,17 +60,19 @@ export class BannerDetail implements OnInit, OnDestroy {
     const banner: any = { ...this.banner, ...formValue };
 
     if (banner.id) {
-      delete banner.id;
-      banner.entitiesId.includes(this.userDataModel.entity.id) ? null : banner.entitiesId.push(this.userDataModel.entity.id);
-      this._editBanner(banner);
+      banner?.entitiesId.includes(this.userDataModel.entity.id) ? null : banner?.entitiesId?.push(this.userDataModel.entity.id);
+      this._editBanner(banner, banner.id);
     } else {
-      banner.entitiesId.push(this.userDataModel.entity.id);
+      banner?.entitiesId?.push(this.userDataModel.entity.id);
       this._createBanner(banner);
     }
+    console.log(banner);
+    
   }
 
-  private async _editBanner(banner: any): Promise<any> {
-    return firstValueFrom(this._bannersRepositoryService.update(banner, banner.id)).then(() => {
+  private async _editBanner(banner: any, id: string): Promise<any> {
+    delete banner.id;
+    return firstValueFrom(this._bannersRepositoryService.update(banner, id)).then(() => {
       this._loaderService.show = false;
       this._toastService.add({
         severity: 'success',
@@ -117,7 +119,7 @@ export class BannerDetail implements OnInit, OnDestroy {
 
   private _getBanner(): void {
     if (this._activatedRoute.snapshot.params['id'] === 'new') {
-      this.banner = new SsBanner();
+      this.banner = new Banner();
     } else {
       firstValueFrom(this._bannersRepositoryService.getById(this._activatedRoute.snapshot.params['id']))
         .then((banner: BannerResponse) => {

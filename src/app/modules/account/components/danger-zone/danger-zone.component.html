@@ -8,7 +8,7 @@
       </span>
     </div>
 
-    <div *ngIf="userData.role === 'ADMIN'" class="w-full flex cursor-pointer ss-bg--grey-lighten p-3 border-round-xl">
+    <div *ngIf="userData.role === 'ADMIN' || userData?.role === 'SUPERADMIN'" class="w-full flex cursor-pointer ss-bg--grey-lighten p-3 border-round-xl">
       <i class="pi pi-trash text-xl ss-txt--red mr-3"></i>
 
       <span class="ss-txt-body ss-txt--black-lighten">

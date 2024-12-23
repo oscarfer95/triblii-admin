@@ -7,7 +7,7 @@ import {Observable, switchMap, take} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SsAuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
 
   constructor(private _angularFireAuth: AngularFireAuth,
               private _router: Router) {

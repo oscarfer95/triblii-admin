@@ -5,7 +5,7 @@ import { EventEmitter, ChangeDetectionStrategy, Component, Input, OnInit, Output
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
 import { EntitiesRepositoryService } from 'src/app/modules/ss-shared/services/entities.repository-service';
 
 @Component({
@@ -28,7 +28,7 @@ export class EntityFormComponent implements OnInit {
   public userDataModel!: any;
 
   constructor(private _entitiesRepositoryService: EntitiesRepositoryService,
-    private _loaderService: SsLoaderService,
+    private _loaderService: LoaderService,
     private _toastService: MessageService,
     private _formBuilder: FormBuilder,
     private _cdr: ChangeDetectorRef) {

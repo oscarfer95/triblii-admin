@@ -1,5 +1,6 @@
 <article *ngIf="bannerList" class="w-full h-full ss-main-admin-padding pt-7 lg:pt-6 flex flex-column flex-grow-1">
-  <header class="w-full flex ss-txt-title ss-txt-title--big ss-txt-title--regular justify-content-between align-items-center px-3 lg:px-0"
+  <header
+    class="w-full flex ss-txt-title ss-txt-title--big ss-txt-title--regular justify-content-between align-items-center px-3 lg:px-0"
     data-aos="fade-up">
     <section class="w-fit">
       <i class="bi bi-tv text-3xl ss-txt--primary mr-2"></i> Banners
@@ -19,7 +20,11 @@
     <section *ngIf="bannerList.length > 0" data-aos="fade-up" data-aos-delay="600">
       <swiper [config]="swiperConfig" class="overflow-hidden">
         <ng-template swiperSlide *ngFor="let banner of bannerList">
-          <banner-card [banner]="banner" (bannerDeleted)="updateAfterDelete()"></banner-card>
+          <section class="w-full flex justify-content-center">
+            <section class="w-11 md:w-10 lg:w-9">
+              <banner-card [banner]="banner" (bannerDeleted)="updateAfterDelete()"></banner-card>
+            </section>
+          </section>
         </ng-template>
       </swiper>
     </section>

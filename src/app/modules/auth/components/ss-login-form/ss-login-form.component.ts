@@ -4,7 +4,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
-import {SsAuthService} from '../../service/ss-auth.service';
+import {AuthService} from '../../service/ss-auth.service';
 
 @Component({
   selector: 'ss-login-form',
@@ -15,7 +15,7 @@ export class SsLoginFormComponent implements OnInit {
   public logInForm!: FormGroup;
 
   constructor(private _messageService: MessageService,
-              private _ssAuthService: SsAuthService,
+              private _authService: AuthService,
               private _formBuilder: FormBuilder,
               private _router: Router) { }
 
@@ -26,7 +26,7 @@ export class SsLoginFormComponent implements OnInit {
   public login(): void {
     const formValue: any = this.logInForm.value;
 
-    this._ssAuthService.login(formValue.email, formValue.password)
+    this._authService.login(formValue.email, formValue.password)
       .then(() => {
         this._router.navigate(['/dashboard/home']);
       })

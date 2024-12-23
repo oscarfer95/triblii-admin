@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { ConfigList } from 'src/framework/repository/config-list.model';
 import { ActivatedRoute } from '@angular/router';
-import { UsersRepositoryService } from 'src/app/modules/ss-shared/services/ss-users.repository-service';
+import { UsersRepositoryService } from 'src/app/modules/ss-shared/services/users.repository-service';
 
 @Component({
   selector: 'users-page',
@@ -24,7 +24,7 @@ export class UsersPage implements OnInit, OnDestroy {
   constructor(private _usersRepositoryService: UsersRepositoryService,
     private _userDataModelService: UserDataModelService,
     private _activatedRoute: ActivatedRoute,
-    private _loaderService: SsLoaderService,
+    private _loaderService: LoaderService,
     private _cdr: ChangeDetectorRef) {
     this.userList = null;
     this._unsubscribe = new Subject<void>();
@@ -53,15 +53,7 @@ export class UsersPage implements OnInit, OnDestroy {
         return;
       }
 
-      const configList: ConfigList = {
-        queryList: [
-          {
-            field: 'entityId',
-            operation: '==',
-            value: this.userDataModel.entity.id
-          }
-        ]
-      };
+      const configList: ConfigList = this._getConfigList(); 
 
       const users: any = await firstValueFrom(this._usersRepositoryService.getByQuerys(configList));
       const filteredUsers = users.filter((user: any) => user.id !== this.userDataModel.id);
@@ -74,6 +66,26 @@ export class UsersPage implements OnInit, OnDestroy {
     }
   }
 
+  private _getConfigList() {
+    let configList: ConfigList;
+
+    if (this.userDataModel.role !== 'SUPERADMIN') {
+      configList = {
+        queryList: [
+          {
+            field: 'entityId',
+            operation: '==',
+            value: this.userDataModel.entity.id
+          }
+        ]
+      };
+    } else {
+      configList = {};
+    };
+
+    return configList;
+  }
+  
   private _userDataModelListener() {
     this._userDataModelService.userDataModelListener()
       .pipe(

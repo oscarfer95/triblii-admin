@@ -8,7 +8,7 @@ import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
 import { BannerRepositoryService } from 'src/app/modules/ss-shared/services/banner.repository-service';
 import { Router } from '@angular/router';
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 import { ConfigList } from 'src/framework/repository/config-list.model';
@@ -32,7 +32,7 @@ export class BannersPage implements OnInit, OnDestroy {
 
   constructor(private _bannerRepositoryService: BannerRepositoryService,
     private _userDataModelService: UserDataModelService,
-    private _loaderService: SsLoaderService,
+    private _loaderService: LoaderService,
     private _toastService: MessageService,
     private _cdr: ChangeDetectorRef,
     private _router: Router) {
@@ -108,15 +108,7 @@ export class BannersPage implements OnInit, OnDestroy {
         return;
       }
 
-      const configList: ConfigList = {
-        queryList: [
-          {
-            field: 'entitiesId',
-            operation: 'array-contains-any',
-            value: [this.userDataModel.entity.id]
-          }
-        ]
-      };
+      const configList: ConfigList = this._getConfigList();
 
       const items: any = await firstValueFrom(this._bannerRepositoryService.getByQuerys(configList));
 
@@ -128,6 +120,27 @@ export class BannersPage implements OnInit, OnDestroy {
       this._loaderService.show = false;
     }
   }
+
+  private _getConfigList() {
+    let configList: ConfigList;
+
+    if (this.userDataModel.role !== 'SUPERADMIN') {
+      configList = {
+        queryList: [
+          {
+            field: 'entitiesId',
+            operation: 'array-contains-any',
+            value: [this.userDataModel.entity.id]
+          }
+        ]
+      };
+    } else {
+      configList = {};
+    };
+
+    return configList;
+  }
+  
 
   private _userDataModelListener() {
     this._userDataModelService.userDataModelListener()

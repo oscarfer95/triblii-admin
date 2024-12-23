@@ -22,7 +22,7 @@
 
               <input type="text" pInputText class="w-full flex flex-grow-1" placeholder="Ejm: starbucks"
                 formControlName="slug" [ngClass]="{ 'p-error': !isSlugAvailable }" 
-                [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}"/>
+                [ngClass]="{'pointer-events-none': userDataModel.role === 'MAINTAINER'}"/>
             </section>
 
             <small *ngIf="form.get('slug')?.hasError('pattern') ||
@@ -34,7 +34,7 @@
           </section>
 
           <color-picker (hideEvent)="changeColor($event)" [customColor]="form.value.color" 
-                           [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}">
+                           [ngClass]="{'pointer-events-none': userDataModel.role === 'MAINTAINER'}">
           </color-picker>
 
           <section class="w-full">
@@ -45,7 +45,7 @@
 
             <section class="flex gap-3 pt-1">
               <p-inputSwitch formControlName="isPublic" 
-                             [ngClass]="{'pointer-events-none': userDataModel.role !== 'ADMIN'}">
+                             [ngClass]="{'pointer-events-none': userDataModel.role === 'MAINTAINER'}">
               </p-inputSwitch>
 
               <span class="ss-txt--black" *ngIf="!form.value.isPublic">
@@ -67,7 +67,7 @@
             </div>
           </section>
 
-          <section *ngIf="userDataModel.role === 'ADMIN'" class="flex justify-content-end">
+          <section *ngIf="userDataModel.role === 'ADMIN' || userDataModel?.role === 'SUPERADMIN'" class="flex justify-content-end">
             <button class="ss-button fadein" [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
               [disabled]="form.invalid || !form.touched" (click)="saveForm()">
               Guardar cambios

@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, V
 import {Router} from '@angular/router';
 import {Subject, takeUntil} from 'rxjs';
 
-import {SsAuthService} from '../../../auth/service/ss-auth.service';
+import {AuthService} from '../../../auth/service/ss-auth.service';
 import {UserDataModelService} from 'src/app/modules/auth/storage/user-data-model.service';
 import {UserDataModel} from 'src/app/modules/ss-shared/models/user-data-model.model';
 import {generateMenuItems} from '../../../ss-shared/utils/get-side-bar-options.utils';
@@ -23,7 +23,7 @@ export class SsSidebarComponent implements OnInit, OnDestroy {
   private _unsubscribe: Subject<void>;
 
   constructor(private _userDataModelService: UserDataModelService,
-              private _ssAuthService: SsAuthService,
+              private _authService: AuthService,
               private _cdr: ChangeDetectorRef,
               private _router: Router) {
     this.clickMenuButton = new EventEmitter();
@@ -44,7 +44,7 @@ export class SsSidebarComponent implements OnInit, OnDestroy {
   }
 
   public logout(): void {
-    this._ssAuthService.logout()
+    this._authService.logout()
       .then(() => {
         this._router.navigate(['/public/login']);
       });

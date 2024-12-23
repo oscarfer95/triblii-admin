@@ -27,6 +27,9 @@ import { LocationMapComponent } from './components/map-form/location-map/locatio
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { AccordionModule } from 'primeng/accordion';
 import { ItemDetail } from './pages/item-detail/item-detail.page';
+import { FoodsFormComponent } from './components/foods-form/foods-form.component';
+import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import { ItemDetail } from './pages/item-detail/item-detail.page';
     OptionsFormComponent,
     LocationCardComponent,
     LocationFormComponent,
-    LocationMapComponent
+    LocationMapComponent,
+    FoodsFormComponent,
+    ScheduleFormComponent
   ],
   imports: [
     AccordionModule,
@@ -58,7 +63,8 @@ import { ItemDetail } from './pages/item-detail/item-detail.page';
     MultiSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    CalendarModule
   ]
 })
 export class ItemsModule { }

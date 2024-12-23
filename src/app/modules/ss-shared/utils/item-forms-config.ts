@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 const FORM_GROUPS_CONFIG: Record<string, string[]> = {
   attractions: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm', 'scheduleForm'],
   restaurants: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm', 'scheduleForm', 'deliveryForm'],
-  hotels: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm'],
+  hotels: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'scheduleForm'],
   foods: ['galleryForm', 'informationForm', 'optionsForm'],
   events: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm', 'dateSettingForm'],
 };

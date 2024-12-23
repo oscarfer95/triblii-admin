@@ -1,16 +1,16 @@
 <article
-  class="w-10 shadow-1 cursor-pointer border-round-2xl p-3 md:p-5 flex flex-column-reverse md:flex-row md:align-items-center mx-auto bg-primary-200 my-6 bg-cover relative"
+  class="w-full shadow-1 cursor-pointer border-round-2xl p-3 md:p-5 flex flex-column-reverse md:flex-row md:align-items-center mx-auto bg-primary-200 my-6 bg-cover relative"
   [style.background-image]="'url('+ banner.backgroundUrl +')'">
   <section class="w-full md:w-8 h-full flex flex-column z-2" routerLink="/dashboard/banners/{{ banner.id }}">
-    <h4 class="ss-txt-title ss-txt--white font-bold mb-2">
+    <h4 class="ss-txt-title ss-txt--white font-semibold mb-2 text-3xl">
       {{ banner.title }}
     </h4>
 
-    <p class="mb-3 ss-txt--white">
+    <p class="my-3 ss-txt--white">
       {{ banner.description }}
     </p>
 
-    <button class="w-fit ss-button ss-button--small my-3">
+    <button class="w-fit ss-button my-3">
       {{ banner.buttonLabel }}
     </button>
   </section>

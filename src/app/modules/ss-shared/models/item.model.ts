@@ -74,7 +74,7 @@ export class Attraction extends Item {
 
   constructor() {
     super();
-    this.schedule = null;
+    this.schedule = scheduleDays;
     this.price = '';
     this.location = {
       address: '',
@@ -102,7 +102,7 @@ export class Restaurant extends Item {
   constructor() {
     super();
     this.categories = ['gastronomy'];
-    this.schedule = null;
+    this.schedule = scheduleDays;
     this.delivery = null;
     this.location = {
       address: '',
@@ -197,8 +197,11 @@ export class Hotel extends Item {
     coords: any | null;
   };
 
+  schedule: any | null;
+
   constructor() {
     super();
+    this.schedule = scheduleDays;
     this.location = {
       address: '',
       city: '',
@@ -207,4 +210,46 @@ export class Hotel extends Item {
       coords: null,
     };
   }
+}
+
+//Schedule
+const scheduleDays: any = {
+  available: false,
+  days: [
+    {
+      day: 'monday',
+      open: '',
+      close: ''
+    },
+    {
+      day: 'tuesday',
+      open: '',
+      close: ''
+    },
+    {
+      day: 'wednesday',
+      open: '',
+      close: ''
+    },
+    {
+      day: 'thursday',
+      open: '',
+      close: ''
+    },
+    {
+      day: 'friday',
+      open: '',
+      close: ''
+    },
+    {
+      day: 'saturday',
+      open: '',
+      close: ''
+    },
+    {
+      day: 'sunday',
+      open: '',
+      close: ''
+    }
+  ]
 }

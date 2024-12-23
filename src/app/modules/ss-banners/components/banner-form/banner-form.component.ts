@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy,
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {firstValueFrom} from 'rxjs';
 
-import {SsUploadFileStorageService} from 'src/app/modules/ss-shared/services/ss-upload-file-storage.service';
+import {UploadFileStorageService} from 'src/app/modules/ss-shared/services/upload-file-storage.service';
 
 @Component({
   selector: 'banner-form',
@@ -18,7 +18,7 @@ export class BannerFormComponent implements OnInit, OnDestroy {
   @Input()
   public banner!: any;
 
-  constructor(private _ssUploadFileStorageService: SsUploadFileStorageService,
+  constructor(private _ssUploadFileStorageService: UploadFileStorageService,
               private _formBuilder: FormBuilder,
               private _cdr: ChangeDetectorRef) {
   }
@@ -46,9 +46,9 @@ export class BannerFormComponent implements OnInit, OnDestroy {
 
   private _initForm(): void {
     this.form.addControl('backgroundUrl', this._formBuilder.control(this.banner.backgroundUrl || ''));
-    this.form.addControl('buttonLabel', this._formBuilder.control(this.banner.buttonLabel || '', [Validators.required, Validators.min(1), Validators.max(200)]));
-    this.form.addControl('buttonLink', this._formBuilder.control(this.banner.buttonLink || '', [Validators.required, Validators.minLength(1), Validators.maxLength(3500)]));
-    this.form.addControl('description', this._formBuilder.control(this.banner.description || '', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]));
+    this.form.addControl('buttonLabel', this._formBuilder.control(this.banner.buttonLabel || '', [Validators.required, Validators.min(2), Validators.max(200)]));
+    this.form.addControl('buttonLink', this._formBuilder.control(this.banner.buttonLink || '', [Validators.required, Validators.minLength(7), Validators.maxLength(200)]));
+    this.form.addControl('description', this._formBuilder.control(this.banner.description || '', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]));
     this.form.addControl('pngUrl', this._formBuilder.control(this.banner.pngUrl || ''));
     this.form.addControl('title', this._formBuilder.control(this.banner.title || '', Validators.required));
   }

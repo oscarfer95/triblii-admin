@@ -6,8 +6,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { firstValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 
-import { SsDeleteManyFilesStorageService } from '../../../ss-shared/services/ss-delete-many-files-storage.service';
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
+import { DeleteManyFilesStorageService } from '../../../ss-shared/services/delete-many-files-storage.service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
 import CanDeactivateComponent from '../../../ss-shared/models/router/can-deactivate-component';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
@@ -37,12 +37,12 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
   public moduleId: string;
   private _service: any;
 
-  constructor(private _deleteManyFilesStorageService: SsDeleteManyFilesStorageService,
+  constructor(private _deleteManyFilesStorageService: DeleteManyFilesStorageService,
     private _repositoryService: RepositoryFactoryService,
     private _userDataModelService: UserDataModelService,
     private _confirmationService: ConfirmationService,
     private _activatedRoute: ActivatedRoute,
-    private _loaderService: SsLoaderService,
+    private _loaderService: LoaderService,
     private _toastService: MessageService,
     private _formBuilder: FormBuilder,
     private _cdr: ChangeDetectorRef,
@@ -80,6 +80,14 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
 
   public get locationForm(): FormGroup {
     return <FormGroup>this.itemForm?.get('locationForm');
+  }
+
+  public get foodsForm(): FormGroup {
+    return <FormGroup>this.itemForm?.get('foodsForm');
+  }
+
+  public get scheduleForm(): FormGroup {
+    return <FormGroup>this.itemForm?.get('scheduleForm');
   }
 
   public changeTab(event: any): void {
@@ -134,7 +142,6 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     }
 
     const item: any = { ...this.item, ...formValue };
-
     if (item.id) {
       delete item.id;
       item.entitiesId.includes(this.userDataModel.entity.id) ? null : item.entitiesId.push(this.userDataModel.entity.id);

@@ -10,7 +10,7 @@ import { UserDataModelService } from '../../auth/storage/user-data-model.service
 @Injectable({
   providedIn: 'root'
 })
-export class SsUploadFileStorageService extends SsUploadFileService implements OnDestroy {
+export class UploadFileStorageService extends SsUploadFileService implements OnDestroy {
   private _uploadPercent$: Subject<number>;
   private _dataResponse$: Subject<string>;
 

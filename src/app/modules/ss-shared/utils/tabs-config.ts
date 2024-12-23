@@ -7,23 +7,21 @@ export const ALL_TAB_ITEMS: TabItem[] = [
   { label: 'Información', icon: 'pi pi-book' },
   { label: 'Opciones', icon: 'pi pi-fw pi-check-square' },
   { label: 'Ubicación', icon: 'pi pi-map-marker' },
-  { label: 'Galería', icon: 'pi pi-fw pi-images' },
-  { label: 'Comidas', icon: 'pi pi-sitemap' }
+  { label: 'Horario', icon: 'pi pi-calendar' },
+  { label: 'Comidas', icon: 'pi pi-sitemap' },
+  { label: 'Galería', icon: 'pi pi-fw pi-images' }
 ];
 
 export const TAB_CONFIG: Record<string, TabItem[]> = {
-  attractions: insertTabs(ALL_TAB_ITEMS, [
-    { item: { label: 'Horario', icon: 'pi pi-calendar' }, position: 3 }
-  ]),
+  attractions: ALL_TAB_ITEMS,
   restaurants: insertTabs(ALL_TAB_ITEMS, [
-    { item: { label: 'Delivery', icon: 'pi pi-send' }, position: 3 },
-    { item: { label: 'Horario', icon: 'pi pi-calendar' }, position: 4 }
+    { item: { label: 'Delivery', icon: 'pi pi-send' }, position: 4 }
   ]),
-  events: insertTabs(ALL_TAB_ITEMS, [
-    { item: { label: 'Fecha', icon: 'pi pi-calendar' }, position: 3 }
+  events: insertTabs(excludeTabs(ALL_TAB_ITEMS, ['Horario']), [
+    { item: { label: 'Fechas', icon: 'pi pi-calendar' }, position: 2 }
   ]),
-  foods: excludeTabs(ALL_TAB_ITEMS, ['Comidas', 'Ubicación']),
-  hotels: insertTabs(ALL_TAB_ITEMS, [])
+  foods: excludeTabs(ALL_TAB_ITEMS, ['Comidas', 'Ubicación', 'Horario', 'Fecha']),
+  hotels: excludeTabs(ALL_TAB_ITEMS, ['Comidas']),
 };
 
 function insertTabs(baseTabs: TabItem[], inserts: { item: TabItem; position: number }[]): TabItem[] {

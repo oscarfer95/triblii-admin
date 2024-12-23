@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy,
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {firstValueFrom} from 'rxjs';
 
-import {SsLoaderService} from 'src/app/modules/ss-shared/services/ss-loader.service';
-import {SsUploadFileStorageService} from 'src/app/modules/ss-shared/services/ss-upload-file-storage.service';
+import {LoaderService} from 'src/app/modules/ss-shared/services/loader.service';
+import {UploadFileStorageService} from 'src/app/modules/ss-shared/services/upload-file-storage.service';
 
 @Component({
   selector: 'information-form',
@@ -19,8 +19,8 @@ export class InformationFormComponent implements OnInit, OnDestroy {
   @Input()
   public item!: any;
 
-  constructor(private _ssUploadFileStorageService: SsUploadFileStorageService,
-              private _loaderService: SsLoaderService,
+  constructor(private _ssUploadFileStorageService: UploadFileStorageService,
+              private _loaderService: LoaderService,
               private _formBuilder: FormBuilder,
               private _cdr: ChangeDetectorRef) {
   }

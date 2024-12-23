@@ -1,10 +1,10 @@
 import {ExtraOptions, Routes} from '@angular/router';
 
-import {SsAuthGuard} from '../modules/ss-shared/guards/ss-auth.guard';
+import {AuthGuard} from '../modules/ss-shared/guards/ss-auth.guard';
 
 export const SS_MAIN_ROUTES: Routes = [
   {
-    canActivate: [SsAuthGuard],
+    canActivate: [AuthGuard],
     path: 'dashboard',
     loadChildren: () => import('../modules/ss-dashboard/ss-dashboard.module')
       .then(m => m.SsDashboardModule)

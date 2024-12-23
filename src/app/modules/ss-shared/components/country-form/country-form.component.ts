@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
 import { ConfigList } from 'src/framework/repository/config-list.model';
-import { LocationService } from '../../services/ss-location.repository-service';
+import { LocationService } from '../../services/location.repository-service';
 
 @Component({
   selector: 'country-form',

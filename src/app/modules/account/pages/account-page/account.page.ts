@@ -4,8 +4,8 @@ import { MenuItem } from 'primeng/api';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
-import { SsLoaderService } from 'src/app/modules/ss-shared/services/ss-loader.service';
-import { SsUploadFileStorageService } from 'src/app/modules/ss-shared/services/ss-upload-file-storage.service';
+import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
+import { UploadFileStorageService } from 'src/app/modules/ss-shared/services/upload-file-storage.service';
 import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
 import { EntitiesRepositoryService } from 'src/app/modules/ss-shared/services/entities.repository-service';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
@@ -28,9 +28,9 @@ export class AccountPage implements OnInit, OnDestroy {
   private _unsubscribe: Subject<void>;
 
   constructor(private _entitiesRepositoryService: EntitiesRepositoryService,
-    private _ssUploadFileStorageService: SsUploadFileStorageService,
+    private _ssUploadFileStorageService: UploadFileStorageService,
     private _userDataModelService: UserDataModelService,
-    private _loaderService: SsLoaderService,
+    private _loaderService: LoaderService,
     private _cdr: ChangeDetectorRef) {
     this.tabItems = [
       { label: 'Usuario', icon: 'pi pi-user-edit' },

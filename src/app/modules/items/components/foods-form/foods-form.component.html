@@ -1,0 +1,17 @@
+<article *ngIf="!isLoading" [formGroup]="form" class="sm:p-3 flex flex-column gap-5">
+  <section class="w-full">
+    <h4>
+      Comidas relacionadas
+    </h4>
+
+    <div class="w-full mt-2 mb-3 ss-txt--black-lighten text-sm">
+      Asocia una o más comidas para relacionar un lugar con comidas que encuentra.
+    </div>
+
+    <section>
+      <p-multiSelect class="w-full" [options]="foods" optionLabel="name" display="chip" optionValue="id"
+        formControlName="foods" placeholder="Selecciona una comida" (onChange)="markAsTouched()">
+      </p-multiSelect>
+    </section>
+  </section>
+</article>

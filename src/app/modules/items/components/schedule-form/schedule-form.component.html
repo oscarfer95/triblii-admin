@@ -1,0 +1,32 @@
+<article [formGroup]="form" class="sm:p-3 flex flex-column gap-3">
+  <div class="w-full flex justify-content-between sm:justify-content-start align-items-center gap-3">
+    <strong>Mostrar horario</strong>
+
+    <p-inputSwitch formControlName="available"></p-inputSwitch>
+  </div>
+
+  <p-divider class="p-divider--grey" styleClass="my-0">
+  </p-divider>
+
+  <div class="w-full flex flex-column gap-3" formArrayName="days">
+    <div class="w-full flex align-items-center gap-3">
+      <div class="w-10rem">
+        <strong>Día</strong>
+      </div>
+
+      <strong class="w-10rem sm:w-13rem">Apertura</strong>
+      <strong class="w-10rem sm:w-13rem">Cierre</strong>
+    </div>
+
+    <div class="w-full flex align-items-center gap-3" *ngFor="let day of days.controls; let i = index"
+      [formGroupName]="i">
+      <div class="w-10rem">
+        <label>{{ getDayLabel(day.get('day')?.value) }}</label>
+      </div>
+
+      <p-calendar class="w-10rem sm:w-13rem" formControlName="open" [timeOnly]="true" [hourFormat]="'12'" placeholder="07:30 AM"></p-calendar>
+
+      <p-calendar class="w-10rem sm:w-13rem" formControlName="close" [timeOnly]="true" [hourFormat]="'12'" placeholder="06:30 PM"></p-calendar>
+    </div>
+  </div>
+</article>

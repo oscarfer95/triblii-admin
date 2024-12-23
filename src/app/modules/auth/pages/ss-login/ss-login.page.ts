@@ -5,7 +5,7 @@ import {firstValueFrom} from 'rxjs';
 import {ResetPasswordFormComponent} from 'src/app/modules/account/components/reset-password-form/reset-password-form.component';
 import {SwiperOptions} from 'swiper';
 
-import {SsAuthService} from '../../service/ss-auth.service';
+import {AuthService} from '../../service/ss-auth.service';
 
 @Component({
   selector: 'ss-login',
@@ -20,7 +20,7 @@ export class SsLoginPage implements OnInit {
 
   public swiperConfig: SwiperOptions;
 
-  constructor(private _ssAuthService: SsAuthService,
+  constructor(private _authService: AuthService,
               private _dialogService: DialogService,
               private _router: Router) {
     this.swiperConfig = {
@@ -85,7 +85,7 @@ export class SsLoginPage implements OnInit {
   }
 
   private _redirectIfUserIsAuthenticated(): void {
-    firstValueFrom(this._ssAuthService.getAuth())
+    firstValueFrom(this._authService.getAuth())
       .then((isAuth: boolean) => {
         if (isAuth) {
           this._router.navigate(['/dashboard']);
