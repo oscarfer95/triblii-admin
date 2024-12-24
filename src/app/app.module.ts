@@ -14,14 +14,14 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {SsRouterModule} from './router/ss-router.module';
+import {AppRouterModule} from './router/router.module';
 import {environment} from '../environments/environment';
-import {SsLoaderComponent} from './modules/ss-shared/components/ss-loader/ss-loader.component';
+import {LoaderComponent} from './modules/shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SsLoaderComponent
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +34,7 @@ import {SsLoaderComponent} from './modules/ss-shared/components/ss-loader/ss-loa
     provideStorage(() => getStorage()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     ToastModule,
-    SsRouterModule
+    AppRouterModule
   ],
   providers: [
     ConfirmationService,

@@ -2,8 +2,8 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { OverlayPanel } from 'primeng/overlaypanel';
-import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
-import { LocationService } from 'src/app/modules/ss-shared/services/location.repository-service';
+import { LoaderService } from 'src/app/modules/shared/services/loader.service';
+import { LocationService } from 'src/app/modules/shared/services/location.repository-service';
 import { LocationFormComponent } from '../location-form/location-form.component';
 
 @Component({

@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 
 import {StatisticsRouterModule} from './router/statistics-router-module';
-import {SsSharedModule} from '../ss-shared/ss-shared.module';
+import {SharedModule} from '../shared/shared.module';
 import {StatisticsPage} from './pages/statistics-page/statistics.page';
 
 @NgModule({
@@ -14,7 +14,7 @@ import {StatisticsPage} from './pages/statistics-page/statistics.page';
     CommonModule,
     RouterModule,
     StatisticsRouterModule,
-    SsSharedModule
+    SharedModule
   ]
 })
 export class StatisticsModule { }

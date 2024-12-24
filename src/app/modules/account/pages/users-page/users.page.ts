@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
-import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
-import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
+import { LoaderService } from 'src/app/modules/shared/services/loader.service';
+import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { ConfigList } from 'src/framework/repository/config-list.model';
 import { ActivatedRoute } from '@angular/router';
-import { UsersRepositoryService } from 'src/app/modules/ss-shared/services/users.repository-service';
+import { UsersRepositoryService } from 'src/app/modules/shared/services/users.repository-service';
 
 @Component({
   selector: 'users-page',
@@ -53,7 +53,7 @@ export class UsersPage implements OnInit, OnDestroy {
         return;
       }
 
-      const configList: ConfigList = this._getConfigList(); 
+      const configList: ConfigList = this._getConfigList();
 
       const users: any = await firstValueFrom(this._usersRepositoryService.getByQuerys(configList));
       const filteredUsers = users.filter((user: any) => user.id !== this.userDataModel.id);
@@ -85,7 +85,7 @@ export class UsersPage implements OnInit, OnDestroy {
 
     return configList;
   }
-  
+
   private _userDataModelListener() {
     this._userDataModelService.userDataModelListener()
       .pipe(

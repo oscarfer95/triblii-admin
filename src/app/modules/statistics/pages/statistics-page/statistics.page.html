@@ -1,55 +1,49 @@
-<article class="w-full h-full ss-main-admin-padding py-6 flex flex-column gap-6 overflow-hidden">
-  <header class="hidden lg:flex ss-txt-title ss-txt-title--big ss-txt-title--regular justify-content-between align-items-center"
-          data-aos="fade-up">
-    <section>
-      <i class="pi pi-chart-bar text-3xl ss-txt--black-lighten mr-2"></i> Estadísticas
-    </section>
+<article class="w-full h-full ss-main-admin-padding pt-7 lg:pt-6 flex flex-column flex-grow-1">
+  <header class="w-full flex ss-txt-title ss-txt-title--big ss-txt-title--regular align-items-center px-3 lg:px-0"
+    data-aos="fade-up">
+    <i class="pi pi-chart-bar text-3xl ss-txt--primary mr-2"></i> Estadísticas
   </header>
 
-  <section class="w-full"
-           data-aos="fade-up">
-    <p class="ss-txt-body">
-      En esta sección podrás encontrar una serie de gráficos e infografías que te ayudarán a comprender de manera visual y sencilla algunos de los datos más relevantes.
+  <section class="w-full px-3 lg:px-0" data-aos="fade-up">
+    <p class="ss-txt-body mt-3">
+      En esta sección podrás encontrar una serie de gráficos e infografías que te ayudarán a comprender de manera visual
+      la interacción de los usuarios con tu información.
     </p>
 
     <section class="w-full flex gap-6 my-6 relative p-3">
       <section class="w-full md:w-6 flex flex-column gap-6">
         <p-card header="Ventas del mes">
-          <p-chart type="pie"
-                   [data]="data">
+          <p-chart type="pie" [data]="data">
           </p-chart>
         </p-card>
 
         <p-card header="Ventas por promocion">
-          <p-chart type="line"
-                   [data]="data">
+          <p-chart type="line" [data]="data">
           </p-chart>
         </p-card>
 
         <p-card header="Recomendación del mes">
-          <p-chart type="radar"
-                   [data]="data">
+          <p-chart type="radar" [data]="data">
           </p-chart>
         </p-card>
       </section>
 
       <section class="w-full md:w-6 flex flex-column gap-6">
         <p-card header="Pedidos del mes">
-          <p-chart type="bar"
-                   [data]="data">
+          <p-chart type="bar" [data]="data">
           </p-chart>
         </p-card>
 
         <p-card header="Productos mas vendidos">
-          <p-chart type="doughnut"
-                   [data]="data">
+          <p-chart type="doughnut" [data]="data">
           </p-chart>
         </p-card>
       </section>
 
-      <section class="w-full h-full absolute top-0 right-0 left-0 bottom-0 flex align-items-start justify-content-center"
-               style="backdrop-filter: blur(4px);">
-        <ss-announcement class="mt-8"></ss-announcement>
+      <section
+        class="w-full h-full absolute top-0 right-0 left-0 bottom-0 flex align-items-start justify-content-center"
+        style="backdrop-filter: blur(4px);">
+        <announcement class="mt-8"></announcement>
       </section>
     </section>
   </section>

@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
-import { AttractionsRepositoryService } from 'src/app/modules/ss-shared/services/attractions.repository-service';
+import { AttractionsRepositoryService } from 'src/app/modules/shared/services/attractions.repository-service';
 import { ActivatedRoute } from '@angular/router';
-import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
+import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
-import { getMenuItemById } from 'src/app/modules/ss-shared/utils/get-side-bar-options.utils';
-import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
+import { getMenuItemById } from 'src/app/modules/shared/utils/get-side-bar-options.utils';
+import { LoaderService } from 'src/app/modules/shared/services/loader.service';
 import { ConfigList } from 'src/framework/repository/config-list.model';
-import { RestaurantsRepositoryService } from 'src/app/modules/ss-shared/services/restaurants.repository-service';
-import { HotelsRepositoryService } from 'src/app/modules/ss-shared/services/hotels.repository-service';
-import { FoodsRepositoryService } from 'src/app/modules/ss-shared/services/foods.repository-service';
-import { EventsRepositoryService } from 'src/app/modules/ss-shared/services/events.repository-service';
+import { RestaurantsRepositoryService } from 'src/app/modules/shared/services/restaurants.repository-service';
+import { HotelsRepositoryService } from 'src/app/modules/shared/services/hotels.repository-service';
+import { FoodsRepositoryService } from 'src/app/modules/shared/services/foods.repository-service';
+import { EventsRepositoryService } from 'src/app/modules/shared/services/events.repository-service';
 
 @Component({
   selector: 'items-page',
@@ -54,15 +54,15 @@ export class ItemsPage implements OnInit, OnDestroy {
   private async _getItems(): Promise<void> {
     try {
       this._loaderService.show = true;
-  
+
       if (!this.userDataModel?.entity?.id) {
         console.warn('El ID de la entidad no está disponible.');
         this._loaderService.show = false;
         return;
       }
-  
+
       const configList: ConfigList = this._getConfigList();
-  
+
       const items: any = await firstValueFrom(this.itemsService.getByQuerys(configList));
       this.itemList = items;
     } catch (error) {

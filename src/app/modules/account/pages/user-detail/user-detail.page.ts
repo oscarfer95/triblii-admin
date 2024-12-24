@@ -6,12 +6,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { firstValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 
-import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
-import CanDeactivateComponent from '../../../ss-shared/models/router/can-deactivate-component';
-import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
+import { LoaderService } from 'src/app/modules/shared/services/loader.service';
+import CanDeactivateComponent from '../../../shared/models/router/can-deactivate-component';
+import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
-import { UsersRepositoryService } from 'src/app/modules/ss-shared/services/users.repository-service';
-import { User } from 'src/app/modules/ss-shared/models/user.model';
+import { UsersRepositoryService } from 'src/app/modules/shared/services/users.repository-service';
+import { User } from 'src/app/modules/shared/models/user.model';
 
 @Component({
   selector: 'user-detail',

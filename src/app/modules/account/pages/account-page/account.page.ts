@@ -4,10 +4,10 @@ import { MenuItem } from 'primeng/api';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
-import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
-import { UploadFileStorageService } from 'src/app/modules/ss-shared/services/upload-file-storage.service';
-import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
-import { EntitiesRepositoryService } from 'src/app/modules/ss-shared/services/entities.repository-service';
+import { LoaderService } from 'src/app/modules/shared/services/loader.service';
+import { UploadFileStorageService } from 'src/app/modules/shared/services/upload-file-storage.service';
+import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
+import { EntitiesRepositoryService } from 'src/app/modules/shared/services/entities.repository-service';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 
 @Component({

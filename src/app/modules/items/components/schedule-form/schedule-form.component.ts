@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { getDayLabel } from 'src/app/modules/ss-shared/utils/get-day-label.util';
+import { getDayLabel } from 'src/app/modules/shared/utils/get-day-label.util';
 
 @Component({
   selector: 'schedule-form',

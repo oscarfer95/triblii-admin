@@ -5,8 +5,8 @@ import {EventEmitter, ChangeDetectionStrategy, Component, Input, OnInit, Output,
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {firstValueFrom} from 'rxjs';
 
-import {LoaderService} from 'src/app/modules/ss-shared/services/loader.service';
-import { EntitiesRepositoryService } from 'src/app/modules/ss-shared/services/entities.repository-service';
+import {LoaderService} from 'src/app/modules/shared/services/loader.service';
+import { EntitiesRepositoryService } from 'src/app/modules/shared/services/entities.repository-service';
 
 @Component({
   selector: 'entity-settings-form',

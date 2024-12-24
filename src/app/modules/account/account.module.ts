@@ -18,7 +18,7 @@ import { NgModule } from '@angular/core';
 
 import { AccountRouterModule } from './router/account-router-module';
 import { AccountPage } from './pages/account-page/account.page';
-import { SsSharedModule } from '../ss-shared/ss-shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { EntityFormComponent } from './components/entity-form/entity-form.component';
 import { ColorPickerComponent } from './components/color-picker/color-picker.component';
 import { DangerZoneComponent } from './components/danger-zone/danger-zone.component';
@@ -56,7 +56,7 @@ import { UserFormComponent } from './components/user-form/user-form.component';
     ReactiveFormsModule,
     MultiSelectModule,
     NgxIntlTelInputModule,
-    SsSharedModule,
+    SharedModule,
     FileUploadModule,
     HttpClientModule,
     ChipModule,

@@ -2,7 +2,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 import {Injectable} from '@angular/core';
 
-import {UserDataModel} from '../../ss-shared/models/user-data-model.model';
+import {UserDataModel} from '../../shared/models/user-data-model.model';
 
 @Injectable({
   providedIn: 'root'

@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, Vi
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MessageService} from 'primeng/api';
 
-import {SsUploadFileService} from '../../../ss-shared/components/ss-file-input/services/ss-upload-file.service';
-import {UploadFileStorageService} from '../../../ss-shared/services/upload-file-storage.service';
+import {UploadFileService} from '../../../shared/components/ss-file-input/services/upload-file.service';
+import {UploadFileStorageService} from '../../../shared/services/upload-file-storage.service';
 
 @Component({
   selector: 'gallery-form',
@@ -12,7 +12,7 @@ import {UploadFileStorageService} from '../../../ss-shared/services/upload-file-
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
-      provide: SsUploadFileService,
+      provide: UploadFileService,
       useClass: UploadFileStorageService
     }
   ]

@@ -6,15 +6,15 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { firstValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 
-import { DeleteManyFilesStorageService } from '../../../ss-shared/services/delete-many-files-storage.service';
-import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
-import CanDeactivateComponent from '../../../ss-shared/models/router/can-deactivate-component';
-import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
+import { DeleteManyFilesStorageService } from '../../../shared/services/delete-many-files-storage.service';
+import { LoaderService } from 'src/app/modules/shared/services/loader.service';
+import CanDeactivateComponent from '../../../shared/models/router/can-deactivate-component';
+import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
-import { RepositoryFactoryService } from 'src/app/modules/ss-shared/services/repository-factory.service';
-import { getTabItemsById } from 'src/app/modules/ss-shared/utils/tabs-config';
-import { createEmptyItemForm } from 'src/app/modules/ss-shared/utils/item-forms-config';
-import { Item } from 'src/app/modules/ss-shared/models/item.model';
+import { RepositoryFactoryService } from 'src/app/modules/shared/services/repository-factory.service';
+import { getTabItemsById } from 'src/app/modules/shared/utils/tabs-config';
+import { createEmptyItemForm } from 'src/app/modules/shared/utils/item-forms-config';
+import { Item } from 'src/app/modules/shared/models/item.model';
 
 @Component({
   selector: 'item-detail',

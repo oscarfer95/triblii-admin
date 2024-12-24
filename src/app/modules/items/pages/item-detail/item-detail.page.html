@@ -86,8 +86,8 @@
   </section>
 </article>
 
-<ss-announcement *ngIf="item === null" [iconName]="'pi-spinner'" [text]="'Cargando'">
-</ss-announcement>
+<announcement *ngIf="item === null" [iconName]="'pi-spinner'" [text]="'Cargando'">
+</announcement>
 
 <ng-template #saveButtonTemplate let-isValid="isValid" let-onClick="onClick">
   <button *ngIf="itemForm" class="ss-button w-full px-3" [ngClass]="{'ss-button--disabled': isValid}"

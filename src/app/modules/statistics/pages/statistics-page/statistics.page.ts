@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
-import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
+import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
 
 @Component({
   selector: 'statistics-page',

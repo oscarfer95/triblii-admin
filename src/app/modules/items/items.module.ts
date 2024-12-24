@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ItemsRouterModule } from './router/items-router-module';
-import { SsSharedModule } from '../ss-shared/ss-shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { ItemsPage } from './pages/items-page/items.page';
 import { GalleryFormComponent } from './components/gallery-form/gallery-form.component';
 import { InformationFormComponent } from './components/information-form/information-form.component';
@@ -50,7 +50,7 @@ import { CalendarModule } from 'primeng/calendar';
     CommonModule,
     RouterModule,
     ItemsRouterModule,
-    SsSharedModule,
+    SharedModule,
     TabMenuModule,
     CardModule,
     EditorModule,

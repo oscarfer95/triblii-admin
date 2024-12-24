@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { FoodsRepositoryService } from 'src/app/modules/ss-shared/services/foods.repository-service';
-import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
+import { FoodsRepositoryService } from 'src/app/modules/shared/services/foods.repository-service';
+import { LoaderService } from 'src/app/modules/shared/services/loader.service';
 
 import { ConfigList } from 'src/framework/repository/config-list.model';
 

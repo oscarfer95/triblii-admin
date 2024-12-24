@@ -14,8 +14,8 @@ import {
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
-import { DeleteManyFilesStorageService } from '../../../ss-shared/services/delete-many-files-storage.service';
-import { LoaderService } from 'src/app/modules/ss-shared/services/loader.service';
+import { DeleteManyFilesStorageService } from '../../../shared/services/delete-many-files-storage.service';
+import { LoaderService } from 'src/app/modules/shared/services/loader.service';
 
 @Component({
   selector: 'items-table',

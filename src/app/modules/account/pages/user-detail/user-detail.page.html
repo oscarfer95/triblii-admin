@@ -4,11 +4,11 @@
       <section class="w-fit w-9 flex align-items-center cursor-pointer px-2" (click)="location.back()">
         <i class="pi pi-angle-left mr-2 text-2xl ss-txt--black-lighten">
         </i>
-  
+
         <small *ngIf="user.name === ''" class="ss-txt-title ss-txt-title--regular">
           Volver
         </small>
-  
+
         <small *ngIf="user.name"
           class="max-w-23rem sm:max-w-30rem md:max-w-full overflow-hidden ss-txt-title ss-txt-title--regular text-overflow-ellipsis white-space-nowrap">
           {{ user.name }}
@@ -40,8 +40,8 @@
   </section>
 </article>
 
-<ss-announcement *ngIf="user === null" [iconName]="'pi-spinner'" [text]="'Cargando'">
-</ss-announcement>
+<announcement *ngIf="user === null" [iconName]="'pi-spinner'" [text]="'Cargando'">
+</announcement>
 
 <ng-template #saveButtonTemplate let-isValid="isValid" let-onClick="onClick">
   <button *ngIf="itemForm.controls['entityId'] && !itemForm.invalid" class="ss-button w-full px-3 fadein animation-duration-1000" [ngClass]="{'ss-button--disabled': isValid}" [disabled]="isValid"

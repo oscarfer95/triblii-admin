@@ -3,7 +3,7 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { ChangeDetectionStrategy, Component, Input, Type, ViewEncapsulation } from '@angular/core';
 
 import { ResetPasswordFormComponent } from '../reset-password-form/reset-password-form.component';
-import { UserDataModel } from 'src/app/modules/ss-shared/models/user-data-model.model';
+import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
 
 @Component({
   selector: 'danger-zone',

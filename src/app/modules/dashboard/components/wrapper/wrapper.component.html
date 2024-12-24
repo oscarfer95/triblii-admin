@@ -1,0 +1,21 @@
+<article class="ss-admin-wrapper flex flex-column w-full h-full">
+  <header class="lg:hidden">
+    <navbar (clickMenuButton)="onClickMenuButton()"></navbar>
+  </header>
+
+  <main class="flex w-full h-full">
+    <section class="ss-admin-wrapper__sidebar-container">
+      <p-sidebar styleClass="flex flex-column border-round-right-2xl"
+                 [dismissible]="sidebarMenuModal"
+                 [modal]="sidebarMenuModal"
+                 [showCloseIcon]="false"
+                 [(visible)]="displaySidebarMenu">
+        <admin-sidebar (clickMenuButton)="hideMenu()"></admin-sidebar>
+      </p-sidebar>
+    </section>
+
+    <section class="ss-admin-wrapper__content-container lg:p-3">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</article>
