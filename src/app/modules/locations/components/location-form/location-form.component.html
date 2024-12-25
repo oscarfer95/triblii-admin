@@ -1,0 +1,68 @@
+<form *ngIf="location" class="w-full" [formGroup]="form">
+  <section class="w-full flex flex-column gap-4">
+    <section class="w-full">
+      <div class="font-semibold mb-2">
+        Nombre
+      </div>
+
+      <input class="w-full" type="text" pInputText placeholder="Ingresa un nombre" formControlName="name" />
+    </section>
+
+    <section class="w-full">
+      <div class="mb-2 font-semibold">
+        Descripción
+      </div>
+
+      <textarea class="w-full h-8rem" pInputTextarea formControlName="description"
+        placeholder="Ingresa el texto aquí..." [rows]="5"></textarea>
+    </section>
+
+    <section class="w-full">
+      <div class="font-semibold mb-2">
+        País o Ciudad padre
+      </div>
+      
+      <p-dropdown [options]="locationList" optionValue="id" optionLabel="name" formControlName="parentId" class="w-full"
+        [placeholder]="'Seleccionar'">
+      </p-dropdown>
+    </section>
+
+    <section class="w-full">
+      <div class="font-semibold mb-2">
+        Link foto ciudad
+      </div>
+
+      <input class="w-full" type="text" pInputText placeholder="Ingresa URL del archivo" formControlName="photoUrl" />
+    </section>
+
+    <section class="w-full">
+      <div class="font-semibold mb-2">
+        Link foto bandera
+      </div>
+
+      <input class="w-full" type="text" pInputText placeholder="Ingresa URL del archivo" formControlName="flag" />
+    </section>
+
+    <p-divider class="p-divider--grey" styleClass="my-0"></p-divider>
+
+    <div class="w-full flex justify-content-between align-items-center gap-3">
+      <strong>Orden</strong>
+
+      <p-inputNumber [showButtons]="true" buttonLayout="horizontal"
+        spinnerMode="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+        formControlName="order" class="w-fit"></p-inputNumber>
+    </div>
+
+    <div class="w-full flex justify-content-between align-items-center gap-3">
+      <strong>Disponible</strong>
+
+      <p-inputSwitch formControlName="available"></p-inputSwitch>
+    </div>
+
+    <div class="w-full flex justify-content-between align-items-center gap-3">
+      <strong>Destacado</strong>
+
+      <p-inputSwitch formControlName="isFeatured"></p-inputSwitch>
+    </div>
+  </section>
+</form>

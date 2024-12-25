@@ -1,23 +1,23 @@
 <article>
-  <p-table #dt [value]="userList" styleClass="p-datatable-gridlines" class="w-full fadein animation-duration-700"
+  <p-table #dt [value]="locationList" styleClass="p-datatable-gridlines" class="w-full fadein animation-duration-700"
     selectionMode="single" responsiveLayout="scroll"
-    [globalFilterFields]="['name','location.state','location.city','location.country','location.address']"
+    [globalFilterFields]="['name','parentId','description']"
     [paginator]="true" [rows]="25"
     [responsiveLayout]="'scroll'">
     <ng-template pTemplate="caption">
       <section class="w-full flex justify-content-between gap-3">
         <section class="w-full">
-          <div *ngIf="userList.length > 0 && userData.actions.read" class="p-input-icon-left w-full">
+          <div *ngIf="locationList.length > 0 && userData.actions.read" class="p-input-icon-left w-full">
             <i class="pi pi-search"></i>
 
-            <input class="bg-transparent w-full md:w-20rem" pInputText type="text" placeholder="Buscar por nombre"
+            <input class="bg-transparent w-full md:w-20rem" pInputText type="text" placeholder="Buscar por nombre ó país"
               (input)="applyFilterGlobal($event, 'contains')" />
           </div>
         </section>
 
         <section *ngIf="userData.actions.create" class="w-fit flex align-items-center justify-content-end">
           <button class="ss-button -mr-2 ss-button--small ss-button--without-shadow ss-button--without-animation"
-            (click)="addItem()">
+            (click)="addLocation()">
             <i class="pi pi-plus text-sm mr-2"></i>
 
             <span class="font-semibold">
@@ -37,7 +37,7 @@
         </th>
 
         <th class="hidden-column text-center">
-          Rol
+          Tipo
         </th>
 
         <th class="text-center" [style.border-top-right-radius]="'10px'">
@@ -48,14 +48,14 @@
 
     <ng-template pTemplate="body" let-item>
       <tr class="ss-txt--black-lighten">
-        <td class="hidden-column text-center cursor-pointer" routerLink='/dashboard/account/users/{{item.id}}'>
-          <span class="p-column-title"> # {{ userList.indexOf(item) + 1 }} </span>
+        <td class="hidden-column text-center cursor-pointer" (click)="openLocationFormModal(item)">
+          <span class="p-column-title"> # {{ locationList.indexOf(item) + 1 }} </span>
           <span>
-            {{ userList.indexOf(item) + 1 }}
+            {{ locationList.indexOf(item) + 1 }}
           </span>
         </td>
 
-        <td class="cursor-pointer" routerLink='/dashboard/account/users/{{item.id}}'>
+        <td class="cursor-pointer" (click)="openLocationFormModal(item)">
           <section class="flex gap-1 align-items-center">
             <img *ngIf="item?.coverUrl" [src]="item?.coverUrl" alt="Prodcut image" class="max-h-2rem max-w-2rem">
 
@@ -68,16 +68,20 @@
           </section>
         </td>
 
-        <td class="hidden-column text-center cursor-pointer" routerLink='/dashboard/account/users/{{item.id}}'>
-          <span>
-            {{item.role}}
+        <td class="hidden-column text-center cursor-pointer" (click)="openLocationFormModal(item)">
+          <span *ngIf="item.parentId === ''">
+            País
+          </span>
+
+          <span *ngIf="item.parentId !== ''">
+            Estado/Ciudad
           </span>
         </td>
 
         <td>
           <section class="flex gap-3 md:gap-5 py-3 lg:py-0 justify-content-center">
             <i *ngIf="userData.actions.update" class="pi pi-pencil text-xl cursor-pointer ss-txt--black-lighten"
-              routerLink='/dashboard/account/users/{{item.id}}'>
+            (click)="openLocationFormModal(item)">
             </i>
 
             <i *ngIf="userData.actions.delete" class="pi pi-trash text-xl cursor-pointer ss-txt--red"

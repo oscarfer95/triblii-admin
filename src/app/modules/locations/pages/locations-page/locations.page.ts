@@ -4,9 +4,6 @@ import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { LoaderService } from 'src/app/modules/shared/services/loader.service';
 import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
-import { ConfigList } from 'src/framework/repository/config-list.model';
-import { ActivatedRoute } from '@angular/router';
-import { UsersRepositoryService } from 'src/app/modules/shared/services/users.repository-service';
 import { LocationService } from 'src/app/modules/shared/services/location.repository-service';
 
 @Component({
@@ -24,7 +21,6 @@ export class LocationsPage implements OnInit, OnDestroy {
 
   constructor(private _locationsRepositoryService: LocationService,
     private _userDataModelService: UserDataModelService,
-    private _activatedRoute: ActivatedRoute,
     private _loaderService: LoaderService,
     private _cdr: ChangeDetectorRef) {
     this.locationList = null;

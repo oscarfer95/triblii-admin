@@ -10,6 +10,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ChipModule } from 'primeng/chip';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,15 +19,15 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
 import { LocationsPage } from './pages/locations-page/locations.page';
-import { UsersTableComponent } from './components/users-table/users-table.component';
-import { UserFormComponent } from './components/user-form/user-form.component';
+import { LocationsTableComponent } from './components/locations-table/locations-table.component';
+import { LocationFormComponent } from './components/location-form/location-form.component';
 import { LocationRouterModule } from './router/location-router-module';
 
 @NgModule({
   declarations: [
     LocationsPage,
-    UsersTableComponent,
-    UserFormComponent
+    LocationsTableComponent,
+    LocationFormComponent
   ],
   imports: [
     AccordionModule,
@@ -46,7 +47,8 @@ import { LocationRouterModule } from './router/location-router-module';
     FileUploadModule,
     HttpClientModule,
     ChipModule,
-    DropdownModule
+    DropdownModule,
+    InputNumberModule
   ]
 })
 export class LocationsModule { }

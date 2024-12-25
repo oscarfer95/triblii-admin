@@ -8,26 +8,29 @@ import {
   Input,
   OnInit,
   Output,
+  Type,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { DeleteManyFilesStorageService } from '../../../shared/services/delete-many-files-storage.service';
 import { LoaderService } from 'src/app/modules/shared/services/loader.service';
-import { UsersRepositoryService } from 'src/app/modules/shared/services/users.repository-service';
+import { LocationFormComponent } from '../location-form/location-form.component';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { LocationService } from 'src/app/modules/shared/services/location.repository-service';
 
 @Component({
-  selector: 'users-table',
-  templateUrl: './users-table.component.html',
+  selector: 'locations-table',
+  templateUrl: './locations-table.component.html',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DialogService]
 })
-export class UsersTableComponent implements OnInit {
+export class LocationsTableComponent implements OnInit {
 
   @Input()
-  public userList!: any[];
+  public locationList!: any[];
 
   @Input()
   public userData!: any;
@@ -38,12 +41,12 @@ export class UsersTableComponent implements OnInit {
   @ViewChild('dt')
   public table!: Table;
 
-  constructor(private _usersRepositoryService: UsersRepositoryService,
+  constructor(private _locationsRepositoryService: LocationService,
     private _deleteManyFilesStorageService: DeleteManyFilesStorageService,
     private _confirmationService: ConfirmationService,
+    private _dialogService: DialogService,
     private _loaderService: LoaderService,
-    private _toastService: MessageService,
-    private _router: Router) {
+    private _toastService: MessageService) {
     this.dataChanges = new EventEmitter<void>();
   }
 
@@ -52,7 +55,7 @@ export class UsersTableComponent implements OnInit {
 
   public confirmDeleteItem(item: any): void {
     this._confirmationService.confirm({
-      message: 'Seguro que deseas eliminar este usuario?',
+      message: 'Seguro que deseas eliminar esta locación?',
       header: 'Eliminar',
       acceptLabel: 'Confirmar',
       rejectLabel: 'Cancelar',
@@ -66,11 +69,11 @@ export class UsersTableComponent implements OnInit {
         this._loaderService.show = true;
 
         try {
-          this._deleteUser(item.id as string).then(() => {
+          this._deleteLocation(item.id as string).then(() => {
             this._toastService.add({
               severity: 'success',
               summary: 'Eliminado',
-              detail: 'El usuario se eliminó correctamente',
+              detail: 'Locación eliminada correctamente',
               life: 6000
             });
 
@@ -98,9 +101,9 @@ export class UsersTableComponent implements OnInit {
     });
   }
 
-  private _deleteUser(id: string): Promise<any> {
+  private _deleteLocation(id: string): Promise<any> {
     return firstValueFrom(
-      this._usersRepositoryService.delete(id)
+      this._locationsRepositoryService.delete(id)
     );
   }
 
@@ -108,8 +111,8 @@ export class UsersTableComponent implements OnInit {
     this.table.filterGlobal((event.target as HTMLInputElement).value, stringVal);
   }
 
-  public addItem(): void {
-    if (this.userList.length >= 50) {
+  public addLocation(): void {
+    if (this.locationList.length >= 50) {
       // TODO: Cuando se agreguen suscripciones cambiar aqui el control de limite de items
       this._toastService.add({
         severity: 'error',
@@ -118,7 +121,21 @@ export class UsersTableComponent implements OnInit {
         life: 6000
       });
     } else {
-      this._router.navigate([`/dashboard/account/users/new`]);
+      this.openLocationFormModal(null);
     }
+
+  }
+
+  public openLocationFormModal(location: any) {
+    const component: Type<any> = LocationFormComponent;
+    const dialogConfig: DynamicDialogConfig = {
+      data: {
+        location: location,
+        locationList: this.locationList
+      },
+      header: 'Locación'
+    };
+
+    const dialogRef: DynamicDialogRef = this._dialogService.open(component, dialogConfig);
   }
 }
