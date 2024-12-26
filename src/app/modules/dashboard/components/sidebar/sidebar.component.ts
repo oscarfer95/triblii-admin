@@ -6,6 +6,7 @@ import {AuthService} from '../../../auth/service/auth.service';
 import {UserDataModelService} from 'src/app/modules/auth/storage/user-data-model.service';
 import {UserDataModel} from 'src/app/modules/shared/models/user-data-model.model';
 import {generateMenuItems} from '../../../shared/utils/get-side-bar-options.utils';
+import { ADMIN_MODULES_LIST, MODULES_LIST } from 'src/app/modules/shared/constants/modules.constant';
 
 @Component({
   selector: 'admin-sidebar',
@@ -19,6 +20,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   public userDataModel: UserDataModel | null = null;
   public menuItems: any = null;
+  public modules = MODULES_LIST;
+  public adminModules = ADMIN_MODULES_LIST;
 
   private _unsubscribe: Subject<void>;
 
@@ -60,6 +63,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
     const message = 'Hola 👋, necesito ayuda con la plataforma de ShoppyStore';
 
     window.open(whatsAppBaseUrl + numberUrl + messageUrl + encodeURIComponent(message));
+  }
+
+  public isModuleIdInList(searchId: string): boolean {
+    return MODULES_LIST.some(module => module.id === searchId);
+  }
+
+  public isModuleIdInAdminList(searchId: string): boolean {
+    return ADMIN_MODULES_LIST.some(module => module.id === searchId);
   }
 
   private _userDataModelListener() {

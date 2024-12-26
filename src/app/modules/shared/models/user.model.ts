@@ -3,6 +3,7 @@ export class User {
   entityId: string;
   name: string;
   role: string;
+  email: string;
 
   permissions: string[];
   actions: any;
@@ -12,6 +13,8 @@ export class User {
     this.accountId = '';
     this.entityId = '';
     this.role = '';
+    this.email = '';
+
 
     this.permissions = [];
     this.actions = {

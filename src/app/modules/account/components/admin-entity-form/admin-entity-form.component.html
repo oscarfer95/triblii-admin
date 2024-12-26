@@ -1,0 +1,155 @@
+<article *ngIf="form" [formGroup]="form" class="w-full md:w-30rem account flex flex-column relative">
+  <p-accordion class="ss-accordion-information">
+    <p-accordionTab [selected]="true">
+      <ng-template pTemplate="header">
+        <h3 class="ss-txt--primary font-normal">
+          Información
+        </h3>
+      </ng-template>
+
+      <ng-template pTemplate="body">
+        <section class="flex flex-column gap-5 px-3">
+          <section>
+            <div
+              class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+              <i class="pi pi-id-card mr-3 ss-txt--primary text-xl"></i> Nombre
+            </div>
+
+            <input type="text" pInputText class="w-full" placeholder="Ejm: TarjetaTech SRL." formControlName="name" />
+          </section>
+
+          <section>
+            <div
+              class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+              <i class="pi pi-align-left mr-3 ss-txt--primary text-xl"></i> Descripción
+            </div>
+
+            <textarea type="text" class="w-full max-h-5rem" pInputTextarea formControlName="description"
+              placeholder="Escribe una breve descripción..." [rows]="2"></textarea>
+          </section>
+
+          <section>
+            <div class="font-semibold flex align-items-center ss-txt--black flex align-items-center">
+              <i class="pi pi-whatsapp mr-2 ss-txt--primary text-xl"></i> Número de celular
+            </div>
+
+            <ngx-intl-tel-input [cssClass]="'custom-ngx-input'" [preferredCountries]="[CountryISO.Bolivia]"
+              [enableAutoCountrySelect]="true" [enablePlaceholder]="false" [customPlaceholder]="'Ingresa tu número'"
+              [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+              [phoneValidation]="true" formControlName="phone">
+            </ngx-intl-tel-input>
+          </section>
+
+          <section>
+            <div
+              class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+              <i class="pi pi-id-card mr-3 ss-txt--primary text-xl"></i> Link de foto
+            </div>
+
+            <input type="text" pInputText class="w-full" placeholder="Ingresa link" formControlName="photoUrl" />
+          </section>
+        </section>
+      </ng-template>
+    </p-accordionTab>
+
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <h3 class="ss-txt--primary font-normal">
+          Locación
+        </h3>
+      </ng-template>
+
+      <ng-template pTemplate="body">
+        <section formGroupName="location" class="flex flex-column gap-5 px-3">
+          <section class="w-full">
+            <h4>
+              País
+            </h4>
+
+            <div class="w-full mt-2 mb-3 ss-txt--black-lighten text-sm">
+              Elige un país, así los elementos que administran podrán asociarse a una ubicación.
+            </div>
+
+            <section *ngIf="countries?.length > 0">
+              <p-multiSelect [filter]="true" class="w-full" [options]="countries" optionLabel="name" display="chip"
+                optionValue="id" placeholder="Selecciona un país" [selectionLimit]="1"
+                (onChange)="markAsTouched()" formControlName="countryIds">
+              </p-multiSelect>
+            </section>
+
+            <section *ngIf="!countries">
+              <ng-container *ngTemplateOutlet="inputLoader"></ng-container>
+            </section>
+          </section>
+
+          <section class="w-full">
+            <h4 *ngIf="cities">
+              Ciudad <span class="text-sm ss-txt--grey font-normal">(Opcional)</span>
+            </h4>
+
+            <section *ngIf="cities" class="mt-2">
+              <p-multiSelect [filter]="true" class="w-full" [options]="cities" optionLabel="name" display="chip"
+                optionValue="id" placeholder="Selecciona una ciudad" formControlName="cityIds">
+              </p-multiSelect>
+            </section>
+
+            <section *ngIf="!cities">
+              <ng-container *ngTemplateOutlet="inputLoader"></ng-container>
+            </section>
+          </section>
+        </section>
+      </ng-template>
+    </p-accordionTab>
+
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <h3 class="ss-txt--primary font-normal">
+          Personalización
+        </h3>
+      </ng-template>
+
+      <ng-template pTemplate="body">
+        <section class="flex flex-column gap-5 px-3">
+          <section>
+            <div
+              class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+              <i class="pi pi-link mr-3 ss-txt--primary text-xl"></i> URL
+            </div>
+
+            <section class="w-full flex align-items-center gap-2">
+              <span class="ss-txt--black-lighten">
+                triblii.web.app/entity/
+              </span>
+
+              <input type="text" pInputText class="w-full flex flex-grow-1" placeholder="Ejm: starbucks"
+                formControlName="slug" />
+            </section>
+          </section>
+
+          <color-picker (hideEvent)="changeColor($event)" [customColor]="form.value.color">
+          </color-picker>
+
+          <div class="w-full flex justify-content-between align-items-center gap-3">
+            <div
+              class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+              <i class="pi pi-eye mr-3 ss-txt--primary text-xl"></i> Aparecer en Triblii
+            </div>
+
+            <p-inputSwitch formControlName="isPublic"></p-inputSwitch>
+          </div>
+        </section>
+      </ng-template>
+    </p-accordionTab>
+  </p-accordion>
+
+  <section class="flex justify-content-end mt-5">
+    <button class="ss-button fadein" [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
+      [disabled]="form.invalid || !form.touched" (click)="saveForm()">
+      Guardar cambios
+    </button>
+  </section>
+</article>
+
+<ng-template #inputLoader>
+  <i class="pi pi-spin pi-spinner ss-txt--primary text-lg mr-1 mt-2"></i>
+</ng-template>

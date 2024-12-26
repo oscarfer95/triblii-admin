@@ -1,4 +1,4 @@
-<article class="w-full flex flex-column gap-3 overflow-auto relative">
+<article class="w-full flex flex-column gap-3 relative">
   <section class="fadein animation-duration-500">
     <button *ngIf="!location" class="w-full ss-button ss-bg--warning ss-txt--black" (click)="getLocation()">
       <i class="bi bi-pin-map text-lg mr-3"></i>
@@ -12,13 +12,22 @@
 
   <form [formGroup]="form" *ngIf="location" class="w-full flex flex-column gap-4 fadein animation-duration-500">
     <section class="flex flex-column">
+      <section class="w-full flex align-items-center justify-content-between overflow-hidden mb-1">
+        <span class="font-semibold">Ciudad</span>
+      </section>
+
+      <p-dropdown [options]="cities" optionValue="id" optionLabel="name" formControlName="cityId" class="w-full"
+        [filter]="true" placeholder="Seleccionar">
+      </p-dropdown>
+    </section>
+
+    <section class="flex flex-column">
       <section class="w-full flex align-items-center justify-content-between overflow-hidden">
         <span class="font-semibold">Dirección</span>
 
         <section>
-          <small *ngIf="!isAddressLoading"
-                 class="ss-txt--primary cursor-pointer font-italic underline mr-1"
-                 (click)="reverseGeocode()">
+          <small *ngIf="!isAddressLoading" class="ss-txt--primary cursor-pointer font-italic underline mr-1"
+            (click)="reverseGeocode()">
             Obtener dirección
           </small>
 

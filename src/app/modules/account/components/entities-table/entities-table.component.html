@@ -1,13 +1,13 @@
 <article>
-  <p-table #dt [value]="userList" styleClass="p-datatable-gridlines" class="w-full fadein animation-duration-700"
+  <p-table #dt [value]="entitiesList" styleClass="p-datatable-gridlines" class="w-full fadein animation-duration-700"
     selectionMode="single" responsiveLayout="scroll"
-    [globalFilterFields]="['name','location.state','location.city','location.country','location.address']"
+    [globalFilterFields]="['name','slug','location.countryIds','location.cityIds','description']"
     [paginator]="true" [rows]="25"
     [responsiveLayout]="'scroll'">
     <ng-template pTemplate="caption">
       <section class="w-full flex justify-content-between gap-3">
         <section class="w-full">
-          <div *ngIf="userList.length > 0 && userData.actions.read" class="p-input-icon-left w-full">
+          <div *ngIf="entitiesList.length > 0 && userData.actions.read" class="p-input-icon-left w-full">
             <i class="pi pi-search"></i>
 
             <input class="bg-transparent w-full md:w-20rem" pInputText type="text" placeholder="Buscar por nombre"
@@ -17,7 +17,7 @@
 
         <section *ngIf="userData.actions.create" class="w-fit flex align-items-center justify-content-end">
           <button class="ss-button -mr-2 ss-button--small ss-button--without-shadow ss-button--without-animation"
-            (click)="addItem()">
+            (click)="addEntity()">
             <i class="pi pi-plus text-sm mr-2"></i>
 
             <span class="font-semibold">
@@ -37,11 +37,7 @@
         </th>
 
         <th class="hidden-column text-center">
-          Rol
-        </th>
-
-        <th class="hidden-column text-center">
-          Activo
+          Público
         </th>
 
         <th class="text-center" [style.border-top-right-radius]="'10px'">
@@ -52,14 +48,14 @@
 
     <ng-template pTemplate="body" let-item>
       <tr class="ss-txt--black-lighten">
-        <td class="hidden-column text-center cursor-pointer" routerLink='/dashboard/account/users/{{item.id}}'>
-          <span class="p-column-title"> # {{ userList.indexOf(item) + 1 }} </span>
+        <td class="hidden-column text-center cursor-pointer" (click)="openEntityFormModal(item)">
+          <span class="p-column-title"> # {{ entitiesList.indexOf(item) + 1 }} </span>
           <span>
-            {{ userList.indexOf(item) + 1 }}
+            {{ entitiesList.indexOf(item) + 1 }}
           </span>
         </td>
 
-        <td class="cursor-pointer" routerLink='/dashboard/account/users/{{item.id}}'>
+        <td class="cursor-pointer" (click)="openEntityFormModal(item)">
           <section class="flex gap-1 align-items-center">
             <img *ngIf="item?.coverUrl" [src]="item?.coverUrl" alt="Prodcut image" class="max-h-2rem max-w-2rem">
 
@@ -72,29 +68,20 @@
           </section>
         </td>
 
-        <td class="hidden-column text-center cursor-pointer" routerLink='/dashboard/account/users/{{item.id}}'>
-          <span>
-            {{item.role}}
-          </span>
-        </td>
-
-        <td class="hidden-column text-center cursor-pointer">
-          <span *ngIf="item.accountId === ''" class="ss-txt--red">
-            Inhabilitado
+        <td class="hidden-column text-center cursor-pointer" (click)="openEntityFormModal(item)">
+          <span *ngIf="item.isPublic">
+            Sí
           </span>
 
-          <span *ngIf="item.accountId !== ''">
-            Habilitado
+          <span *ngIf="!item.isPublic">
+            No
           </span>
         </td>
 
         <td>
-          <section class="flex gap-3 md:gap-5 py-3 lg:py-0 justify-content-end px-3">
-            <i *ngIf="userData.actions.update && item.accountId === ''" class="pi pi-lock text-xl cursor-pointer ss-txt--primary">
-            </i>
-
+          <section class="flex gap-3 md:gap-5 py-3 lg:py-0 justify-content-center">
             <i *ngIf="userData.actions.update" class="pi pi-pencil text-xl cursor-pointer ss-txt--black-lighten"
-              routerLink='/dashboard/account/users/{{item.id}}'>
+            (click)="openEntityFormModal(item)">
             </i>
 
             <i *ngIf="userData.actions.delete" class="pi pi-trash text-xl cursor-pointer ss-txt--red"

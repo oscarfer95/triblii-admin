@@ -24,3 +24,18 @@ export const MODULES_LIST: any[] = [
     name: 'Banners'
   },
 ]
+
+export const ADMIN_MODULES_LIST: any[] = [
+  {
+    id: 'users',
+    name: 'Usuarios'
+  },
+  {
+    id: 'locations',
+    name: 'Locaciones'
+  },
+  {
+    id: 'entities',
+    name: 'Entidades'
+  },
+]

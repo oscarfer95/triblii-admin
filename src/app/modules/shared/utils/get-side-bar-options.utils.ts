@@ -1,15 +1,16 @@
-export const menuOptions: { [key: string]: { icon: string; label: string; url: string } } = {
-  home: { icon: 'bi bi-house', label: 'Inicio', url: 'home' },
-  attractions: { icon: 'bi bi-geo-alt', label: 'Atracciones', url: 'items/attractions' },
-  restaurants: { icon: 'bi bi-shop', label: 'Restaurantes', url: 'items/restaurants' },
-  hotels: { icon: 'pi pi-building', label: 'Hoteles', url: 'items/hotels' },
-  foods: { icon: 'bi bi-cup-straw', label: 'Comidas', url: 'items/foods' },
-  events: { icon: 'pi pi-calendar', label: 'Eventos', url: 'items/events' },
-  banners: { icon: 'bi bi-tv', label: 'Banners', url: 'banners' },
-  stats: { icon: 'pi pi-chart-bar', label: 'Estadísticas', url: 'stats' },
-  users: { icon: 'pi pi-users', label: 'Usuarios', url: 'account/users' },
-  locations: { icon: 'pi pi-map', label: 'Locaciones', url: 'locations' },
-  account: { icon: 'pi pi-user', label: 'Cuenta', url: 'account/user-entity' }
+export const menuOptions: { [key: string]: { icon: string; label: string; url: string; id: string  } } = {
+  home: { icon: 'bi bi-house', label: 'Inicio', url: 'home', id: 'home' },
+  attractions: { icon: 'bi bi-geo-alt', label: 'Atracciones', url: 'items/attractions', id: 'attractions' },
+  restaurants: { icon: 'bi bi-shop', label: 'Restaurantes', url: 'items/restaurants', id: 'restaurants' },
+  hotels: { icon: 'pi pi-building', label: 'Hoteles', url: 'items/hotels', id: 'hotels' },
+  foods: { icon: 'bi bi-cup-straw', label: 'Comidas', url: 'items/foods', id: 'foods' },
+  events: { icon: 'pi pi-calendar', label: 'Eventos', url: 'items/events', id: 'events' },
+  banners: { icon: 'bi bi-tv', label: 'Banners', url: 'banners', id: 'banners' },
+  stats: { icon: 'pi pi-chart-bar', label: 'Estadísticas', url: 'stats', id: 'stats' },
+  users: { icon: 'pi pi-users', label: 'Usuarios', url: 'account/users', id: 'users' },
+  locations: { icon: 'pi pi-map', label: 'Locaciones', url: 'locations', id: 'locations' },
+  account: { icon: 'pi pi-user', label: 'Cuenta', url: 'account/user-entity', id: 'account' },
+  entities: { icon: 'pi pi-briefcase', label: 'Entidades', url: 'account/entities', id: 'entities' }
 };
 
 export function generateMenuItems(permissions: string[], role: string): any[] {
@@ -25,6 +26,7 @@ export function generateMenuItems(permissions: string[], role: string): any[] {
 
     if (role === 'SUPERADMIN') {
       baseMenu.splice(baseMenu.length - 1, 0, 'locations');
+      baseMenu.splice(baseMenu.length - 1, 0, 'entities');
     }
 
     return baseMenu
@@ -34,7 +36,7 @@ export function generateMenuItems(permissions: string[], role: string): any[] {
 
   // ALL PERMISSIONS
   if (permissions.length === 1 && permissions[0] === 'all') {
-    const excludedKeys = ['users', 'locations', 'stats'];
+    const excludedKeys = ['users', 'locations', 'stats', 'entities'];
     const fullMenuKeys = Object.keys(menuOptions).filter((key) => !excludedKeys.includes(key));
 
     if (role === 'ADMIN' || role === 'SUPERADMIN') {
@@ -44,6 +46,7 @@ export function generateMenuItems(permissions: string[], role: string): any[] {
 
     if (role === 'SUPERADMIN') {
       fullMenuKeys.splice(fullMenuKeys.length - 1, 0, 'locations');
+      fullMenuKeys.splice(fullMenuKeys.length - 1, 0, 'entities');
     }
 
     return fullMenuKeys.map((key) => menuOptions[key]);
@@ -57,6 +60,7 @@ export function generateMenuItems(permissions: string[], role: string): any[] {
 
   if (role === 'SUPERADMIN') {
     mixedOptions.splice(mixedOptions.length - 1, 0, 'locations');
+    mixedOptions.splice(mixedOptions.length - 1, 0, 'entities');
   }
 
   return mixedOptions

@@ -116,6 +116,7 @@ export class UserFormComponent implements OnInit {
     this.form?.addControl('role', this._formBuilder.control(this.user.role, [Validators.required]));
     this.form?.addControl('permissions', this._formBuilder.control(this.user.permissions));
     this.form?.addControl('entityId', this._formBuilder.control(entityId, [Validators.required]));
+    this.form?.addControl('email', this._formBuilder.control(this.user.email, [Validators.required]));
 
     const actionsGroup = this._formBuilder.group({});
     Object.keys(this.user.actions).forEach((action: string) => {

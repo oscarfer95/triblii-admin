@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { AccountPage } from '../pages/account-page/account.page';
 import { UsersPage } from '../pages/users-page/users.page';
 import { UserDetail } from '../pages/user-detail/user-detail.page';
+import { EntitiesPage } from '../pages/entities-page/entities-page.page';
 
 export const ACCOUNT_ROUTES: Routes = [
   {
@@ -12,6 +13,10 @@ export const ACCOUNT_ROUTES: Routes = [
   {
     path: 'users',
     component: UsersPage
+  },
+  {
+    path: 'entities',
+    component: EntitiesPage
   },
   {
     path: 'users/:id',

@@ -47,10 +47,10 @@
       </p-card>
     </section>
 
-    <section *ngIf="locationForm" class="w-full flex-column gap-3 hidden"
+    <section *ngIf="locationForm && userDataModel" class="w-full flex-column gap-3 hidden"
       [ngClass]="{ 'flex': activeTab.label === 'Ubicación' }">
       <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
-        <app-location-form [form]="locationForm" [itemLocation]="item.location"></app-location-form>
+        <app-location-form [form]="locationForm" [itemLocation]="item.location" [userDataModel]="userDataModel"></app-location-form>
       </p-card>
     </section>
 

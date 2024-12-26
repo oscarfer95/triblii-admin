@@ -1,16 +1,62 @@
 .#{$app-prefix}-admin-sidebar {
-
   &__logout-button {
     background-color: rgba(var(--#{$app-prefix}-color-red-rgb), 0.1) !important;
     color: var(--#{$app-prefix}-color-red) !important;
+  }
+
+  li,
+  .accordion-details {
+    margin-bottom: 0.5rem;
+  }
+
+  details {
+    border: 1px solid rgba(var(--#{$app-prefix}-color-primary-rgb), 0.2);
+    border-radius: 0.5rem !important;
+  }
+
+  summary {
+    height: 45px;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: rgba(
+        var(--#{$app-prefix}-color-primary-rgb),
+        0.1
+      ) !important;
+      border-radius: 0.5rem !important;
+
+      span,
+      i {
+        color: var(--#{$app-prefix}-color-primary) !important;
+      }
+    }
+
+    li {
+      margin-top: 0.5rem;
+      margin-bottom: 0;
+    }
+  }
+
+  details.accordion-details[open] summary {
+    border-radius: 0.5rem !important;
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+
+    span,
+    i {
+      color: var(--#{$app-prefix}-color-primary) !important;
+    }
   }
 }
 
 .#{$app-prefix}-sidebar-menu {
   &__button {
-
     &--active {
-      background-color: rgba(var(--#{$app-prefix}-color-primary-rgb), 0.1) !important;
+      background-color: rgba(
+        var(--#{$app-prefix}-color-primary-rgb),
+        0.1
+      ) !important;
       color: var(--#{$app-prefix}-color-primary) !important;
       border-left: 3px solid var(--#{$app-prefix}-color-primary) !important;
       border-top-left-radius: 0px !important;
@@ -22,7 +68,10 @@
     }
 
     &.#{$app-prefix}-button--clear:hover {
-      background-color: rgba(var(--#{$app-prefix}-color-primary-rgb), 0.1) !important;
+      background-color: rgba(
+        var(--#{$app-prefix}-color-primary-rgb),
+        0.1
+      ) !important;
       color: var(--#{$app-prefix}-color-primary) !important;
     }
   }

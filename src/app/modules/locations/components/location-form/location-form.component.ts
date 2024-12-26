@@ -32,6 +32,10 @@ export class LocationFormComponent implements OnInit {
     this._initForm();
   }
 
+  public saveForm() {
+
+  }
+
   private _initForm(): void {
     this.form?.addControl('name', this._formBuilder.control(this.location.name, [Validators.required, Validators.min(1), Validators.max(20)]));
     this.form?.addControl('description', this._formBuilder.control(this.location.description));

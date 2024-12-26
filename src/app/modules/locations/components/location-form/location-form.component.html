@@ -1,5 +1,5 @@
-<form *ngIf="location" class="w-full" [formGroup]="form">
-  <section class="w-full flex flex-column gap-4">
+<form *ngIf="location" class="w-full overflow-hidden" [formGroup]="form">
+  <section class="w-full flex flex-column gap-4 pb-6">
     <section class="w-full">
       <div class="font-semibold mb-2">
         Nombre
@@ -21,7 +21,7 @@
       <div class="font-semibold mb-2">
         País o Ciudad padre
       </div>
-      
+
       <p-dropdown [options]="locationList" optionValue="id" optionLabel="name" formControlName="parentId" class="w-full"
         [placeholder]="'Seleccionar'">
       </p-dropdown>
@@ -48,9 +48,9 @@
     <div class="w-full flex justify-content-between align-items-center gap-3">
       <strong>Orden</strong>
 
-      <p-inputNumber [showButtons]="true" buttonLayout="horizontal"
-        spinnerMode="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
-        formControlName="order" class="w-fit"></p-inputNumber>
+      <p-inputNumber [showButtons]="true" buttonLayout="horizontal" spinnerMode="horizontal"
+        incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" formControlName="order"
+        class="w-fit"></p-inputNumber>
     </div>
 
     <div class="w-full flex justify-content-between align-items-center gap-3">
@@ -64,5 +64,12 @@
 
       <p-inputSwitch formControlName="isFeatured"></p-inputSwitch>
     </div>
+  </section>
+
+  <section class="w-full flex justify-content-end mt-5 fixed bottom-0 right-0 left-0 p-3 bg-white">
+    <button class="ss-button fadein w-full" [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
+      [disabled]="form.invalid || !form.touched" (click)="saveForm()">
+      Guardar cambios
+    </button>
   </section>
 </form>

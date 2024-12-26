@@ -12,6 +12,7 @@ import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.mod
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { UsersRepositoryService } from 'src/app/modules/shared/services/users.repository-service';
 import { User } from 'src/app/modules/shared/models/user.model';
+import { createUserWithEmailAndPassword, getAuth, UserCredential } from '@angular/fire/auth';
 
 @Component({
   selector: 'user-detail',
@@ -61,13 +62,29 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     const formValue: any = this.itemForm.value;
     const user: any = { ...this.user, ...formValue };
 
-    if (user.id) {
+    if (user.accountId !== '') {
       delete user.id;
       user.entitiesId?.includes(this.userDataModel.entity.id) ? null : user.entitiesId?.push(this.userDataModel.entity.id);
       this._editUser(user);
     } else {
       user.entitiesId?.push(this.userDataModel.entity.id);
-      this._createUser(user);
+      this._createAccount(user);
+    }
+  }
+
+  private async _createAccount(user: any): Promise<void> {
+    // const auth = getAuth();
+    try {
+      // const userCredential: UserCredential =
+      //   await createUserWithEmailAndPassword(auth, user.email, 'triblii-admin-1!');
+
+      // user.accountId = userCredential.user.uid;
+
+      await this._createUser(user);
+
+      // console.log('¡Usuario creado correctamente en Firebase y en la BD!');
+    } catch (error) {
+      console.error('Error al crear el usuario', error);
     }
   }
 
@@ -98,7 +115,7 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
       });
   }
 
-  private _createUser(user: any): void {
+  private async _createUser(user: any) {
     firstValueFrom(this._usersRepositoryService.create(user))
       .then(() => {
         this._toastService.add({

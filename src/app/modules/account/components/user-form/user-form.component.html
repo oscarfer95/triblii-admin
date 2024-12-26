@@ -1,5 +1,14 @@
 <form [formGroup]="form">
   <section class="md:p-3 flex flex-column gap-3">
+    <section class="w-full"
+      [ngClass]="{'pointer-events-none': user.email}">
+      <div class="font-semibold mb-2">
+        Correo electrónico
+      </div>
+
+      <input class="w-full" type="text" pInputText placeholder="Ingresa un email" formControlName="email" />
+    </section>
+
     <section class="w-full">
       <div class="font-semibold mb-2">
         Nombre

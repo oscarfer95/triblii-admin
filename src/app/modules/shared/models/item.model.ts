@@ -64,25 +64,13 @@ export class Item {
 export class Attraction extends Item {
   schedule: any | null;
   price: string;
-  location: {
-    address: string;
-    city: string;
-    country: string;
-    state: string;
-    coords: any | null;
-  };
+  location: any;
 
   constructor() {
     super();
     this.schedule = scheduleDays;
     this.price = '';
-    this.location = {
-      address: '',
-      city: '',
-      country: '',
-      state: '',
-      coords: null,
-    };
+    this.location = location;
     this.categories = ['recreation-musement'];
   }
 }
@@ -91,26 +79,14 @@ export class Attraction extends Item {
 export class Restaurant extends Item {
   schedule: any | null;
   delivery: any | null
-  location: {
-    address: string;
-    city: string;
-    country: string;
-    state: string;
-    coords: any | null;
-  };
+  location: any;
 
   constructor() {
     super();
     this.categories = ['gastronomy'];
     this.schedule = scheduleDays;
     this.delivery = null;
-    this.location = {
-      address: '',
-      city: '',
-      country: '',
-      state: '',
-      coords: null,
-    };
+    this.location = location;
   }
 }
 
@@ -151,13 +127,7 @@ export class Event extends Item {
   recurrenceDates: number[] | null;
   recurrenceMonths: number[] | null;
 
-  location: {
-    address: string;
-    city: string;
-    country: string;
-    state: string;
-    coords: any | null;
-  };
+  location: any;
 
   constructor() {
     super();
@@ -174,13 +144,7 @@ export class Event extends Item {
     this.recurrenceDates = null;
     this.recurrenceMonths = null;
 
-    this.location = {
-      address: '',
-      city: '',
-      country: '',
-      state: '',
-      coords: null,
-    };
+    this.location = location;
 
     this.categories = ['experiences-activities', 'general-interest', 'recreation-musement'];
   }
@@ -189,26 +153,14 @@ export class Event extends Item {
 // Hotels
 export class Hotel extends Item {
 
-  location: {
-    address: string;
-    city: string;
-    country: string;
-    state: string;
-    coords: any | null;
-  };
+  location: any;
 
   schedule: any | null;
 
   constructor() {
     super();
     this.schedule = scheduleDays;
-    this.location = {
-      address: '',
-      city: '',
-      country: '',
-      state: '',
-      coords: null,
-    };
+    this.location = location;
   }
 }
 
@@ -253,3 +205,11 @@ const scheduleDays: any = {
     }
   ]
 }
+
+const location = {
+  address: '',
+  cityId: '',
+  countryId: '',
+  state: '',
+  coords: null,
+};

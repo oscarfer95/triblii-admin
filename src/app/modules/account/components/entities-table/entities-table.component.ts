@@ -8,27 +8,29 @@ import {
   Input,
   OnInit,
   Output,
+  Type,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { DeleteManyFilesStorageService } from '../../../shared/services/delete-many-files-storage.service';
 import { LoaderService } from 'src/app/modules/shared/services/loader.service';
-import { UsersRepositoryService } from 'src/app/modules/shared/services/users.repository-service';
-import { deleteUser, getAuth } from '@angular/fire/auth';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AdminEntityFormComponent } from '../admin-entity-form/admin-entity-form.component';
+import { EntitiesRepositoryService } from 'src/app/modules/shared/services/entities.repository-service';
 
 @Component({
-  selector: 'users-table',
-  templateUrl: './users-table.component.html',
+  selector: 'entities-table',
+  templateUrl: './entities-table.component.html',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DialogService]
 })
-export class UsersTableComponent implements OnInit {
+export class EntitiesTableComponent implements OnInit {
 
   @Input()
-  public userList!: any[];
+  public entitiesList!: any[];
 
   @Input()
   public userData!: any;
@@ -39,24 +41,21 @@ export class UsersTableComponent implements OnInit {
   @ViewChild('dt')
   public table!: Table;
 
-  private _authService: any;
-
-  constructor(private _usersRepositoryService: UsersRepositoryService,
+  constructor(private _entitiesRepositoryService: EntitiesRepositoryService,
     private _deleteManyFilesStorageService: DeleteManyFilesStorageService,
     private _confirmationService: ConfirmationService,
+    private _dialogService: DialogService,
     private _loaderService: LoaderService,
-    private _toastService: MessageService,
-    private _router: Router) {
+    private _toastService: MessageService) {
     this.dataChanges = new EventEmitter<void>();
   }
 
   public ngOnInit(): void {
-    this._authService = getAuth();
   }
 
   public confirmDeleteItem(item: any): void {
     this._confirmationService.confirm({
-      message: 'Seguro que deseas eliminar este usuario?',
+      message: 'Seguro que deseas eliminar esta entidad?',
       header: 'Eliminar',
       acceptLabel: 'Confirmar',
       rejectLabel: 'Cancelar',
@@ -70,11 +69,11 @@ export class UsersTableComponent implements OnInit {
         this._loaderService.show = true;
 
         try {
-          this._deleteUser(item.id as string, item.accountId as string).then(() => {
+          this._deleteEntity(item.id as string).then(() => {
             this._toastService.add({
               severity: 'success',
               summary: 'Eliminado',
-              detail: 'El usuario se eliminó correctamente',
+              detail: 'Locación eliminada correctamente',
               life: 6000
             });
 
@@ -102,21 +101,18 @@ export class UsersTableComponent implements OnInit {
     });
   }
 
-private async _deleteUser(id: string, uid: string): Promise<void> {
-  try {
-    await firstValueFrom(this._usersRepositoryService.delete(id));
-  } catch (error) {
-    console.error('Error al eliminar usuario', error);
-    throw error;
+  private _deleteEntity(id: string): Promise<any> {
+    return firstValueFrom(
+      this._entitiesRepositoryService.delete(id)
+    );
   }
-}
 
   public applyFilterGlobal(event: any, stringVal: string): void {
     this.table.filterGlobal((event.target as HTMLInputElement).value, stringVal);
   }
 
-  public addItem(): void {
-    if (this.userList.length >= 50) {
+  public addEntity(): void {
+    if (this.entitiesList.length >= 50) {
       // TODO: Cuando se agreguen suscripciones cambiar aqui el control de limite de items
       this._toastService.add({
         severity: 'error',
@@ -125,7 +121,25 @@ private async _deleteUser(id: string, uid: string): Promise<void> {
         life: 6000
       });
     } else {
-      this._router.navigate([`/dashboard/account/users/new`]);
+      this.openEntityFormModal(null);
     }
+
+  }
+
+  public openEntityFormModal(entity: any) {
+    const component: Type<any> = AdminEntityFormComponent;
+    const dialogConfig: DynamicDialogConfig = {
+      data: {
+        entity: entity
+      },
+      header: 'Entidad'
+    };
+
+    const dialogRef: DynamicDialogRef = this._dialogService.open(component, dialogConfig);
+    dialogRef.onClose.subscribe((refreshList) => {
+      if (refreshList) {
+        this.dataChanges.emit();
+      }
+    });
   }
 }

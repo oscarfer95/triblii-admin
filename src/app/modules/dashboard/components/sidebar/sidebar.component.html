@@ -2,18 +2,14 @@
   <section class="mt-4">
     <section class="flex flex-column align-items-center justify-content-center mx-auto gap-3">
       <section *ngIf="!userDataModel?.entity?.photoUrl"
-               class="shadow-1 w-8rem h-8rem fadein flex justify-content-center align-items-center border-circle bg-gray-100">
+        class="shadow-1 w-8rem h-8rem fadein flex justify-content-center align-items-center border-circle bg-gray-100">
         <i class="pi pi-image text-6xl my-6 fadein"></i>
       </section>
 
-      <img *ngIf="userDataModel?.entity?.photoUrl"
-           class="w-8rem max-h-8rem fadein"
-           [src]="userDataModel.entity.photoUrl"
-           alt="Store photo"
-           loading="lazy">
+      <img *ngIf="userDataModel?.entity?.photoUrl" class="w-8rem max-h-8rem fadein"
+        [src]="userDataModel.entity.photoUrl" alt="Store photo" loading="lazy">
 
-      <span *ngIf="userDataModel?.entity?.name"
-            class="fadein ss-txt-title--bold fadein">
+      <span *ngIf="userDataModel?.entity?.name" class="fadein ss-txt-title--bold fadein">
         {{ userDataModel?.entity?.name }}
       </span>
     </section>
@@ -21,15 +17,62 @@
     <section class="overflow-auto mt-5">
       <article class="ss-sidebar-menu">
         <ul>
-          <li *ngFor="let menuItem of menuItems"
-              class="mb-2"
-              (click)="onClickMenuButton()">
-            <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
-               [routerLink]="menuItem?.url"
-               routerLinkActive="ss-sidebar-menu__button--active">
-              <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
-            </a>
-          </li>
+          <section *ngFor="let menuItem of menuItems" (click)="onClickMenuButton()">
+            <li *ngIf="!isModuleIdInList(menuItem.id) && !isModuleIdInAdminList(menuItem.id) && (menuItem.id !== 'account')">
+              <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
+                [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
+                <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
+              </a>
+            </li>
+          </section>
+
+          <details class="accordion-details">
+            <summary class="cursor-pointer">
+              <span class="w-full ss-txt--black-lighten w-full px-3 text-lg flex gap-2 align-items-center">
+                <i class="pi pi-th-large text-xl"></i>
+                Módulos
+                <div class="w-full border-bottom-1 border-black-alpha-10"></div>
+              </span>
+            </summary>
+
+            <section *ngFor="let menuItem of menuItems" (click)="onClickMenuButton()">
+              <li *ngIf="isModuleIdInList(menuItem.id)">
+                <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
+                  [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
+                  <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
+                </a>
+              </li>
+            </section>
+          </details>
+
+          <details *ngIf="userDataModel?.role !=='MAINTAINER'" class="accordion-details">
+            <summary class="cursor-pointer flex justify-content-between">
+              <span class="w-full ss-txt--black-lighten w-full px-3 text-lg flex gap-2 align-items-center">
+                <i class="pi pi-key text-xl"></i>
+                Administrador
+
+                <div class="w-full border-bottom-1 border-black-alpha-10"></div>
+              </span>
+            </summary>
+
+            <section *ngFor="let menuItem of menuItems" (click)="onClickMenuButton()">
+              <li *ngIf="isModuleIdInAdminList(menuItem.id)">
+                <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
+                  [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
+                  <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
+                </a>
+              </li>
+            </section>
+          </details>
+
+          <section *ngFor="let menuItem of menuItems" (click)="onClickMenuButton()">
+            <li *ngIf="!isModuleIdInList(menuItem.id) && !isModuleIdInAdminList(menuItem.id) && (menuItem.id !== 'home')">
+              <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
+                [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
+                <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
+              </a>
+            </li>
+          </section>
         </ul>
       </article>
     </section>
@@ -39,17 +82,15 @@
     <p-divider class="p-divider--grey"></p-divider>
 
     <button class="ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full"
-            (click)="openHelpDesk()">
+      (click)="openHelpDesk()">
       <i class="pi pi-desktop text-xl"></i>
       Servicio al cliente
     </button>
 
-    <p-divider class="p-divider--grey"
-               styleClass="my-3">
+    <p-divider class="p-divider--grey" styleClass="my-3">
     </p-divider>
 
-    <button class="ss-admin-sidebar__logout-button ss-button justify-content-start gap-2 w-full"
-            (click)="logout()">
+    <button class="ss-admin-sidebar__logout-button ss-button justify-content-start gap-2 w-full" (click)="logout()">
       <i class="pi pi-sign-out text-xl ss-txt--red"></i> Cerrar sesión
     </button>
   </footer>

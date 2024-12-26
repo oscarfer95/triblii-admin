@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -64,7 +65,8 @@ import { CalendarModule } from 'primeng/calendar';
     FormsModule,
     ReactiveFormsModule,
     OverlayPanelModule,
-    CalendarModule
+    CalendarModule,
+    DropdownModule
   ]
 })
 export class ItemsModule { }
