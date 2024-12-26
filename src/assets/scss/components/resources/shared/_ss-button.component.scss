@@ -82,6 +82,17 @@
     }
   }
 
+  &--yellow {
+    background-color: var(--#{$app-prefix}-color-warning);
+    color: var(--#{$app-prefix}-color-white);
+    border: none;
+
+    &:hover {
+      background-color: var(--#{$app-prefix}-color-warning) !important;
+      color: var(--#{$app-prefix}-color-white) !important;
+    }
+  }
+
   &--primary {
     background-color: var(--#{$app-prefix}-color-primary);
     color: var(--#{$app-prefix}-color-white);

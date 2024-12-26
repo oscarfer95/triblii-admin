@@ -1,11 +1,12 @@
-import {ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
-import {Subject, takeUntil} from 'rxjs';
 
-import {AuthService} from '../../../auth/service/auth.service';
-import {UserDataModelService} from 'src/app/modules/auth/storage/user-data-model.service';
-import {UserDataModel} from 'src/app/modules/shared/models/user-data-model.model';
-import {generateMenuItems} from '../../../shared/utils/get-side-bar-options.utils';
+import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+
+import { AuthService } from '../../../auth/service/auth.service';
+import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
+import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
+import { generateMenuItems } from '../../../shared/utils/get-side-bar-options.utils';
 import { ADMIN_MODULES_LIST, MODULES_LIST } from 'src/app/modules/shared/constants/modules.constant';
 
 @Component({
@@ -20,15 +21,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   public userDataModel: UserDataModel | null = null;
   public menuItems: any = null;
-  public modules = MODULES_LIST;
-  public adminModules = ADMIN_MODULES_LIST;
+  public modulesList: any = null;
+  public adminModulesList: any = null;
 
   private _unsubscribe: Subject<void>;
 
   constructor(private _userDataModelService: UserDataModelService,
-              private _authService: AuthService,
-              private _cdr: ChangeDetectorRef,
-              private _router: Router) {
+    private _authService: AuthService,
+    private _cdr: ChangeDetectorRef,
+    private _router: Router) {
     this.clickMenuButton = new EventEmitter();
     this._unsubscribe = new Subject<void>();
   }
@@ -59,7 +60,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     const whatsAppBaseUrl = 'https://api.whatsapp.com';
     const numberUrl = '/send?phone=' + numbers[random];
-    const messageUrl ='&text=';
+    const messageUrl = '&text=';
     const message = 'Hola 👋, necesito ayuda con la plataforma de ShoppyStore';
 
     window.open(whatsAppBaseUrl + numberUrl + messageUrl + encodeURIComponent(message));
@@ -73,6 +74,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
     return ADMIN_MODULES_LIST.some(module => module.id === searchId);
   }
 
+  private _filterList(list: any, idList: any[]) {
+    return list.filter((menuItem: any) =>
+      idList.some(module => module.id === menuItem.id)
+    );
+  }
+
+  public getItemsById(id: string): any[] {
+    return this.menuItems.filter(item => item.id === id);
+  }
+
   private _userDataModelListener() {
     this._userDataModelService.userDataModelListener()
       .pipe(
@@ -82,6 +93,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
         if (userDataModel.accountId) {
           this.userDataModel = userDataModel;
           this.menuItems = generateMenuItems(this.userDataModel.permissions, this.userDataModel.role);
+          this.modulesList = this._filterList(this.menuItems, MODULES_LIST);
+          this.adminModulesList = this._filterList(this.menuItems, ADMIN_MODULES_LIST);
         }
 
         this._cdr.markForCheck();
