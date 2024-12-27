@@ -16,6 +16,9 @@ import { firstValueFrom } from 'rxjs';
 
 import { DeleteManyFilesStorageService } from '../../../shared/services/delete-many-files-storage.service';
 import { LoaderService } from 'src/app/modules/shared/services/loader.service';
+import { Log } from 'src/app/modules/shared/models/log.model';
+import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
+import { getLog } from 'src/app/modules/shared/utils/get-log.util';
 
 @Component({
   selector: 'items-table',
@@ -44,6 +47,7 @@ export class ItemsTableComponent implements OnInit {
   public table!: Table;
 
   constructor(private _deleteManyFilesStorageService: DeleteManyFilesStorageService,
+    private _logsRepositoryService: LogsRepositoryService,
     private _confirmationService: ConfirmationService,
     private _loaderService: LoaderService,
     private _toastService: MessageService,
@@ -94,6 +98,9 @@ export class ItemsTableComponent implements OnInit {
               detail: 'El item se eliminó correctamente',
               life: 6000
             });
+
+            let log = getLog(item.id, 'DELETE', this.moduleId, this.userData.id);
+            this._logsRepositoryService.create({...log});
 
             if (item?.gallery && item?.gallery.length > 0) {
               this._deleteManyFilesStorageService.execute(item.gallery);

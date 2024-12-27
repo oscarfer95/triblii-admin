@@ -12,7 +12,8 @@ import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.mod
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { UsersRepositoryService } from 'src/app/modules/shared/services/users.repository-service';
 import { User } from 'src/app/modules/shared/models/user.model';
-import { createUserWithEmailAndPassword, getAuth, UserCredential } from '@angular/fire/auth';
+import { getLog } from 'src/app/modules/shared/utils/get-log.util';
+import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
 
 @Component({
   selector: 'user-detail',
@@ -32,6 +33,7 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
   private _unsubscribe: Subject<void>;
 
   constructor(private _usersRepositoryService: UsersRepositoryService,
+    private _logsRepositoryService: LogsRepositoryService,
     private _userDataModelService: UserDataModelService,
     private _confirmationService: ConfirmationService,
     private _activatedRoute: ActivatedRoute,
@@ -57,7 +59,7 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
-  public saveForm(): void {
+  public async saveForm(): Promise<void> {
     this._loaderService.show = true;
     const formValue: any = this.itemForm.value;
     const user: any = { ...this.user, ...formValue };
@@ -68,23 +70,7 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
       this._editUser(user);
     } else {
       user.entitiesId?.push(this.userDataModel.entity.id);
-      this._createAccount(user);
-    }
-  }
-
-  private async _createAccount(user: any): Promise<void> {
-    // const auth = getAuth();
-    try {
-      // const userCredential: UserCredential =
-      //   await createUserWithEmailAndPassword(auth, user.email, 'triblii-admin-1!');
-
-      // user.accountId = userCredential.user.uid;
-
-      await this._createUser(user);
-
-      // console.log('¡Usuario creado correctamente en Firebase y en la BD!');
-    } catch (error) {
-      console.error('Error al crear el usuario', error);
+      this._createUser(user);
     }
   }
 
@@ -97,6 +83,10 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
           detail: user.name + ' se editó correctamente',
           life: 6000
         });
+
+        
+        let log = getLog(this.user.id, 'UPDATE', 'users', this.userDataModel.id);
+        this._logsRepositoryService.create({...log});
 
         this._itemFormSaved = true;
         this._loaderService.show = false;
@@ -117,13 +107,16 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
 
   private async _createUser(user: any) {
     firstValueFrom(this._usersRepositoryService.create(user))
-      .then(() => {
+      .then((id: string) => {
         this._toastService.add({
           severity: 'success',
           summary: 'Usuario añadido',
           detail: user.name + ' se creó correctamente',
           life: 6000
         });
+
+        let log = getLog(id, 'CREATE', 'users', this.userDataModel.id);
+        this._logsRepositoryService.create({...log});
 
         this._itemFormSaved = true;
         this._loaderService.show = false;
@@ -147,8 +140,11 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
       this.user = new User();
     } else {
       firstValueFrom(this._usersRepositoryService.getById(this._activatedRoute.snapshot.params['id']))
-        .then((user: any[]) => {
+        .then((user: any) => {
           this.user = user;
+          
+          let log = getLog(this.user.id, 'READ', 'users', this.userDataModel.id);
+          this._logsRepositoryService.create({...log});
           this._cdr.markForCheck();
         });
     }

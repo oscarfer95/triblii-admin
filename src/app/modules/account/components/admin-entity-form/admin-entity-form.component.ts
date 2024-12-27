@@ -11,6 +11,8 @@ import { Entity } from 'src/app/modules/shared/models/entity.model';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfigList } from 'src/framework/repository/config-list.model';
 import { LocationService } from 'src/app/modules/shared/services/location.repository-service';
+import { getLog } from 'src/app/modules/shared/utils/get-log.util';
+import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
 
 @Component({
   selector: 'admin-entity-form',
@@ -27,8 +29,10 @@ export class AdminEntityFormComponent implements OnInit {
   CountryISO = CountryISO;
   public cities: any[] | null;
   public countries: any[] | null;
+  public userDataModel!: any;
 
   constructor(private _entitiesRepositoryService: EntitiesRepositoryService,
+    private _logsRepositoryService: LogsRepositoryService,
     private _locationRepositoryService: LocationService,
     private _config: DynamicDialogConfig,
     private _loaderService: LoaderService,
@@ -45,8 +49,9 @@ export class AdminEntityFormComponent implements OnInit {
     } else {
       this.entity = new Entity();
     };
+    this.userDataModel = this._config?.data.userDataModel;
     this._initForm();
-    this.entity.location.countryIds.length > 0 ? this._fetchCities(): this.cities = [];
+    this.entity.location.countryIds.length > 0 ? this._fetchCities() : this.cities = [];
     this._setupFormListeners();
   }
 
@@ -81,6 +86,9 @@ export class AdminEntityFormComponent implements OnInit {
           life: 6000
         });
 
+        let log = getLog(this.entity.id, 'UPDATE', 'entities', this.userDataModel.id);
+        this._logsRepositoryService.create({ ...log });
+
         this._closeModal(true);
         this._loaderService.show = false;
       }).catch((error: any) => {
@@ -98,13 +106,17 @@ export class AdminEntityFormComponent implements OnInit {
 
   private _createItem(item: any): void {
     firstValueFrom(this._entitiesRepositoryService.create(item))
-      .then(() => {
+      .then((id: string) => {
         this._toastService.add({
           severity: 'success',
           summary: 'Entidad añadida',
           detail: item.name + ' se creó correctamente',
           life: 6000
         });
+
+        let log = getLog(id, 'CREATE', 'entities', this.userDataModel.id);
+        this._logsRepositoryService.create({...log});
+
         this._closeModal(true);
         this._loaderService.show = false;
       }).catch((error: any) => {

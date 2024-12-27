@@ -10,7 +10,8 @@ export const menuOptions: { [key: string]: { icon: string; label: string; url: s
   users: { icon: 'pi pi-users', label: 'Usuarios', url: 'account/users', id: 'users' },
   locations: { icon: 'pi pi-map', label: 'Locaciones', url: 'locations', id: 'locations' },
   account: { icon: 'pi pi-user', label: 'Cuenta', url: 'account/user-entity', id: 'account' },
-  entities: { icon: 'pi pi-briefcase', label: 'Entidades', url: 'account/entities', id: 'entities' }
+  entities: { icon: 'pi pi-briefcase', label: 'Entidades', url: 'account/entities', id: 'entities' },
+  logs: { icon: 'pi pi-history', label: 'Logs', url: 'account/logs', id: 'logs' }
 };
 
 export function generateMenuItems(permissions: string[], role: string): any[] {
@@ -27,6 +28,7 @@ export function generateMenuItems(permissions: string[], role: string): any[] {
     if (role === 'SUPERADMIN') {
       baseMenu.splice(baseMenu.length - 1, 0, 'locations');
       baseMenu.splice(baseMenu.length - 1, 0, 'entities');
+      baseMenu.splice(baseMenu.length - 1, 0, 'logs');
     }
 
     return baseMenu
@@ -36,7 +38,7 @@ export function generateMenuItems(permissions: string[], role: string): any[] {
 
   // ALL PERMISSIONS
   if (permissions.length === 1 && permissions[0] === 'all') {
-    const excludedKeys = ['users', 'locations', 'stats', 'entities'];
+    const excludedKeys = ['users', 'locations', 'stats', 'entities', 'logs'];
     const fullMenuKeys = Object.keys(menuOptions).filter((key) => !excludedKeys.includes(key));
 
     if (role === 'ADMIN' || role === 'SUPERADMIN') {
@@ -47,6 +49,7 @@ export function generateMenuItems(permissions: string[], role: string): any[] {
     if (role === 'SUPERADMIN') {
       fullMenuKeys.splice(fullMenuKeys.length - 1, 0, 'locations');
       fullMenuKeys.splice(fullMenuKeys.length - 1, 0, 'entities');
+      fullMenuKeys.splice(fullMenuKeys.length - 1, 0, 'logs');
     }
 
     return fullMenuKeys.map((key) => menuOptions[key]);
@@ -61,6 +64,7 @@ export function generateMenuItems(permissions: string[], role: string): any[] {
   if (role === 'SUPERADMIN') {
     mixedOptions.splice(mixedOptions.length - 1, 0, 'locations');
     mixedOptions.splice(mixedOptions.length - 1, 0, 'entities');
+    mixedOptions.splice(mixedOptions.length - 1, 0, 'logs');
   }
 
   return mixedOptions

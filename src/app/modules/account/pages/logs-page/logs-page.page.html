@@ -1,0 +1,19 @@
+<article *ngIf="logList"
+         class="w-full h-full ss-main-admin-padding pt-7 lg:pt-6 flex flex-column flex-grow-1">
+  <header class="w-full flex ss-txt-title ss-txt-title--big ss-txt-title--regular align-items-center px-3 lg:px-0"
+          data-aos="fade-up">
+    <i class="pi pi-history text-3xl ss-txt--primary mr-2"></i> Historial de registros
+  </header>
+
+  <section class="w-full h-full lg:mt-3 px-3 lg:px-0"
+           data-aos="fade-up"
+           data-aos-delay="200">
+    <logs-table [logList]="logList">
+    </logs-table>
+  </section>
+</article>
+
+<announcement *ngIf="logList === null"
+                 [iconName]="'pi-spinner'"
+                 [text]="'Cargando'">
+</announcement>

@@ -19,6 +19,8 @@ import { LoaderService } from 'src/app/modules/shared/services/loader.service';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AdminEntityFormComponent } from '../admin-entity-form/admin-entity-form.component';
 import { EntitiesRepositoryService } from 'src/app/modules/shared/services/entities.repository-service';
+import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
+import { getLog } from 'src/app/modules/shared/utils/get-log.util';
 
 @Component({
   selector: 'entities-table',
@@ -43,6 +45,7 @@ export class EntitiesTableComponent implements OnInit {
 
   constructor(private _entitiesRepositoryService: EntitiesRepositoryService,
     private _deleteManyFilesStorageService: DeleteManyFilesStorageService,
+    private _logsRepositoryService: LogsRepositoryService,
     private _confirmationService: ConfirmationService,
     private _dialogService: DialogService,
     private _loaderService: LoaderService,
@@ -76,6 +79,9 @@ export class EntitiesTableComponent implements OnInit {
               detail: 'Locación eliminada correctamente',
               life: 6000
             });
+
+            let log = getLog(item.id, 'DELETE', 'entities', this.userData.id);
+            this._logsRepositoryService.create({ ...log });
 
             if (item?.gallery && item?.gallery.length > 0) {
               this._deleteManyFilesStorageService.execute(item.gallery);
@@ -130,7 +136,8 @@ export class EntitiesTableComponent implements OnInit {
     const component: Type<any> = AdminEntityFormComponent;
     const dialogConfig: DynamicDialogConfig = {
       data: {
-        entity: entity
+        entity: entity,
+        userDataModel: this.userData
       },
       header: 'Entidad'
     };

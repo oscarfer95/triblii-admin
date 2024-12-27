@@ -75,7 +75,16 @@
                 <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
               </a>
             </div>
-          </section>          
+          </section>
+
+          <section *ngFor="let menuItem of getItemsById('logs')" (click)="onClickMenuButton()">
+            <div>
+              <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
+                [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
+                <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
+              </a>
+            </div>
+          </section>      
           
           <section *ngFor="let menuItem of getItemsById('account')" (click)="onClickMenuButton()">
             <div>

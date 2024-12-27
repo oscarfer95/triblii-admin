@@ -7,6 +7,8 @@ import { firstValueFrom } from 'rxjs';
 
 import { LoaderService } from 'src/app/modules/shared/services/loader.service';
 import { EntitiesRepositoryService } from 'src/app/modules/shared/services/entities.repository-service';
+import { getLog } from 'src/app/modules/shared/utils/get-log.util';
+import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
 
 @Component({
   selector: 'entity-form',
@@ -28,6 +30,7 @@ export class EntityFormComponent implements OnInit {
   public userDataModel!: any;
 
   constructor(private _entitiesRepositoryService: EntitiesRepositoryService,
+    private _logsRepositoryService: LogsRepositoryService,
     private _loaderService: LoaderService,
     private _toastService: MessageService,
     private _formBuilder: FormBuilder,
@@ -45,7 +48,6 @@ export class EntityFormComponent implements OnInit {
   public saveForm(): any {
     this._loaderService.show = true;
     const entity = { ...this.form.value };
-    // enitity.updatedAt = Date.now(); agregar logs
 
     return firstValueFrom(this._entitiesRepositoryService.update(entity, this.userDataModel.entity.id)).then(() => {
       this._loaderService.show = false;
@@ -56,6 +58,8 @@ export class EntityFormComponent implements OnInit {
         life: 6000
       });
 
+      let log = getLog(this.userDataModel.entity.id, 'UPDATE', 'entities', this.userDataModel.id);
+      this._logsRepositoryService.create({...log});
       this.saveEvent.emit();
 
     }).catch((error: any) => {

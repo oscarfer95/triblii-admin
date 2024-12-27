@@ -93,7 +93,7 @@
             <i *ngIf="userData.actions.update && item.accountId === ''" class="pi pi-lock text-xl cursor-pointer ss-txt--primary">
             </i>
 
-            <i *ngIf="userData.actions.update" class="pi pi-pencil text-xl cursor-pointer ss-txt--black-lighten"
+            <i *ngIf="userData.actions.update && item.accountId" class="pi pi-pencil text-xl cursor-pointer ss-txt--black-lighten"
               routerLink='/dashboard/account/users/{{item.id}}'>
             </i>
 

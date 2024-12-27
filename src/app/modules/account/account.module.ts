@@ -31,6 +31,8 @@ import { UserFormComponent } from './components/user-form/user-form.component';
 import { EntitiesPage } from './pages/entities-page/entities-page.page';
 import { EntitiesTableComponent } from './components/entities-table/entities-table.component';
 import { AdminEntityFormComponent } from './components/admin-entity-form/admin-entity-form.component';
+import { LogsPage } from './pages/logs-page/logs-page.page';
+import { LogsTableComponent } from './components/logs-table/logs-table.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { AdminEntityFormComponent } from './components/admin-entity-form/admin-e
     UserFormComponent,
     EntitiesPage,
     EntitiesTableComponent,
-    AdminEntityFormComponent
+    AdminEntityFormComponent,
+    LogsPage,
+    LogsTableComponent
   ],
   imports: [
     AccordionModule,

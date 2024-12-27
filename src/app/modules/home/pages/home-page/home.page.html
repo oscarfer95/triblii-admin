@@ -7,12 +7,13 @@
       </span>!
     </h3>
 
-    <section class="w-full flex flex-column lg:flex-row gap-3">
+    <section *ngIf="userDataModel" class="w-full flex flex-column lg:flex-row gap-3">
       <section class="w-full lg:w-9 flex flex-column gap-3">
-        <p-card *ngIf="userDataModel" styleClass="border-round-xl fadein animation-duration-500 shadow-none">
+        <p-card styleClass="border-round-xl fadein animation-duration-500 shadow-none">
           <section class="w-full flex flex-column justify-content-center align-items-start md:p-3">
-            <h4 class="w-fit ss-txt--title ss-txt--small ss-txt--primary text-xl font-semibold mb-3">
-              Módulos disponibles
+            <h4
+              class="w-fit ss-txt--title ss-txt--small ss-txt--black-lighten text-xl font-semibold mb-3 flex gap-2 align-items-center">
+              <i class="pi pi-th-large text-xl"></i> Módulos disponibles
             </h4>
 
             <section
@@ -34,62 +35,93 @@
           <section class="w-full md:w-6">
             <p-card *ngIf="userDataModel" styleClass="h-full border-round-xl fadein animation-duration-500 shadow-none">
               <section class="w-full flex flex-column justify-content-center align-items-center md:p-3">
-                <section class="w-full flex justify-content-between gap-3">
-                  <h4 class="w-full ss-txt--title text-left ss-txt--small ss-txt--primary text-xl font-semibold flex align-items-center gap-2">
-                    Actividad
+                <section class="w-full flex justify-content-between gap-3 align-items-center mb-3">
+                  <h4
+                    class="w-full ss-txt--title text-left ss-txt--small ss-txt--black-lighten text-xl font-semibold flex align-items-center gap-2">
+                    <i class="pi pi-chart-bar text-xl"></i> Actividad
                   </h4>
 
-                  <div class="w-fit white-space-nowrap ss-txt--black-lighten cursor-pointer"
-                       routerLink='/dashboard/stats'>
+                  <small class="w-fit white-space-nowrap ss-txt--black-lighten cursor-pointer"
+                    routerLink='/dashboard/stats'>
                     Ver más
-                  </div>
+                  </small>
                 </section>
 
                 <section class="w-full h-auto">
-                  <p-chart type="bar" [data]="data" class="w-full h-auto">
-                  </p-chart>
+                  <swiper [config]="swiperConfig" class="overflow-hidden">
+                    <ng-template swiperSlide>
+                      <p-chart type="bar" [data]="interactionData" class="w-full h-auto"></p-chart>
+                    </ng-template>
+
+                    <ng-template swiperSlide>
+                      <p-chart type="bar" [data]="logByActionData" class="w-full h-auto"></p-chart>
+                    </ng-template>
+                  </swiper>
                 </section>
               </section>
             </p-card>
           </section>
 
-          <section class="w-full md:w-6 flex flex-column gap-3">
-            <p-card *ngIf="userDataModel"
-              styleClass="border-round-xl ss-bg--primary fadein animation-duration-500 shadow-none">
-              <section class="w-full flex flex-column gap-2 justify-content-center align-items-start md:p-3">
-                <h4
-                  class="w-fit ss-txt--title ss-txt--small ss-txt--white text-xl font-semibold flex align-items-center gap-2">
-                  <i class="pi pi-cog text-xl"></i> Cuenta
-                </h4>
+          <section class="w-full md:w-6 flex flex-column gap-3 overflow-hidden">
+            <swiper [config]="swiperConfig" class="w-full">
+              <ng-template swiperSlide>
+                <section
+                  class="w-full h-auto border-round-xl fadein animation-duration-400 p-5 flex flex-column gap-3 justify-content-between bg-cover ng-star-inserted aos-init aos-animate"
+                  style="background-image: url(&quot;https://firebasestorage.googleapis.com/v0/b/random-storage-a7496.appspot.com/o/image%2032.png?alt=media&amp;token=52c830d0-95d1-4089-adc2-9df9c9134da1&quot;);">
+                  <h4
+                    class="w-full ss-txt--title text-left ss-txt--small ss-txt--white text-xl font-semibold flex align-items-center gap-2">
+                    Recomendación
+                  </h4>
+                  <p class="ss-txt-body ss-txt--grey-lighten text-md mb-3"> Adminitrar desde cualquier
+                    dispositivo </p>
+                  <section class="flex gap-3"><i
+                      class="pi pi-mobile text-5xl ss-txt--primary mb-4 animation-duration-3000"></i><i
+                      class="pi pi-tablet text-5xl ss-txt--primary mb-4 animation-duration-3000"></i><i
+                      class="pi pi-desktop text-5xl ss-txt--primary mb-4 animation-duration-3000"></i></section>
+                </section>
+              </ng-template>
 
-                <p class="ss-txt--white">
-                  Administra los ajustes de tu cuenta
-                </p>
+              <ng-template swiperSlide>
+                <p-card *ngIf="userDataModel"
+                  styleClass="border-round-xl ss-bg--primary fadein animation-duration-500 shadow-none">
+                  <section class="w-full flex flex-column gap-2 justify-content-center align-items-start md:p-3">
+                    <h4
+                      class="w-fit ss-txt--title ss-txt--small ss-txt--white text-xl font-semibold flex align-items-center gap-2">
+                      <i class="pi pi-cog text-xl"></i> Cuenta
+                    </h4>
 
-                <button class="ss-button ss-button--small ss-button--yellow fadein mt-3"
-                  routerLink='/dashboard/account/user-entity'>
-                  Ver sección
-                </button>
-              </section>
-            </p-card>
+                    <p class="ss-txt--white">
+                      Administra los ajustes de tu cuenta
+                    </p>
 
-            <p-card *ngIf="userDataModel?.role !== 'MAINTAINER'"
-              styleClass="border-round-xl ss-bg--grey-lighten-2 fadein animation-duration-500 shadow-none">
-              <section class="w-full flex flex-column gap-2 justify-content-center align-items-start md:p-3">
-                <h4
-                  class="w-fit ss-txt--title ss-txt--small ss-txt--primary text-xl font-semibold flex align-items-center gap-2">
-                  <i class="pi pi-chart-bar text-xl"></i> Estadísticas
-                </h4>
+                    <button class="ss-button ss-button--small ss-button--yellow fadein mt-3"
+                      routerLink='/dashboard/account/user-entity'>
+                      Ver sección
+                    </button>
+                  </section>
+                </p-card>
+              </ng-template>
 
-                <p class="ss-txt--black">
-                  Entérate de la información recopilada por la plataforma
-                </p>
+              <ng-template swiperSlide>
+                <p-card *ngIf="userDataModel?.role !== 'MAINTAINER'"
+                  styleClass="border-round-xl ss-bg--grey-lighten-2 fadein animation-duration-500 shadow-none">
+                  <section class="w-full flex flex-column gap-2 justify-content-center align-items-start md:p-3">
+                    <h4
+                      class="w-fit ss-txt--title ss-txt--small ss-txt--primary text-xl font-semibold flex align-items-center gap-2">
+                      <i class="pi pi-chart-bar text-xl"></i> Estadísticas
+                    </h4>
 
-                <button class="ss-button ss-button--small fadein mt-3" routerLink='/dashboard/stats'>
-                  Ver sección
-                </button>
-              </section>
-            </p-card>
+                    <p class="ss-txt--black">
+                      Entérate de la información recopilada por la plataforma
+                    </p>
+
+                    <button class="ss-button ss-button--small fadein mt-3" routerLink='/dashboard/stats'>
+                      Ver sección
+                    </button>
+                  </section>
+                </p-card>
+              </ng-template>
+            </swiper>
           </section>
         </section>
       </section>
@@ -110,45 +142,49 @@
           </section>
         </p-card>
 
-        <section
-          class="w-full h-auto border-round-xl fadein animation-duration-400 p-5 flex flex-column gap-3 justify-content-between bg-cover ng-star-inserted aos-init aos-animate"
-          style="background-image: url(&quot;https://firebasestorage.googleapis.com/v0/b/random-storage-a7496.appspot.com/o/image%2032.png?alt=media&amp;token=52c830d0-95d1-4089-adc2-9df9c9134da1&quot;);">
-          <h3 class="ss-txt-title font-normal ss-txt--white text-xl"> Recomendación </h3>
-          <p class="ss-txt-body ss-txt--grey-lighten text-md mb-3"> Adminitrar desde cualquier
-            dispositivo </p>
-          <section class="flex gap-3"><i
-              class="pi pi-mobile text-5xl ss-txt--primary mb-4 animation-duration-3000"></i><i
-              class="pi pi-tablet text-5xl ss-txt--primary mb-4 animation-duration-3000"></i><i
-              class="pi pi-desktop text-5xl ss-txt--primary mb-4 animation-duration-3000"></i></section>
-        </section>
-
-        <p-card *ngIf="userDataModel" styleClass="border-round-xl fadein animation-duration-500 shadow-none">
+        <p-card styleClass="border-round-xl fadein animation-duration-500 shadow-none">
           <section class="w-full flex flex-column justify-content-center align-items-start md:p-3">
-            <section class="w-full flex justify-content-between gap-3 mb-3">
-              <h4 class="w-full ss-txt--title text-left ss-txt--small ss-txt--primary text-xl font-semibold flex align-items-center gap-2">
-                Registros
+            <section class="w-full flex justify-content-between gap-3 mb-4 align-items-center">
+              <h4
+                class="w-full ss-txt--title text-left ss-txt--small ss-txt--black-lighten text-xl font-semibold flex align-items-center gap-2">
+                <i class="pi pi-history text-xl ss-txt--black-lighten"></i> Historial
               </h4>
 
-              <div class="w-fit white-space-nowrap ss-txt--black-lighten cursor-pointer"
-                   routerLink='/dashboard/logs'>
+              <small class="w-fit white-space-nowrap ss-txt--black-lighten cursor-pointer"
+                routerLink='/dashboard/account/logs'>
                 Ver más
-              </div>
+              </small>
             </section>
 
             <section class="ss-txt--black-lighten w-full flex flex-column gap-2">
-              <section class="w-full flex align-items-center justify-content-between" *ngFor="let item of [1,1,1,1]">
-                <div class="w-full">
-                  Edicion de xxx el
+              <section
+                class="w-full flex align-items-start justify-content-between border-bottom-1 border-black-alpha-10 pb-2"
+                *ngFor="let item of logList">
+                <div class="w-full flex flex-column">
+                  <p class="font-semibold ss-txt--black">
+                    {{getModuleLabel(item.moduleId)}}
+                  </p>
+                  <small class="ss-txt--black-lighten">
+                    {{getActionLabel(item.action)}}
+                  </small>
                 </div>
 
-                <span>
-                  12/23/2345
-                </span>
+                <div class="flex flex-column align-items-end">
+                  <small>
+                    {{toDDMMAAAA(item.date)}}
+                  </small>
+                  <small>
+                    {{getHour(item.date)}}
+                  </small>
+                </div>
               </section>
             </section>
           </section>
         </p-card>
       </section>
     </section>
+
+    <announcement *ngIf="!userDataModel" [iconName]="'pi-spinner'" [text]="'Cargando'">
+    </announcement>
   </section>
 </article>

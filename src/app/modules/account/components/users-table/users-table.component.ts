@@ -18,6 +18,8 @@ import { DeleteManyFilesStorageService } from '../../../shared/services/delete-m
 import { LoaderService } from 'src/app/modules/shared/services/loader.service';
 import { UsersRepositoryService } from 'src/app/modules/shared/services/users.repository-service';
 import { deleteUser, getAuth } from '@angular/fire/auth';
+import { getLog } from 'src/app/modules/shared/utils/get-log.util';
+import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
 
 @Component({
   selector: 'users-table',
@@ -43,6 +45,7 @@ export class UsersTableComponent implements OnInit {
 
   constructor(private _usersRepositoryService: UsersRepositoryService,
     private _deleteManyFilesStorageService: DeleteManyFilesStorageService,
+    private _logsRepositoryService: LogsRepositoryService,
     private _confirmationService: ConfirmationService,
     private _loaderService: LoaderService,
     private _toastService: MessageService,
@@ -77,6 +80,9 @@ export class UsersTableComponent implements OnInit {
               detail: 'El usuario se eliminó correctamente',
               life: 6000
             });
+
+            let log = getLog(item.id, 'DELETE', 'users', this.userData.id);
+            this._logsRepositoryService.create({...log});
 
             if (item?.gallery && item?.gallery.length > 0) {
               this._deleteManyFilesStorageService.execute(item.gallery);

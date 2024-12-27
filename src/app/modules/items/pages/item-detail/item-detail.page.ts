@@ -15,6 +15,9 @@ import { RepositoryFactoryService } from 'src/app/modules/shared/services/reposi
 import { getTabItemsById } from 'src/app/modules/shared/utils/tabs-config';
 import { createEmptyItemForm } from 'src/app/modules/shared/utils/item-forms-config';
 import { Item } from 'src/app/modules/shared/models/item.model';
+import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
+import { Log } from 'src/app/modules/shared/models/log.model';
+import { getLog } from 'src/app/modules/shared/utils/get-log.util';
 
 @Component({
   selector: 'item-detail',
@@ -38,6 +41,7 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
   private _service: any;
 
   constructor(private _deleteManyFilesStorageService: DeleteManyFilesStorageService,
+    private _logsRepositoryService: LogsRepositoryService,
     private _repositoryService: RepositoryFactoryService,
     private _userDataModelService: UserDataModelService,
     private _confirmationService: ConfirmationService,
@@ -57,7 +61,6 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._getModuleParam();
-    this._getItem();
     this._userDataModelListener();
   }
 
@@ -162,6 +165,9 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
           life: 6000
         });
 
+        let log = getLog(this.item.id, 'UPDATE', this.moduleId, this.userDataModel.id);
+        this._logsRepositoryService.create({...log});
+
         const imageUrlListToDelete: string[] = this.galleryForm.value.removedImageIdList;
         this._removeImagesByUrlList(imageUrlListToDelete);
 
@@ -184,13 +190,16 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
 
   private _createItem(item: any): void {
     firstValueFrom(this._service.create(item))
-      .then(() => {
+      .then((id: any) => {
         this._toastService.add({
           severity: 'success',
           summary: 'Item añadido',
           detail: item.name + ' se creó correctamente',
           life: 6000
         });
+
+        let log = getLog(id, 'CREATE', this.moduleId, this.userDataModel.id);
+        this._logsRepositoryService.create({...log});
 
         const imageUrlListToDelete: string[] = this.galleryForm.value.removedImageIdList;
         this._removeImagesByUrlList(imageUrlListToDelete);
@@ -223,8 +232,10 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
       this.item = Item.createInstance(this.moduleId);
     } else {
       firstValueFrom(this._service.getById(this._activatedRoute.snapshot.params['id']))
-        .then((item: any[]) => {
+        .then((item: any) => {
           this.item = item;
+          let log = getLog(item.id, 'READ', this.moduleId, this.userDataModel.id);
+          this._logsRepositoryService.create({...log});
 
           this._cdr.markForCheck();
         });
@@ -240,6 +251,7 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
         if (userDataModel.accountId) {
           this.userDataModel = userDataModel;
 
+          this._getItem();
           this._cdr.markForCheck();
         }
       });
@@ -258,7 +270,7 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     this.tabItems = getTabItemsById(this.moduleId);
     this.itemForm = createEmptyItemForm(this.moduleId, this._formBuilder);
     this.activeTab = this.tabItems[0];
-    this.item = null;
+    // this.item = null;
   }
 
   public isFormValid(): boolean {

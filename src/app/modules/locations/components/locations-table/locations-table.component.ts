@@ -19,6 +19,8 @@ import { LoaderService } from 'src/app/modules/shared/services/loader.service';
 import { LocationFormComponent } from '../location-form/location-form.component';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { LocationService } from 'src/app/modules/shared/services/location.repository-service';
+import { getLog } from 'src/app/modules/shared/utils/get-log.util';
+import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
 
 @Component({
   selector: 'locations-table',
@@ -43,6 +45,7 @@ export class LocationsTableComponent implements OnInit {
 
   constructor(private _locationsRepositoryService: LocationService,
     private _deleteManyFilesStorageService: DeleteManyFilesStorageService,
+    private _logsRepositoryService: LogsRepositoryService,
     private _confirmationService: ConfirmationService,
     private _dialogService: DialogService,
     private _loaderService: LoaderService,
@@ -76,6 +79,9 @@ export class LocationsTableComponent implements OnInit {
               detail: 'Locación eliminada correctamente',
               life: 6000
             });
+
+            let log = getLog(item.id, 'DELETE', 'locations', this.userData.id);
+            this._logsRepositoryService.create({ ...log });
 
             if (item?.gallery && item?.gallery.length > 0) {
               this._deleteManyFilesStorageService.execute(item.gallery);

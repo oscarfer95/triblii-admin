@@ -33,7 +33,8 @@ export class LocationFormComponent implements OnInit {
   }
 
   public saveForm() {
-
+    // todo COMPLETAR
+    // TODO LOGS
   }
 
   private _initForm(): void {
