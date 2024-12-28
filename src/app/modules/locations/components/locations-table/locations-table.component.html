@@ -48,14 +48,14 @@
 
     <ng-template pTemplate="body" let-item>
       <tr class="ss-txt--black-lighten">
-        <td class="hidden-column text-center cursor-pointer" (click)="openLocationFormModal(item)">
+        <td class="hidden-column text-center cursor-pointer">
           <span class="p-column-title"> # {{ locationList.indexOf(item) + 1 }} </span>
           <span>
             {{ locationList.indexOf(item) + 1 }}
           </span>
         </td>
 
-        <td class="cursor-pointer" (click)="openLocationFormModal(item)">
+        <td class="cursor-pointer">
           <section class="flex gap-1 align-items-center">
             <img *ngIf="item?.coverUrl" [src]="item?.coverUrl" alt="Prodcut image" class="max-h-2rem max-w-2rem">
 

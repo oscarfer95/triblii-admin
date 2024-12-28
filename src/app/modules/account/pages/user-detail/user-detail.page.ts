@@ -65,13 +65,32 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     const user: any = { ...this.user, ...formValue };
 
     if (user.accountId !== '') {
-      delete user.id;
-      user.entitiesId?.includes(this.userDataModel.entity.id) ? null : user.entitiesId?.push(this.userDataModel.entity.id);
-      this._editUser(user);
+      if (this.userDataModel.actions.update) {
+        delete user.id;
+        user.entitiesId?.includes(this.userDataModel.entity.id) ? null : user.entitiesId?.push(this.userDataModel.entity.id);
+        this._editUser(user);
+      } else {
+        this._showNoPermissionToast();
+        this._loaderService.show = false;
+      }
     } else {
-      user.entitiesId?.push(this.userDataModel.entity.id);
-      this._createUser(user);
+      if (this.userDataModel.actions.create) {
+        user.entitiesId?.push(this.userDataModel.entity.id);
+        this._createUser(user);
+      } else {
+        this._showNoPermissionToast();
+        this._loaderService.show = false;
+      }
     }
+  }
+
+  private _showNoPermissionToast() {
+    this._toastService.add({
+      severity: 'error',
+      summary: 'Permiso negado',
+      detail: 'El usuario no tiene permisos necesarios para esta acción',
+      life: 6000
+    });
   }
 
   private _editUser(user: any): void {
@@ -84,9 +103,8 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
           life: 6000
         });
 
-        
         let log = getLog(this.user.id, 'UPDATE', 'users', this.userDataModel.id);
-        this._logsRepositoryService.create({...log});
+        this._logsRepositoryService.create({ ...log });
 
         this._itemFormSaved = true;
         this._loaderService.show = false;
@@ -116,7 +134,7 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
         });
 
         let log = getLog(id, 'CREATE', 'users', this.userDataModel.id);
-        this._logsRepositoryService.create({...log});
+        this._logsRepositoryService.create({ ...log });
 
         this._itemFormSaved = true;
         this._loaderService.show = false;
@@ -142,9 +160,9 @@ export class UserDetail implements CanDeactivateComponent, OnInit, OnDestroy {
       firstValueFrom(this._usersRepositoryService.getById(this._activatedRoute.snapshot.params['id']))
         .then((user: any) => {
           this.user = user;
-          
+
           let log = getLog(this.user.id, 'READ', 'users', this.userDataModel.id);
-          this._logsRepositoryService.create({...log});
+          this._logsRepositoryService.create({ ...log });
           this._cdr.markForCheck();
         });
     }

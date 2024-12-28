@@ -63,7 +63,7 @@ export class LogsPage implements OnInit, OnDestroy {
       orderByConfigList: [
         {
           field: 'date',
-          direction: 'asc'
+          direction: 'desc'
         }
       ],
       queryList: [

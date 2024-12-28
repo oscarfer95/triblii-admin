@@ -9,7 +9,8 @@
         <input class="w-full mt-2"
                type="text"
                pInputText
-               formControlName="email">
+               formControlName="email"
+               placeholder="Ingresa un correo">
 
         <small *ngIf="logInForm.get('email')?.hasError('required') && logInForm.get('email')?.touched || logInForm.get('email')?.hasError('email')"
                class="p-error block mt-3">
@@ -25,6 +26,7 @@
         <p-password styleClass="p-password p-component p-inputwrapper p-input-icon-right mt-2"
                     type="password"
                     formControlName="password"
+                    placeholder="* * * * * *"
                     [toggleMask]="true"
                     [feedback]="false">
         </p-password>

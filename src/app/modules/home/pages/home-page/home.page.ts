@@ -47,7 +47,7 @@ export class HomePage implements OnInit, OnDestroy {
         disableOnInteraction: true
       }
     };
-    
+
     this._userDataModelListener();
   }
 
@@ -68,7 +68,7 @@ export class HomePage implements OnInit, OnDestroy {
     const date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-    
+
     return `${hours}:${minutes}`;
   }
 
@@ -108,7 +108,7 @@ export class HomePage implements OnInit, OnDestroy {
       case 'hotels':
         label = 'Hotel'
         break;
-        
+
       case 'foods':
         label = 'Comida'
         break;
@@ -119,6 +119,22 @@ export class HomePage implements OnInit, OnDestroy {
 
       case 'banners':
         label = 'Banner'
+        break;
+
+      case 'entities':
+        label = 'Entidad'
+        break;
+
+      case 'users':
+        label = 'Usuario'
+        break;
+
+      case 'locations':
+        label = 'Locación'
+        break;
+
+      case 'account':
+        label = 'Cuenta'
         break;
     }
 
@@ -139,7 +155,7 @@ export class HomePage implements OnInit, OnDestroy {
       this._getLogsByMonth(logs);
       this._getLogsByAction(logs);
 
-      this.logList = logs.length > 3? logs.slice(0, 3): logs;
+      this.logList = logs.length > 4? logs.slice(0, 5) : logs;
     } catch (error) {
       console.error('Error al obtener los logs:', error);
     } finally {
@@ -152,7 +168,7 @@ export class HomePage implements OnInit, OnDestroy {
       orderByConfigList: [
         {
           field: 'date',
-          direction: 'asc'
+          direction: 'desc'
         }
       ],
       queryList: [
@@ -187,7 +203,7 @@ export class HomePage implements OnInit, OnDestroy {
     const currentYear = new Date().getFullYear();
     const labels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Deciembre'];
     const counts = new Array(12).fill(0);
-  
+
     logs.forEach(log => {
       const logDate = new Date(log.date.seconds * 1000 + log.date.nanoseconds / 1000000);
 
@@ -196,7 +212,7 @@ export class HomePage implements OnInit, OnDestroy {
         counts[month]++;
       }
     });
-  
+
     this.interactionData = {
       labels,
       datasets: [
@@ -207,17 +223,17 @@ export class HomePage implements OnInit, OnDestroy {
       ]
     };
   }
-  
+
   private _getLogsByAction(logs: any[]): any {
     const actionCounts: { [key: string]: number } = {};
-  
+
     logs.forEach(log => {
       const action = log.action;
       if (action) {
         actionCounts[action] = (actionCounts[action] || 0) + 1;
       }
     });
-  
+
     this.logByActionData = {
       labels: Object.keys(actionCounts),
       datasets: [
@@ -228,5 +244,5 @@ export class HomePage implements OnInit, OnDestroy {
       ]
     };
   }
-  
+
 }

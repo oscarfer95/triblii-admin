@@ -12,6 +12,8 @@ import { BannerResponse } from 'src/app/modules/shared/services/api/responses/ba
 import { LoaderService } from 'src/app/modules/shared/services/loader.service';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
+import { getLog } from 'src/app/modules/shared/utils/get-log.util';
+import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
 
 @Component({
   selector: 'banner-detail',
@@ -29,6 +31,7 @@ export class BannerDetail implements OnInit, OnDestroy {
   private _unsubscribe: Subject<void>;
 
   constructor(private _bannersRepositoryService: BannerRepositoryService,
+    private _logsRepositoryService: LogsRepositoryService,
     private _userDataModelService: UserDataModelService,
     private _activatedRoute: ActivatedRoute,
     private _loaderService: LoaderService,
@@ -60,14 +63,31 @@ export class BannerDetail implements OnInit, OnDestroy {
     const banner: any = { ...this.banner, ...formValue };
 
     if (banner.id) {
-      banner?.entitiesId.includes(this.userDataModel.entity.id) ? null : banner?.entitiesId?.push(this.userDataModel.entity.id);
-      this._editBanner(banner, banner.id);
+      if (this.userDataModel.actions.update) {
+        banner?.entitiesId.includes(this.userDataModel.entity.id) ? null : banner?.entitiesId?.push(this.userDataModel.entity.id);
+        this._editBanner(banner, banner.id);
+      } else {
+        this._showNoPermissionToast();
+        this._loaderService.show = false;
+      }
     } else {
-      banner?.entitiesId?.push(this.userDataModel.entity.id);
-      this._createBanner(banner);
+      if (this.userDataModel.actions.create) {
+        banner?.entitiesId?.push(this.userDataModel.entity.id);
+        this._createBanner(banner);
+      } else {
+        this._showNoPermissionToast();
+        this._loaderService.show = false;
+      }
     }
-    console.log(banner);
+  }
 
+  private _showNoPermissionToast() {
+    this._toastService.add({
+      severity: 'error',
+      summary: 'Permiso negado',
+      detail: 'El usuario no tiene permisos necesarios para esta acción',
+      life: 6000
+    });
   }
 
   private async _editBanner(banner: any, id: string): Promise<any> {
@@ -80,6 +100,9 @@ export class BannerDetail implements OnInit, OnDestroy {
         detail: 'El banner se editó correctamente',
         life: 6000
       });
+
+      let log = getLog(id, 'UPDATE', 'banners', this.userDataModel.id);
+      this._logsRepositoryService.create({ ...log });
 
       this._router.navigate(['/dashboard/banners']);
     }).catch((error: any) => {
@@ -96,7 +119,7 @@ export class BannerDetail implements OnInit, OnDestroy {
   }
 
   private async _createBanner(banner: any): Promise<any> {
-    return firstValueFrom(this._bannersRepositoryService.create(banner)).then(() => {
+    return firstValueFrom(this._bannersRepositoryService.create(banner)).then((id: string) => {
       this._loaderService.show = false;
       this._toastService.add({
         severity: 'success',
@@ -104,6 +127,9 @@ export class BannerDetail implements OnInit, OnDestroy {
         detail: 'El banner se creó correctamente',
         life: 6000
       });
+
+      let log = getLog(id, 'CREATE', 'banners', this.userDataModel.id);
+      this._logsRepositoryService.create({ ...log });
 
       this._router.navigate(['/dashboard/banners']);
     }).catch(() => {
@@ -124,6 +150,9 @@ export class BannerDetail implements OnInit, OnDestroy {
       firstValueFrom(this._bannersRepositoryService.getById(this._activatedRoute.snapshot.params['id']))
         .then((banner: BannerResponse) => {
           this.banner = banner;
+
+          let log = getLog(this.banner.id, 'READ', 'banners', this.userDataModel.id);
+          this._logsRepositoryService.create({ ...log });
 
           this._cdr.markForCheck();
         });

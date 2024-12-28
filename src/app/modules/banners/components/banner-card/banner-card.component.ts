@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
 import { BannerRepositoryService } from 'src/app/modules/shared/services/banner.repository-service';
 import { LoaderService } from 'src/app/modules/shared/services/loader.service';
+import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
+import { getLog } from 'src/app/modules/shared/utils/get-log.util';
 @Component({
   selector: 'banner-card',
   templateUrl: './banner-card.component.html',
@@ -14,19 +17,29 @@ export class BannerCardComponent implements OnInit {
   @Input()
   public banner!: any;
 
+  @Input()
+  public userDataModel!: any;
+
   @Output()
   public bannerDeleted: EventEmitter<void>;
 
   constructor(private _bannerRepositoryService: BannerRepositoryService,
-              private _confirmationService: ConfirmationService,
-              private _loaderService: LoaderService,
-              private _toastService: MessageService) {
+    private _logsRepositoryService: LogsRepositoryService,
+    private _confirmationService: ConfirmationService,
+    private _loaderService: LoaderService,
+    private _toastService: MessageService,
+    private _router: Router) {
     this.bannerDeleted = new EventEmitter<void>();
   }
 
   ngOnInit(): void {
   }
 
+  public goToRoute(): void {
+    if (this.userDataModel.actions.update) {
+      this._router.navigate(['/dashboard/banners/' + this.banner.id]);
+    }
+  }
 
   public confirmDeleteProduct(banner: any): void {
     this._confirmationService.confirm({
@@ -53,6 +66,10 @@ export class BannerCardComponent implements OnInit {
             });
 
             this.bannerDeleted.emit();
+
+
+            let log = getLog(this.banner.id, 'DELETE', 'banners', this.userDataModel.id);
+            this._logsRepositoryService.create({ ...log });
 
             this._loaderService.show = false;
           });

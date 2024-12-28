@@ -137,11 +137,17 @@ export class LocationsTableComponent implements OnInit {
     const dialogConfig: DynamicDialogConfig = {
       data: {
         location: location,
-        locationList: this.locationList
+        locationList: this.locationList,
+        userData: this.userData
       },
       header: 'Locación'
     };
 
     const dialogRef: DynamicDialogRef = this._dialogService.open(component, dialogConfig);
+    dialogRef.onClose.subscribe((refreshList) => {
+      if (refreshList) {
+        this.dataChanges.emit();
+      }
+    });
   }
 }

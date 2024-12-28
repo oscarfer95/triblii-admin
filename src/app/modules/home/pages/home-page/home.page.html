@@ -1,8 +1,8 @@
 <article class="w-full h-screen flex flex-column ss-main-admin-padding pt-7 lg:pt-6 relative">
   <section class="w-full h-full px-3 lg:px-0" data-aos="fade-up" data-aos-delay="200">
-    <h3 class="font-normal text-2xl lg:text-5xl ss-txt--black mb-4 lg:mb-6">
+    <h3 class="font-normal text-2xl lg:text-5xl ss-txt--black mb-3 lg:mb-6">
       ¡Bienvenido de vuelta
-      <span *ngIf="userDataModel">
+      <span *ngIf="userDataModel" class="ss-txt--primary">
         , {{userDataModel.name}}
       </span>!
     </h3>
@@ -12,16 +12,16 @@
         <p-card styleClass="border-round-xl fadein animation-duration-500 shadow-none">
           <section class="w-full flex flex-column justify-content-center align-items-start md:p-3">
             <h4
-              class="w-fit ss-txt--title ss-txt--small ss-txt--black-lighten text-xl font-semibold mb-3 flex gap-2 align-items-center">
+              class="w-fit ss-txt--title ss-txt--small ss-txt--black-lighten text-xl font-normal mb-3 flex gap-2 align-items-center">
               <i class="pi pi-th-large text-xl"></i> Módulos disponibles
             </h4>
 
             <section
-              class="w-full flex flex-wrap gap-3 align-items-center p-1 justify-content-around md:justify-content-between md:my-3">
+              class="w-full flex flex-wrap gap-3 align-items-center p-1 justify-content-between md:justify-content-start sm:my-3">
               <section *ngFor="let item of menuItems"
-                class="w-7rem h-7rem flex ss-bg--grey-lighten shadow-1 cursor-pointer flex-column border-round-xl gap-1 justify-content-center align-items-center p-3"
+                class="w-full sm:w-7rem sm:h-7rem flex ss-bg--grey-lighten shadow-1 cursor-pointer sm:flex-column border-round-xl gap-2 sm:gap-1 justify-content-center align-items-center p-2 sm:p-3"
                 routerLink='/dashboard/{{item?.url}}'>
-                <i class="{{ item.icon }} text-4xl ss-txt--primary"></i>
+                <i class="{{ item.icon }} text-xl sm:text-4xl ss-txt--primary"></i>
 
                 <small class="ss-txt--black-lighten">
                   {{ item.label }}
@@ -37,7 +37,7 @@
               <section class="w-full flex flex-column justify-content-center align-items-center md:p-3">
                 <section class="w-full flex justify-content-between gap-3 align-items-center mb-3">
                   <h4
-                    class="w-full ss-txt--title text-left ss-txt--small ss-txt--black-lighten text-xl font-semibold flex align-items-center gap-2">
+                    class="w-full ss-txt--title text-left ss-txt--small ss-txt--black-lighten text-xl font-normal flex align-items-center gap-2">
                     <i class="pi pi-chart-bar text-xl"></i> Actividad
                   </h4>
 
@@ -129,7 +129,7 @@
       <section class="w-full lg:w-3 flex flex-column gap-3">
         <p-card *ngIf="userDataModel?.entity" styleClass="border-round-xl fadein animation-duration-500 shadow-none">
           <section class="w-full flex flex-column justify-content-center align-items-center md:p-3">
-            <h4 class="w-fit ss-txt--title ss-txt--small ss-txt--primary text-xl font-semibold">
+            <h4 class="w-fit ss-txt--title ss-txt--small ss-txt--primary text-xl font-normal">
               Entidad
             </h4>
 
@@ -142,11 +142,11 @@
           </section>
         </p-card>
 
-        <p-card styleClass="border-round-xl fadein animation-duration-500 shadow-none">
+        <p-card styleClass="border-round-xl fadein animation-duration-500 shadow-none mb-3">
           <section class="w-full flex flex-column justify-content-center align-items-start md:p-3">
             <section class="w-full flex justify-content-between gap-3 mb-4 align-items-center">
               <h4
-                class="w-full ss-txt--title text-left ss-txt--small ss-txt--black-lighten text-xl font-semibold flex align-items-center gap-2">
+                class="w-full ss-txt--title text-left ss-txt--small ss-txt--black-lighten text-xl font-normal flex align-items-center gap-2">
                 <i class="pi pi-history text-xl ss-txt--black-lighten"></i> Historial
               </h4>
 
@@ -156,7 +156,7 @@
               </small>
             </section>
 
-            <section class="ss-txt--black-lighten w-full flex flex-column gap-2">
+            <section *ngIf="logList?.length > 0" class="ss-txt--black-lighten w-full flex flex-column gap-2">
               <section
                 class="w-full flex align-items-start justify-content-between border-bottom-1 border-black-alpha-10 pb-2"
                 *ngFor="let item of logList">
@@ -178,6 +178,15 @@
                   </small>
                 </div>
               </section>
+            </section>
+
+            <section *ngIf="logList?.length === 0"
+                     class="">
+              <div class="ss-txt--black-lighten bg-black-alpha-10 p-3 border-round-xl">
+                <small>
+                  Aún no realizaste ninguna acción en la plataforma
+                </small>
+              </div>
             </section>
           </section>
         </p-card>

@@ -15,7 +15,7 @@
         </small>
       </section>
 
-      <section class="xl:w-3 hidden xl:flex justify-content-end">
+      <section *ngIf="userDataModel.actions.update || userDataModel.actions.create" class="xl:w-3 hidden xl:flex justify-content-end">
         <ng-container
           *ngTemplateOutlet="saveButtonTemplate; context: { isValid: isFormValid(), onClick: saveForm.bind(this) }">
         </ng-container>
