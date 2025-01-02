@@ -8,6 +8,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
+import { getActionLabel, getSingularModuleLabel } from 'src/app/modules/shared/utils/get-label-text.util';
 
 @Component({
   selector: 'logs-table',
@@ -20,6 +21,8 @@ export class LogsTableComponent implements OnInit {
   @Input()
   public logList!: any[];
 
+  @Input()
+  public userDataModel!: any;
 
   @ViewChild('dt')
   public table!: Table;
@@ -32,6 +35,14 @@ export class LogsTableComponent implements OnInit {
 
   public applyFilterGlobal(event: any, stringVal: string): void {
     this.table.filterGlobal((event.target as HTMLInputElement).value, stringVal);
+  }
+
+  public getActionLabel(action: string): string {
+    return getActionLabel(action);
+  }
+
+  public getModuleLabel(action: string): string {
+    return getSingularModuleLabel(action);
   }
 
   public toDate(timestamp: { seconds: number, nanoseconds: number }): any {

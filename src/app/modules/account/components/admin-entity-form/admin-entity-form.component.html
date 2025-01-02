@@ -61,41 +61,37 @@
 
       <ng-template pTemplate="body">
         <section formGroupName="location" class="flex flex-column gap-5 px-3">
-          <section class="w-full">
-            <h4>
-              País
-            </h4>
-
-            <div class="w-full mt-2 mb-3 ss-txt--black-lighten text-sm">
-              Elige un país, así los elementos que administran podrán asociarse a una ubicación.
-            </div>
-
-            <section *ngIf="countries?.length > 0">
-              <p-multiSelect [filter]="true" class="w-full" [options]="countries" optionLabel="name" display="chip"
-                optionValue="id" placeholder="Selecciona un país" [selectionLimit]="1"
-                (onChange)="markAsTouched()" formControlName="countryIds">
-              </p-multiSelect>
+          <section *ngIf="countries?.length > 0" class="flex flex-column">
+            <section class="w-full flex align-items-center justify-content-between overflow-hidden mb-1">
+              <span class="font-semibold">País</span>
             </section>
 
-            <section *ngIf="!countries">
-              <ng-container *ngTemplateOutlet="inputLoader"></ng-container>
-            </section>
+            <p-multiSelect [filter]="true" class="w-full" [options]="countries" optionLabel="name" display="chip"
+              optionValue="id" placeholder="Selecciona un país" [selectionLimit]="1" (onChange)="markAsTouched()"
+              formControlName="countryIds">
+            </p-multiSelect>
           </section>
 
-          <section class="w-full">
-            <h4 *ngIf="cities">
-              Ciudad <span class="text-sm ss-txt--grey font-normal">(Opcional)</span>
-            </h4>
-
-            <section *ngIf="cities" class="mt-2">
-              <p-multiSelect [filter]="true" class="w-full" [options]="cities" optionLabel="name" display="chip"
-                optionValue="id" placeholder="Selecciona una ciudad" formControlName="cityIds">
-              </p-multiSelect>
+          <section *ngIf="cities?.length > 0" class="flex flex-column">
+            <section class="w-full flex align-items-center justify-content-between overflow-hidden mb-1">
+              <span class="font-semibold">Ciudad</span>
             </section>
 
-            <section *ngIf="!cities">
-              <ng-container *ngTemplateOutlet="inputLoader"></ng-container>
+            <p-multiSelect [filter]="true" class="w-full" [options]="cities" optionLabel="name" display="chip"
+              optionValue="id" placeholder="Seleccionar" [selectionLimit]="1" (onChange)="markAsTouched()"
+              formControlName="cityIds">
+            </p-multiSelect>
+          </section>
+
+          <section *ngIf="states?.length > 0" class="flex flex-column">
+            <section class="w-full flex align-items-center justify-content-between overflow-hidden mb-1">
+              <span class="font-semibold">Estado</span>
             </section>
+
+            <p-multiSelect [filter]="true" class="w-full" [options]="states" optionLabel="name" display="chip"
+              optionValue="id" placeholder="Seleccionar" (onChange)="markAsTouched()"
+              formControlName="stateIds">
+            </p-multiSelect>
           </section>
         </section>
       </ng-template>

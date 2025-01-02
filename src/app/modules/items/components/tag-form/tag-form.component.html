@@ -1,0 +1,38 @@
+<article *ngIf="form" [formGroup]="form" class="w-full md:w-30rem h-full md:h-30rem account flex flex-column justify-content-between relative">
+  <section class="flex flex-column gap-4">
+    <section>
+      <div class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+        Nombre
+      </div>
+
+      <input type="text" pInputText class="w-full" placeholder="Iglesia" formControlName="name" />
+    </section>
+
+    <section>
+      <div class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+        Categoría padre
+      </div>
+
+      <p-dropdown [options]="categories" placeholder="Opcional" optionValue="id" optionLabel="name"
+        formControlName="categoryId" class="w-full" [filter]="true">
+      </p-dropdown>
+    </section>
+
+    <div class="w-full flex justify-content-between align-items-center gap-3">
+      <strong>Disponible</strong>
+
+      <p-inputSwitch formControlName="available"></p-inputSwitch>
+    </div>
+  </section>
+
+  <section class="flex justify-content-end mt-8">
+    <button class="ss-button fadein" [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
+      [disabled]="form.invalid || !form.touched" (click)="saveForm()">
+      Guardar cambios
+    </button>
+  </section>
+</article>
+
+<ng-template #inputLoader>
+  <i class="pi pi-spin pi-spinner ss-txt--primary text-lg mr-1 mt-2"></i>
+</ng-template>

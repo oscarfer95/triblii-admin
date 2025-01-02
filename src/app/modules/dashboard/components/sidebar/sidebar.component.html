@@ -26,7 +26,7 @@
             </div>
           </section>
 
-          <details *ngIf="modulesList" class="accordion-details">
+          <details *ngIf="modulesList?.length > 0" class="accordion-details">
             <summary class="cursor-pointer">
               <span class="w-full ss-txt--black-lighten w-full px-3 text-lg flex gap-2 align-items-center">
                 <i class="pi pi-th-large text-xl"></i>
@@ -47,7 +47,7 @@
             </section>
           </details>
 
-          <details *ngIf="userDataModel?.role !=='MAINTAINER' && adminModulesList" class="accordion-details">
+          <details *ngIf="userDataModel?.role !=='MAINTAINER' && adminModulesList?.length > 0" class="accordion-details">
             <summary class="cursor-pointer flex justify-content-between">
               <span class="w-full ss-txt--black-lighten w-full px-3 text-lg flex gap-2 align-items-center">
                 <i class="pi pi-key text-xl"></i>

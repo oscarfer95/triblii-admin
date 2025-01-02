@@ -4,7 +4,9 @@ import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-mod
 import { MODULES_LIST } from 'src/app/modules/shared/constants/modules.constant';
 import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
 import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
+import { getSingularActionLabel, getSingularModuleLabel } from 'src/app/modules/shared/utils/get-label-text.util';
 import { generateMenuItems } from 'src/app/modules/shared/utils/get-side-bar-options.utils';
+import { getLogsByAction, getLogsByMonth } from 'src/app/modules/shared/utils/get-stadistics.utils';
 import { ConfigList } from 'src/framework/repository/config-list.model';
 import { SwiperOptions } from 'swiper';
 
@@ -73,72 +75,11 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   public getActionLabel(action: string): string {
-    let label = '';
-
-    switch (action) {
-      case 'CREATE':
-        label = 'Creada'
-        break;
-      case 'READ':
-        label = 'Vista'
-        break;
-      case 'UPDATE':
-        label = 'Actualizada'
-        break;
-      case 'DELETE':
-        label = 'Eliminada'
-        break;
-    }
-
-    return label;
+    return getSingularActionLabel(action);
   }
 
-  public getModuleLabel(module: string): string {
-    let label = '';
-
-    switch (module) {
-      case 'attractions':
-        label = 'Atracción'
-        break;
-
-      case 'restaurants':
-        label = 'Restaurante'
-        break;
-
-      case 'hotels':
-        label = 'Hotel'
-        break;
-
-      case 'foods':
-        label = 'Comida'
-        break;
-
-      case 'events':
-        label = 'Evento'
-        break;
-
-      case 'banners':
-        label = 'Banner'
-        break;
-
-      case 'entities':
-        label = 'Entidad'
-        break;
-
-      case 'users':
-        label = 'Usuario'
-        break;
-
-      case 'locations':
-        label = 'Locación'
-        break;
-
-      case 'account':
-        label = 'Cuenta'
-        break;
-    }
-
-    return label;
+  public getModuleLabel(action: string): string {
+    return getSingularModuleLabel(action);
   }
 
   private _filterList(list: any, idList: any[]) {
@@ -200,49 +141,11 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   private _getLogsByMonth(logs: any[]): any {
-    const currentYear = new Date().getFullYear();
-    const labels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Deciembre'];
-    const counts = new Array(12).fill(0);
-
-    logs.forEach(log => {
-      const logDate = new Date(log.date.seconds * 1000 + log.date.nanoseconds / 1000000);
-
-      if (logDate.getFullYear() === currentYear) {
-        const month = logDate.getMonth();
-        counts[month]++;
-      }
-    });
-
-    this.interactionData = {
-      labels,
-      datasets: [
-        {
-          label: 'Interacciones por mes',
-          data: counts
-        }
-      ]
-    };
+    this.interactionData = getLogsByMonth(logs);
   }
 
   private _getLogsByAction(logs: any[]): any {
-    const actionCounts: { [key: string]: number } = {};
-
-    logs.forEach(log => {
-      const action = log.action;
-      if (action) {
-        actionCounts[action] = (actionCounts[action] || 0) + 1;
-      }
-    });
-
-    this.logByActionData = {
-      labels: Object.keys(actionCounts),
-      datasets: [
-        {
-          label: 'Cantidad de acciones',
-          data: Object.values(actionCounts)
-        }
-      ]
-    };
+    this.logByActionData = getLogsByAction(logs);
   }
 
 }

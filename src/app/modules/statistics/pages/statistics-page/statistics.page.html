@@ -10,41 +10,74 @@
       la interacción de los usuarios con tu información.
     </p>
 
-    <section class="w-full flex gap-6 my-6 relative p-3">
-      <section class="w-full md:w-6 flex flex-column gap-6">
-        <p-card header="Ventas del mes">
-          <p-chart type="pie" [data]="data">
-          </p-chart>
-        </p-card>
+    <section *ngIf="logList?.length > 0" class="w-full flex flex-column gap-3 md:gap-6 my-6 relative">
+      <p-accordion class="ss-accordion-information">
+        <p-accordionTab [selected]="true">
+          <ng-template pTemplate="header">
+            <h3 class="ss-txt--primary font-normal">
+              Interacciones mensuales
+            </h3>
+          </ng-template>
 
-        <p-card header="Ventas por promocion">
-          <p-chart type="line" [data]="data">
-          </p-chart>
-        </p-card>
+          <ng-template pTemplate="body">
+            <section class="w-full flex flex-column md:flex-row gap-3 md:gap-6">
+              <section class="w-full md:w-4">
+                <p-chart type="doughnut" [data]="logsByCurrentMonthData">
+                </p-chart>
+              </section>
+      
+              <section class="w-full md:w-8 flex flex-column gap-3 md:gap-6">
+                <p-chart class="w-full" type="bar" [data]="logsByCurrentMonthData">
+                </p-chart>
+              </section>
+            </section>
+          </ng-template>
+        </p-accordionTab>
 
-        <p-card header="Recomendación del mes">
-          <p-chart type="radar" [data]="data">
-          </p-chart>
-        </p-card>
-      </section>
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <h3 class="ss-txt--primary font-normal">
+              Interacciones anuales
+            </h3>
+          </ng-template>
 
-      <section class="w-full md:w-6 flex flex-column gap-6">
-        <p-card header="Pedidos del mes">
-          <p-chart type="bar" [data]="data">
-          </p-chart>
-        </p-card>
+          <ng-template pTemplate="body">
+            <section class="w-full flex flex-column md:flex-row gap-3 md:gap-6">
+              <section class="w-full md:w-4">
+                <p-chart type="pie" [data]="interactionYearData" class="w-full">
+                </p-chart>
+              </section>
+      
+              <section class="w-full md:w-8 flex flex-column gap-3 md:gap-6">
+                <p-chart class="w-full" type="bar" [data]="logsByActionYearData">
+                </p-chart>
+              </section>
+            </section>
+          </ng-template>
+        </p-accordionTab>
 
-        <p-card header="Productos mas vendidos">
-          <p-chart type="doughnut" [data]="data">
-          </p-chart>
-        </p-card>
-      </section>
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <h3 class="ss-txt--primary font-normal">
+              Interacciones totales
+            </h3>
+          </ng-template>
 
-      <section
-        class="w-full h-full absolute top-0 right-0 left-0 bottom-0 flex align-items-start justify-content-center"
-        style="backdrop-filter: blur(4px);">
-        <announcement class="mt-8"></announcement>
-      </section>
+          <ng-template pTemplate="body">
+            <section class="w-full flex flex-column md:flex-row gap-3 md:gap-6">
+              <section class="w-full md:w-4">
+                <p-chart type="polarArea" [data]="totalLogsByActionData">
+                </p-chart>
+              </section>
+      
+              <section class="w-full md:w-8 flex flex-column gap-3 md:gap-6">
+                <p-chart type="bar" [data]="totalLogsByActionData">
+                </p-chart>
+              </section>
+            </section>
+          </ng-template>
+        </p-accordionTab>
+      </p-accordion>
     </section>
   </section>
 </article>

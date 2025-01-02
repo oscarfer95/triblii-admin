@@ -9,15 +9,14 @@
 
     <section *ngIf="userDataModel" class="w-full flex flex-column lg:flex-row gap-3">
       <section class="w-full lg:w-9 flex flex-column gap-3">
-        <p-card styleClass="border-round-xl fadein animation-duration-500 shadow-none">
+        <p-card *ngIf="menuItems.length > 0" styleClass="border-round-xl fadein animation-duration-500 shadow-none">
           <section class="w-full flex flex-column justify-content-center align-items-start md:p-3">
             <h4
               class="w-fit ss-txt--title ss-txt--small ss-txt--black-lighten text-xl font-normal mb-3 flex gap-2 align-items-center">
               <i class="pi pi-th-large text-xl"></i> Módulos disponibles
             </h4>
 
-            <section
-              class="w-full flex flex-wrap gap-3 align-items-center p-1 justify-content-between md:justify-content-start sm:my-3">
+            <section class="w-full flex flex-wrap gap-3 align-items-center p-1 justify-content-between md:justify-content-start sm:my-3">
               <section *ngFor="let item of menuItems"
                 class="w-full sm:w-7rem sm:h-7rem flex ss-bg--grey-lighten shadow-1 cursor-pointer sm:flex-column border-round-xl gap-2 sm:gap-1 justify-content-center align-items-center p-2 sm:p-3"
                 routerLink='/dashboard/{{item?.url}}'>
@@ -180,8 +179,7 @@
               </section>
             </section>
 
-            <section *ngIf="logList?.length === 0"
-                     class="">
+            <section *ngIf="logList?.length === 0">
               <div class="ss-txt--black-lighten bg-black-alpha-10 p-3 border-round-xl">
                 <small>
                   Aún no realizaste ninguna acción en la plataforma

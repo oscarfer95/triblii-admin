@@ -50,21 +50,21 @@
 
         <td class="cursor-pointer">
           <section class="flex gap-1 align-items-center">
-            <span>
-              {{item.userId}}
-            </span>
+            <div class="flex flex-column">
+              {{userDataModel.name}}
+            </div>
           </section>
         </td>
 
         <td class="text-center cursor-pointer">
           <span>
-            {{item.action}}
+            {{getActionLabel(item.action)}}
           </span>
         </td>
 
         <td class="hidden-column text-center cursor-pointer">
           <span>
-            {{item.moduleId}}
+            {{getModuleLabel(item.moduleId)}}
           </span>
         </td>
 

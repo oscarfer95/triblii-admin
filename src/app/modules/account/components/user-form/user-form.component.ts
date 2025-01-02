@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { MODULES_LIST } from 'src/app/modules/shared/constants/modules.constant';
 import { EntitiesRepositoryService } from 'src/app/modules/shared/services/entities.repository-service';
+import { getActionLabel } from 'src/app/modules/shared/utils/get-label-text.util';
 import { ConfigList } from 'src/framework/repository/config-list.model';
 
 @Component({
@@ -41,27 +42,7 @@ export class UserFormComponent implements OnInit {
   }
 
   public getActionLabel(action: string): string {
-    let label = '';
-
-    switch (action) {
-      case 'create':
-        label = 'Crear'
-        break;
-
-      case 'update':
-        label = 'Editar'
-        break;
-
-      case 'read':
-        label = 'Leer'
-        break;
-
-      case 'delete':
-        label = 'Eliminar'
-        break;
-    }
-
-    return label;
+    return getActionLabel(action);
   }
 
   private async _getEntities(): Promise<any[]> {

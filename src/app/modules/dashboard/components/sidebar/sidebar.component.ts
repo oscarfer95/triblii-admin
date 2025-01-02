@@ -23,6 +23,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public menuItems: any = null;
   public modulesList: any = null;
   public adminModulesList: any = null;
+  public activeDetails: string | null = null;
 
   private _unsubscribe: Subject<void>;
 

@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import {StatisticsRouterModule} from './router/statistics-router-module';
 import {SharedModule} from '../shared/shared.module';
 import {StatisticsPage} from './pages/statistics-page/statistics.page';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {StatisticsPage} from './pages/statistics-page/statistics.page';
     CommonModule,
     RouterModule,
     StatisticsRouterModule,
-    SharedModule
+    SharedModule,
+    AccordionModule
   ]
 })
 export class StatisticsModule { }

@@ -1,0 +1,106 @@
+<article *ngIf="form" [formGroup]="form" class="w-full md:w-30rem account flex flex-column relative">
+  <section class="flex flex-column gap-4 mb-4">
+    <section>
+      <div class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+        Nombre
+      </div>
+
+      <input type="text" pInputText class="w-full" placeholder="Arte y Entretenimiento" formControlName="name" />
+    </section>
+
+    <section>
+      <div class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+        Tipo
+      </div>
+
+      <p-dropdown [options]="modules" placeholder="Opcional" optionValue="id" optionLabel="name" formControlName="type"
+        class="w-full" [filter]="true">
+      </p-dropdown>
+    </section>
+
+    <section>
+      <div class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+        Categoría padre
+      </div>
+
+      <p-dropdown [options]="parentCategories" placeholder="Opcional" optionValue="id" optionLabel="name"
+        formControlName="parentId" class="w-full" [filter]="true">
+      </p-dropdown>
+    </section>
+  </section>
+
+  <p-accordion class="ss-accordion-information">
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <h3 class="ss-txt--primary font-normal">
+          Recursos
+        </h3>
+      </ng-template>
+
+      <ng-template pTemplate="body">
+        <section class="flex flex-column gap-5">
+          <section>
+            <div
+              class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+              Icono
+            </div>
+
+            <input type="text" pInputText class="w-full" placeholder="Ingresa clase CSS" formControlName="iconClass" />
+          </section>
+
+          <section>
+            <div
+              class="ss-txt-title ss-txt-title--semibold ss-txt--black ss-txt-title--small flex align-items-center mb-2">
+              <i class="pi pi-image mr-3 ss-txt--primary text-xl"></i> Link de foto
+            </div>
+
+            <input type="text" pInputText class="w-full" placeholder="Ingresa link" formControlName="photoUrl" />
+          </section>
+        </section>
+      </ng-template>
+    </p-accordionTab>
+
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <h3 class="ss-txt--primary font-normal">
+          Opciones
+        </h3>
+      </ng-template>
+
+      <ng-template pTemplate="body">
+        <section class="w-full flex flex-column gap-4">
+          <div class="w-full flex justify-content-between align-items-center gap-3">
+            <strong>Orden</strong>
+
+            <p-inputNumber [showButtons]="true" buttonLayout="horizontal" spinnerMode="horizontal"
+              incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" formControlName="order"
+              class="w-fit"></p-inputNumber>
+          </div>
+
+          <div class="w-full flex justify-content-between align-items-center gap-3">
+            <strong>Disponible</strong>
+
+            <p-inputSwitch formControlName="available"></p-inputSwitch>
+          </div>
+
+          <div class="w-full flex justify-content-between align-items-center gap-3">
+            <strong>Destacado</strong>
+
+            <p-inputSwitch formControlName="isFeatured"></p-inputSwitch>
+          </div>
+        </section>
+      </ng-template>
+    </p-accordionTab>
+  </p-accordion>
+
+  <section class="flex justify-content-end mt-5">
+    <button class="ss-button fadein" [ngClass]="{'ss-button--disabled': form.invalid || !form.touched}"
+      [disabled]="form.invalid || !form.touched" (click)="saveForm()">
+      Guardar cambios
+    </button>
+  </section>
+</article>
+
+<ng-template #inputLoader>
+  <i class="pi pi-spin pi-spinner ss-txt--primary text-lg mr-1 mt-2"></i>
+</ng-template>

@@ -27,8 +27,10 @@ export class AdminEntityFormComponent implements OnInit {
 
   SearchCountryField = SearchCountryField;
   CountryISO = CountryISO;
+  public locations: any[] | null;
   public cities: any[] | null;
   public countries: any[] | null;
+  public states: any[] | null;
   public userDataModel!: any;
 
   constructor(private _entitiesRepositoryService: EntitiesRepositoryService,
@@ -42,23 +44,19 @@ export class AdminEntityFormComponent implements OnInit {
     public _ref: DynamicDialogRef) {
   }
 
-  ngOnInit(): void {
-    this._fetchCountries();
-    if (this._config?.data.entity) {
-      this.entity = this._config?.data.entity;
-    } else {
-      this.entity = new Entity();
-    };
-    this.userDataModel = this._config?.data.userDataModel;
+  async ngOnInit(): Promise<any> {
+    this._initInputData();
+
+    await this._getLocations();
+
     this._initForm();
-    this.entity.location.countryIds.length > 0 ? this._fetchCities() : this.cities = [];
     this._setupFormListeners();
   }
 
   public saveForm(): any {
     this._loaderService.show = true;
     const entity = { ...this.entity, ...this.form.value };
-
+    
     if (entity.id) {
       delete entity.id;
       this._editItem(entity);
@@ -74,6 +72,16 @@ export class AdminEntityFormComponent implements OnInit {
   public changeColor(color: any): void {
     this.form.get('color')?.setValue(color);
     this.form.markAsTouched();
+  }
+
+  private _initInputData() {
+    this.userDataModel = this._config?.data.userDataModel;
+
+    if (this._config?.data.entity) {
+      this.entity = this._config?.data.entity;
+    } else {
+      this.entity = new Entity();
+    };
   }
 
   private _editItem(item: any): void {
@@ -136,36 +144,35 @@ export class AdminEntityFormComponent implements OnInit {
     this._ref.close({ refreshList: refreshList });
   }
 
-  private _fetchCountries(): void {
+  private async _getLocations(): Promise<any> {
     const configList: ConfigList = {
-      orderByConfigList: [{ field: 'name', direction: 'asc' }],
-      queryList: [{ field: 'parentId', operation: '==', value: '' }]
+      orderByConfigList: [{ field: 'name', direction: 'asc' }]
     };
 
     firstValueFrom(this._locationRepositoryService.getByQuerys(configList))
-      .then((countries: any[]) => {
-        this.countries = countries;
+      .then((locations: any[]) => {
+        this.locations = locations;
+
+        this.countries = locations.filter(item => item.parentId === '');
+        this.cities = locations.filter(item => item.parentId === this.entity.location.countryIds[0]);
+        this.states = locations.filter(item => item.parentId === this.entity.location.cityIds[0]);
         this._cdr.markForCheck();
       })
       .catch(() => {
+        this.locations = [];
         this.countries = [];
+        this.cities = [];
+        this.states = [];
       });
   }
 
-  private _fetchCities(): void {
-    const configList: ConfigList = {
-      orderByConfigList: [{ field: 'name', direction: 'asc' }],
-      queryList: [{ field: 'parentId', operation: '==', value: this.form.get('location.countryIds')?.value[0] }]
-    };
+  private _getCities(): void {
+    this.cities = this.locations?.filter(item => item.parentId === this.form.get('location.countryIds').value[0]);
+    this.states = [];
+  }
 
-    firstValueFrom(this._locationRepositoryService.getByQuerys(configList))
-      .then((cities: any[]) => {
-        this.cities = cities;
-        this._cdr.markForCheck();
-      })
-      .catch(() => {
-        this.cities = [];
-      });
+  private _getStates(): void {
+    this.states = this.locations?.filter(item => item.parentId === this.form.get('location.cityIds').value[0]);
   }
 
   private _initForm() {
@@ -180,21 +187,18 @@ export class AdminEntityFormComponent implements OnInit {
       location: this._formBuilder.group({
         cityIds: [this.entity.location.cityIds],
         countryIds: [this.entity.location.countryIds],
+        stateIds: [this.entity.location.stateIds],
       })
     });
   }
 
   private _setupFormListeners(): void {
     this.form.get('location.countryIds')?.valueChanges.subscribe((countryIds) => {
-      this._handleCountrySelectionChange(countryIds);
+      this._getCities();
     });
-  }
 
-  private _handleCountrySelectionChange(countryIds: any[]): void {
-    if (countryIds?.length > 0) {
-      this._fetchCities();
-    } else {
-      this.cities = [];
-    }
+    this.form.get('location.cityIds')?.valueChanges.subscribe((countryIds) => {
+      this._getStates();
+    });
   }
 }

@@ -31,6 +31,12 @@ import { ItemDetail } from './pages/item-detail/item-detail.page';
 import { FoodsFormComponent } from './components/foods-form/foods-form.component';
 import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
 import { CalendarModule } from 'primeng/calendar';
+import { CategoriesPage } from './pages/categories-page/categories-page.page';
+import { CategoriesTableComponent } from './components/categories-table/categories-table.component';
+import { CategoryFormComponent } from './components/category-form/category-form.component';
+import { TagsPage } from './pages/tags-page/tags-page.page';
+import { TagsTableComponent } from './components/tags-table/tags-table.component';
+import { TagFormComponent } from './components/tag-form/tag-form.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +50,13 @@ import { CalendarModule } from 'primeng/calendar';
     LocationFormComponent,
     LocationMapComponent,
     FoodsFormComponent,
-    ScheduleFormComponent
+    ScheduleFormComponent,
+    CategoriesPage,
+    CategoriesTableComponent,
+    CategoryFormComponent,
+    TagsPage,
+    TagsTableComponent,
+    TagFormComponent
   ],
   imports: [
     AccordionModule,
