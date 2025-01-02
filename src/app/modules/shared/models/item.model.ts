@@ -208,8 +208,8 @@ const scheduleDays: any = {
 
 const location = {
   address: '',
-  cityId: '',
-  countryId: '',
+  city: '',
+  country: '',
   state: '',
   coords: null,
 };

@@ -23,7 +23,8 @@ export class Entity {
 
     this.location = {
       cityIds: [],
-      countryIds: []
+      countryIds: [],
+      stateIds: []
     };
     this.slug = '';
     this.color = '';

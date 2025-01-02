@@ -1,42 +1,37 @@
-<article [formGroup]="form" class="sm:p-3">
+<article *ngIf="userDataModel" class="sm:p-3">
   <section class="w-full">
     <h4>
       País
     </h4>
 
-    <div class="w-full mt-2 mb-3 ss-txt--black-lighten text-sm">
-      Elige un país, así los elementos que administras podrán asociarse a una ubicación.
-    </div>
-
-    <section *ngIf="countries?.length > 0">
-      <p-multiSelect [filter]="true" class="w-full" [options]="countries" optionLabel="name" display="chip"
-        optionValue="id" formControlName="countryIds" placeholder="Selecciona un país" [selectionLimit]="1"
-        (onChange)="markAsTouched()">
-      </p-multiSelect>
-    </section>
-
-    <section *ngIf="!countries">
-      <ng-container *ngTemplateOutlet="inputLoader"></ng-container>
+    <section>
+      <p>
+        {{userDataModel.entity.location.countryIds}}
+      </p>
     </section>
   </section>
 
-  <section class="w-full mt-5">
+  <section *ngIf="userDataModel?.entity?.location?.cityIds" class="w-full mt-5">
     <h4>
-      Ciudad <span class="text-sm ss-txt--grey font-normal">(Opcional)</span>
+      Ciudad
     </h4>
 
-    <section *ngIf="cities" class="mt-2">
-      <p-multiSelect [filter]="true" class="w-full" [options]="cities" optionLabel="name" display="chip"
-        optionValue="id" formControlName="cityIds" placeholder="Selecciona una ciudad">
-      </p-multiSelect>
+    <section class="mt-2">
+      <p>
+        {{userDataModel.entity.location.cityIds}}
+      </p>
     </section>
+  </section>
 
-    <section *ngIf="!cities">
-      <ng-container *ngTemplateOutlet="inputLoader"></ng-container>
+  <section *ngIf="userDataModel?.entity?.location?.stateIds > 0" class="w-full mt-5">
+    <h4>
+      Estado
+    </h4>
+
+    <section class="mt-2">
+      <p>
+        {{userDataModel.entity.location.stateIds}}
+      </p>
     </section>
   </section>
 </article>
-
-<ng-template #inputLoader>
-  <i class="pi pi-spin pi-spinner ss-txt--primary text-lg mr-1 mt-2"></i>
-</ng-template>

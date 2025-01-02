@@ -144,15 +144,19 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
       }
     }
 
+    console.log(formValue);
+
     const item: any = { ...this.item, ...formValue };
-    if (item.id) {
-      delete item.id;
-      item.entitiesId.includes(this.userDataModel.entity.id) ? null : item.entitiesId.push(this.userDataModel.entity.id);
-      this._editItem(item);
-    } else {
-      item.entitiesId.push(this.userDataModel.entity.id);
-      this._createItem(item);
-    }
+    console.log(item);
+
+    // if (item.id) {
+    //   delete item.id;
+    //   item.entitiesId.includes(this.userDataModel.entity.id) ? null : item.entitiesId.push(this.userDataModel.entity.id);
+    //   this._editItem(item);
+    // } else {
+    //   item.entitiesId.push(this.userDataModel.entity.id);
+    //   this._createItem(item);
+    // }
   }
 
   private _editItem(item: any): void {

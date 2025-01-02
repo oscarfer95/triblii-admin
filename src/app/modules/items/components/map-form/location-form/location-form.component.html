@@ -11,15 +11,41 @@
   </section>
 
   <form [formGroup]="form" *ngIf="location" class="w-full flex flex-column gap-4 fadein animation-duration-500">
-    <section class="flex flex-column">
+    <section *ngIf="userDataModel?.role !== 'MAINTAINER'" class="flex flex-column">
+      <section class="w-full flex align-items-center justify-content-between overflow-hidden mb-1">
+        <span class="font-semibold">País</span>
+      </section>
+
+      <p-dropdown [options]="countries" optionValue="id" optionLabel="name" formControlName="country" class="w-full"
+        [filter]="true" placeholder="Seleccionar">
+      </p-dropdown>
+    </section>
+
+    <section *ngIf="userDataModel?.role !== 'MAINTAINER'" class="flex flex-column">
       <section class="w-full flex align-items-center justify-content-between overflow-hidden mb-1">
         <span class="font-semibold">Ciudad</span>
       </section>
 
-      <p-dropdown [options]="cities" optionValue="id" optionLabel="name" formControlName="cityId" class="w-full"
+      <p-dropdown [options]="cities" optionValue="id" optionLabel="name" formControlName="city" class="w-full"
         [filter]="true" placeholder="Seleccionar">
       </p-dropdown>
     </section>
+
+    <section *ngIf="userDataModel?.role !== 'MAINTAINER'" class="flex flex-column">
+      <section class="w-full flex align-items-center justify-content-between overflow-hidden mb-1">
+        <span class="font-semibold">Estado</span>
+      </section>
+
+      <p-dropdown [options]="states" optionValue="id" optionLabel="name" formControlName="state" class="w-full"
+        [filter]="true" placeholder="Seleccionar">
+      </p-dropdown>
+    </section>
+
+    <p *ngIf="userDataModel?.role === 'MAINTAINER'">
+      {{userDataModel?.entity?.location?.countryIds[0]}},
+      {{userDataModel?.entity?.location?.cityIds[0]}},
+      {{userDataModel?.entity?.location?.stateIds[0]}}
+    </p>
 
     <section class="flex flex-column">
       <section class="w-full flex align-items-center justify-content-between overflow-hidden">
