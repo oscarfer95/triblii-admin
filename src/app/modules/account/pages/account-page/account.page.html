@@ -91,7 +91,8 @@
           </div>
         </div>
 
-        <div *ngIf="userDataModel?.role === 'ADMIN' || userDataModel?.role === 'SUPERADMIN'" class="w-full flex flex-column align-items-start gap-2">
+        <div *ngIf="userDataModel?.role === 'ADMIN' || userDataModel?.role === 'SUPERADMIN'"
+          class="w-full flex flex-column align-items-start gap-2">
           <p-fileUpload #inputPhoto mode="basic" accept="image/png, image/webp" [maxFileSize]="1000000"
             chooseIcon="pi pi-camera" chooseLabel="Subir" (onSelect)="uploadPhoto($event)">
           </p-fileUpload>
@@ -108,9 +109,16 @@
       <entity-form [userDataModel]="userDataModel" (saveEvent)="updateEntity()"></entity-form>
     </p-card>
 
-    <p-card *ngIf="activeTab.label === 'País' && (userDataModel?.entity)"
+    <p-card *ngIf="activeTab.label === 'País' && (userDataModel?.entity) && (userDataModel?.role !== 'SUPERADMIN')"
       styleClass="border-round-xl lg:w-full mt-3 fadein animation-duration-500">
       <country-form *ngIf="(userDataModel?.entity.location)" [userDataModel]="userDataModel"></country-form>
+    </p-card>
+
+    <p-card *ngIf="activeTab.label === 'País' && (userDataModel?.entity) && (userDataModel?.role === 'SUPERADMIN')"
+      styleClass="border-round-xl lg:w-full mt-3 fadein animation-duration-500">
+      <p class="ss-txt--black-lighten">
+        Donde te encuentres.
+      </p>
     </p-card>
 
     <p-card *ngIf="activeTab.label === 'Ajustes' && (userDataModel?.entity)"

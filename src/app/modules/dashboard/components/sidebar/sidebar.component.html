@@ -16,7 +16,7 @@
 
     <section *ngIf="menuItems" class="overflow-auto mt-5">
       <article class="ss-sidebar-menu">
-        <section class="w-full flex flex-column gap-3"> 
+        <section class="w-full flex flex-column gap-3">
           <section *ngFor="let menuItem of getItemsById('home')" (click)="onClickMenuButton()">
             <div>
               <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
@@ -48,7 +48,7 @@
           </details>
 
           <details *ngIf="userDataModel?.role !=='MAINTAINER' && adminModulesList?.length > 0" class="accordion-details">
-            <summary class="cursor-pointer flex justify-content-between">
+            <summary class="cursor-pointer">
               <span class="w-full ss-txt--black-lighten w-full px-3 text-lg flex gap-2 align-items-center">
                 <i class="pi pi-key text-xl"></i>
                 Administrador
@@ -84,8 +84,8 @@
                 <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
               </a>
             </div>
-          </section>      
-          
+          </section>
+
           <section *ngFor="let menuItem of getItemsById('account')" (click)="onClickMenuButton()">
             <div>
               <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"

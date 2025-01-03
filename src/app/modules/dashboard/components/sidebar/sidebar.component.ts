@@ -23,7 +23,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public menuItems: any = null;
   public modulesList: any = null;
   public adminModulesList: any = null;
-  public activeDetails: string | null = null;
 
   private _unsubscribe: Subject<void>;
 
@@ -75,14 +74,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
     return ADMIN_MODULES_LIST.some(module => module.id === searchId);
   }
 
+  public getItemsById(id: string): any[] {
+    return this.menuItems.filter(item => item.id === id);
+  }
+
   private _filterList(list: any, idList: any[]) {
     return list.filter((menuItem: any) =>
       idList.some(module => module.id === menuItem.id)
     );
-  }
-
-  public getItemsById(id: string): any[] {
-    return this.menuItems.filter(item => item.id === id);
   }
 
   private _userDataModelListener() {
