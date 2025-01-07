@@ -37,6 +37,8 @@ import { CategoryFormComponent } from './components/category-form/category-form.
 import { TagsPage } from './pages/tags-page/tags-page.page';
 import { TagsTableComponent } from './components/tags-table/tags-table.component';
 import { TagFormComponent } from './components/tag-form/tag-form.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { TagFormComponent } from './components/tag-form/tag-form.component';
     CategoryFormComponent,
     TagsPage,
     TagsTableComponent,
-    TagFormComponent
+    TagFormComponent,
+    ContactFormComponent
   ],
   imports: [
     AccordionModule,
@@ -78,7 +81,8 @@ import { TagFormComponent } from './components/tag-form/tag-form.component';
     ReactiveFormsModule,
     OverlayPanelModule,
     CalendarModule,
-    DropdownModule
+    DropdownModule,
+    NgxIntlTelInputModule
   ]
 })
 export class ItemsModule { }

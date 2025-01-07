@@ -50,7 +50,8 @@
     <section *ngIf="locationForm && userDataModel" class="w-full flex-column gap-3 hidden"
       [ngClass]="{ 'flex': activeTab.label === 'Ubicación' }">
       <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
-        <app-location-form [form]="locationForm" [itemLocation]="item.location" [userDataModel]="userDataModel"></app-location-form>
+        <app-location-form [form]="locationForm" [itemLocation]="item.location"
+          [userDataModel]="userDataModel"></app-location-form>
       </p-card>
     </section>
 
@@ -62,8 +63,9 @@
     </section>
 
     <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Comidas' }">
-      <p-card *ngIf="foodsForm && userDataModel" styleClass="p-card-shadow border-round-xl fadein animation-duration-400"
-        data-aos="fade-up" data-aos-delay="400">
+      <p-card *ngIf="foodsForm && userDataModel"
+        styleClass="p-card-shadow border-round-xl fadein animation-duration-400" data-aos="fade-up"
+        data-aos-delay="400">
         <foods-form [form]="foodsForm" [item]="item" [userDataModel]="userDataModel">
         </foods-form>
       </p-card>
@@ -74,6 +76,38 @@
         data-aos="fade-up" data-aos-delay="400">
         <schedule-form [form]="scheduleForm" [item]="item" [userDataModel]="userDataModel">
         </schedule-form>
+      </p-card>
+    </section>
+
+    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Contacto' }">
+      <p-card *ngIf="contactForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400"
+        data-aos="fade-up" data-aos-delay="400">
+        <contact-form [form]="contactForm" [item]="item" [userDataModel]="userDataModel">
+        </contact-form>
+      </p-card>
+    </section>
+
+    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Delivery' }">
+      <p-card *ngIf="deliveryForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400"
+        data-aos="fade-up" data-aos-delay="400">
+        Delivery form
+        <!-- PENDING -->
+      </p-card>
+    </section>
+
+    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Servicios' }">
+      <p-card *ngIf="servicesForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400"
+        data-aos="fade-up" data-aos-delay="400">
+        Services form
+        <!-- PENDING -->
+      </p-card>
+    </section>
+
+    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Fechas' }">
+      <p-card *ngIf="datesForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400"
+        data-aos="fade-up" data-aos-delay="400">
+        Dates form
+        <!-- PENDING -->
       </p-card>
     </section>
   </section>

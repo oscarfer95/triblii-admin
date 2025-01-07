@@ -41,15 +41,7 @@ export class FoodsFormComponent implements OnInit {
     try {
       this._loaderService.show = true;
 
-      const configList: ConfigList = {
-        queryList: [
-          {
-            field: 'entitiesId',
-            operation: 'array-contains-any',
-            value: [this.userDataModel.entity.id]
-          }
-        ]
-      };
+      const configList: ConfigList = this._getConfigList();
 
       const foods: any = await firstValueFrom(this._foodsRepositoryService.getByQuerys(configList));
       this.foods = foods;
@@ -66,6 +58,27 @@ export class FoodsFormComponent implements OnInit {
 
   public markAsTouched(): void {
     this.form.markAsTouched();
+  }
+
+  private _getConfigList() {
+    const configList: ConfigList = {
+      orderByConfigList: [
+        {
+          field: 'name',
+          direction: 'desc'
+        }
+      ]
+    };
+
+    if (this.userDataModel.role !== 'SUPERADMIN') {
+      configList.queryList.push({
+          field: 'entitiesId',
+          operation: 'array-contains-any',
+          value: [this.userDataModel.entity.id]
+        })
+    }
+
+    return configList;
   }
 
   private _initForm(): void {

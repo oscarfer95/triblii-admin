@@ -16,7 +16,6 @@ import { getTabItemsById } from 'src/app/modules/shared/utils/tabs-config';
 import { createEmptyItemForm } from 'src/app/modules/shared/utils/item-forms-config';
 import { Item } from 'src/app/modules/shared/models/item.model';
 import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
-import { Log } from 'src/app/modules/shared/models/log.model';
 import { getLog } from 'src/app/modules/shared/utils/get-log.util';
 
 @Component({
@@ -93,6 +92,22 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     return <FormGroup>this.itemForm?.get('scheduleForm');
   }
 
+  public get contactForm(): FormGroup {
+    return <FormGroup>this.itemForm?.get('contactForm');
+  }
+
+  public get deliveryForm(): FormGroup {
+    return <FormGroup>this.itemForm?.get('deliveryForm');
+  }
+
+  public get datesForm(): FormGroup {
+    return <FormGroup>this.itemForm?.get('datesForm');
+  }
+
+  public get servicesForm(): FormGroup {
+    return <FormGroup>this.itemForm?.get('servicesForm');
+  }
+
   public changeTab(event: any): void {
     const index = this.tabItems.findIndex(tab => tab.label === event.target.innerText);
 
@@ -102,7 +117,7 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
   }
 
   public saveForm(): void {
-    this._loaderService.show = true;
+    // this._loaderService.show = true;
 
     const subFormNames = Object.keys(this.itemForm.controls);
     const formValue: any = {};
@@ -122,8 +137,15 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
             ...(subFormValue.mainCategories || [])
           ];
 
+          formValue['tags'] = subFormValue.tags || [];
+          formValue['isFeatured'] = subFormValue.available || false;
+          formValue['available'] = subFormValue.isFeatured || false;
+
           delete subFormValue.categories;
           delete subFormValue.mainCategories;
+          delete subFormValue.tags;
+          delete subFormValue.isFeatured;
+          delete subFormValue.available;
           break;
 
         case 'locationForm':
@@ -134,8 +156,20 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
           formValue['schedule'] = subFormValue;
           break;
 
-        case 'dateSettingForm':
-          formValue['dateSetting'] = subFormValue;
+        case 'dateForm':
+          formValue['dates'] = subFormValue;
+          break;    
+
+        case 'contactForm':
+          formValue['contact'] = subFormValue;
+          break;
+
+        case 'deliveryForm':
+          formValue['delivery'] = subFormValue;
+          break;
+
+        case 'servicesForm':
+          formValue['services'] = subFormValue;
           break;
 
         default:
@@ -143,12 +177,10 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
           break;
       }
     }
-
-    console.log(formValue);
-
     const item: any = { ...this.item, ...formValue };
-    console.log(item);
 
+    console.log(item);
+    
     // if (item.id) {
     //   delete item.id;
     //   item.entitiesId.includes(this.userDataModel.entity.id) ? null : item.entitiesId.push(this.userDataModel.entity.id);
@@ -274,7 +306,6 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     this.tabItems = getTabItemsById(this.moduleId);
     this.itemForm = createEmptyItemForm(this.moduleId, this._formBuilder);
     this.activeTab = this.tabItems[0];
-    // this.item = null;
   }
 
   public isFormValid(): boolean {

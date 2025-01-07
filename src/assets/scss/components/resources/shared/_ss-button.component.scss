@@ -60,6 +60,11 @@
     color: var(--#{$app-prefix}-color-primary);
   }
 
+  &--black {
+    background-color: var(--#{$app-prefix}-color-black);
+    color: var(--#{$app-prefix}-color-white);
+  }
+
   &--red {
     background-color: var(--#{$app-prefix}-color-red);
     color: var(--#{$app-prefix}-color-white);

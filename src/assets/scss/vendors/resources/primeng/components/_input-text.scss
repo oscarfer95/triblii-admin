@@ -1,7 +1,7 @@
 .p-inputtext {
   color: var(--#{$app-prefix}-color-black);
   border: none;
-  border-radius: 3px;
+  border-radius: .3rem;
   border-bottom: 1px solid var(--#{$app-prefix}-color-grey);
   padding-left: 5px;
   background: var(--#{$app-prefix}-color-grey-lighten);
@@ -32,6 +32,7 @@
 .p-multiselect, .p-dropdown {
   width: 100%;
   border: 1px solid var(--#{$app-prefix}-color-grey);
+  border-radius: .3rem;
 }
 
 .p-multiselect.p-multiselect-chip .p-multiselect-token {

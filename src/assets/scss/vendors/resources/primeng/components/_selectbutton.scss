@@ -1,0 +1,13 @@
+.p-selectbutton .p-button {
+  background: var(--#{$app-prefix}-color-grey-lighten);
+  border: 1px solid var(--#{$app-prefix}-color-black);
+  color: var(--#{$app-prefix}-color-black-lighten);
+  border-radius: .3rem;
+  padding: .3rem .5rem;
+}
+
+.p-selectbutton .p-button.p-highlight {
+  background: var(--#{$app-prefix}-color-black);
+  border-color: var(--#{$app-prefix}-color-black);
+  color: var(--#{$app-prefix}-color-white);
+}

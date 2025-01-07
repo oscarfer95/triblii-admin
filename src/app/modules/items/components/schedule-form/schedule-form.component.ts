@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { getDayLabel } from 'src/app/modules/shared/utils/get-day-label.util';
 
 @Component({
@@ -19,10 +19,11 @@ export class ScheduleFormComponent implements OnInit {
   @Input()
   public userDataModel!: any;
 
-  public isLoading: boolean = true;
+  private _defaultOpenTime = new Date().setHours(8, 30, 0, 0);
 
-  constructor(private _formBuilder: FormBuilder,
-    private _cdr: ChangeDetectorRef) {
+  private _defaultCloseTime = new Date().setHours(20, 30, 0, 0);
+
+  constructor(private _formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -42,14 +43,15 @@ export class ScheduleFormComponent implements OnInit {
     const daysArray = this._formBuilder.array(
       days.map((day: any) =>
         this._formBuilder.group({
-          day: [day.day],
-          open: [day.open],
-          close: [day.close],
+          day: [day.day || '', Validators.required],
+          open: [new Date(day.open?.seconds * 1000 || this._defaultOpenTime), Validators.required],
+          close: [new Date(day.close?.seconds * 1000 || this._defaultCloseTime), Validators.required],
         })
       )
     );
 
     this.form.addControl('available', this._formBuilder.control(this.item.schedule?.available || false));
+    this.form.addControl('alwaysOpen', this._formBuilder.control(this.item.schedule?.alwaysOpen || false));
     this.form.addControl('days', daysArray);
   }
 

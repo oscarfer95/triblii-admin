@@ -8,7 +8,22 @@
   <p-divider class="p-divider--grey" styleClass="my-0">
   </p-divider>
 
-  <div class="w-full flex flex-column gap-3" formArrayName="days">
+  <section class="w-full">
+    <div class="w-full flex justify-content-between sm:justify-content-start align-items-center gap-3">
+      <strong>Abierto siempre</strong>
+  
+      <p-inputSwitch formControlName="alwaysOpen"></p-inputSwitch>
+    </div>
+
+    <small class="ss-txt--black-lighten">
+      Cuando esta activado, sale "Abierto siempre sin importar las horas de apertura y cierre."
+    </small>
+  </section>
+
+  <p-divider class="p-divider--grey" styleClass="my-0">
+  </p-divider>
+
+  <div *ngIf="!form.get('alwaysOpen').value" class="w-full flex flex-column gap-3" formArrayName="days">
     <div class="w-full flex align-items-center gap-3">
       <div class="w-10rem">
         <strong>Día</strong>
@@ -19,14 +34,14 @@
     </div>
 
     <div class="w-full flex align-items-center gap-3" *ngFor="let day of days.controls; let i = index"
-      [formGroupName]="i">
+      [formGroupName]="i" [ngClass]="{'pointer-events-none': !form.get('available').value}">
       <div class="w-10rem">
         <label>{{ getDayLabel(day.get('day')?.value) }}</label>
       </div>
 
-      <p-calendar class="w-10rem sm:w-13rem" formControlName="open" [timeOnly]="true" [hourFormat]="'12'" placeholder="07:30 AM"></p-calendar>
+      <p-calendar [ngClass]="{'opacity-50': !form.get('available').value || form.get('alwaysOpen').value}" class="w-10rem sm:w-13rem" formControlName="open" [timeOnly]="true" [hourFormat]="'12'" placeholder="08:30 AM"></p-calendar>
 
-      <p-calendar class="w-10rem sm:w-13rem" formControlName="close" [timeOnly]="true" [hourFormat]="'12'" placeholder="06:30 PM"></p-calendar>
+      <p-calendar [ngClass]="{'opacity-50': !form.get('available').value || form.get('alwaysOpen').value}" class="w-10rem sm:w-13rem" formControlName="close" [timeOnly]="true" [hourFormat]="'12'" placeholder="06:30 PM"></p-calendar>
     </div>
   </div>
 </article>

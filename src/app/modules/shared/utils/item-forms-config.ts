@@ -1,11 +1,11 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 const FORM_GROUPS_CONFIG: Record<string, string[]> = {
-  attractions: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm', 'scheduleForm'],
-  restaurants: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm', 'scheduleForm', 'deliveryForm'],
-  hotels: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'scheduleForm'],
+  attractions: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm', 'scheduleForm', 'contactForm'],
+  restaurants: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm', 'scheduleForm', 'contactForm', 'deliveryForm'],
+  hotels: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'scheduleForm', 'contactForm', 'servicesForm'],
   foods: ['galleryForm', 'informationForm', 'optionsForm'],
-  events: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm', 'dateSettingForm'],
+  events: ['galleryForm', 'informationForm', 'contactForm', 'optionsForm', 'locationForm', 'foodsForm', 'datesForm'],
 };
 
 export function createEmptyItemForm(moduleId: string, fb: FormBuilder): FormGroup {

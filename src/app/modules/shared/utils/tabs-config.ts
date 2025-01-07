@@ -6,6 +6,7 @@ export interface TabItem {
 export const ALL_TAB_ITEMS: TabItem[] = [
   { label: 'Información', icon: 'pi pi-book' },
   { label: 'Opciones', icon: 'pi pi-fw pi-check-square' },
+  { label: 'Contacto', icon: 'pi pi-phone' },
   { label: 'Ubicación', icon: 'pi pi-map-marker' },
   { label: 'Horario', icon: 'pi pi-calendar' },
   { label: 'Comidas', icon: 'pi pi-sitemap' },
@@ -20,8 +21,10 @@ export const TAB_CONFIG: Record<string, TabItem[]> = {
   events: insertTabs(excludeTabs(ALL_TAB_ITEMS, ['Horario']), [
     { item: { label: 'Fechas', icon: 'pi pi-calendar' }, position: 2 }
   ]),
-  foods: excludeTabs(ALL_TAB_ITEMS, ['Comidas', 'Ubicación', 'Horario', 'Fecha']),
-  hotels: excludeTabs(ALL_TAB_ITEMS, ['Comidas']),
+  foods: excludeTabs(ALL_TAB_ITEMS, ['Comidas', 'Ubicación', 'Horario', 'Fecha', 'Contacto']),
+  hotels: insertTabs(excludeTabs(ALL_TAB_ITEMS, ['Comidas']), [
+    { item: { label: 'Servicios', icon: 'pi pi-fw pi-bell' }, position: 5 }
+  ])
 };
 
 function insertTabs(baseTabs: TabItem[], inserts: { item: TabItem; position: number }[]): TabItem[] {

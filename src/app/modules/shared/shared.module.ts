@@ -26,6 +26,7 @@ import { DropZoneDirective } from './directives/drop-zone.directive';
 import { SanitizePipe } from './pipes/sanitize.pipe';
 import { CountryFormComponent } from './components/country-form/country-form.component';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     SkeletonModule,
     TooltipModule,
     ChartModule,
-    MultiSelectModule
+    MultiSelectModule,
+    SelectButtonModule
   ],
   exports: [
     ButtonModule,
@@ -68,7 +70,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     SwiperModule,
     TableModule,
     TooltipModule,
-    CountryFormComponent
+    CountryFormComponent,
+    SelectButtonModule
   ],
   providers: [
     SanitizePipe
