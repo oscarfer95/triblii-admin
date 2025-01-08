@@ -63,20 +63,15 @@ export class Item {
 // Attraction
 export class Attraction extends Item {
   schedule: any | null;
-  price: string;
   location: any;
   contact: any;
 
   constructor() {
     super();
-    this.schedule = scheduleDays;
-    this.price = '';
-    this.location = location;
     this.categories = ['recreation-musement'];
-    this.contact = {
-      available: true,
-      rrss: []
-    };
+    this.schedule = SCHEDULE_DAYS;
+    this.location = LOCATION;
+    this.contact = CONTACT;
   }
 }
 
@@ -89,77 +84,33 @@ export class Restaurant extends Item {
   constructor() {
     super();
     this.categories = ['gastronomy'];
-    this.schedule = scheduleDays;
-    this.location = location;
-    this.contact = {
-      available: true,
-      rrss: []
-    };
+    this.schedule = SCHEDULE_DAYS;
+    this.location = LOCATION;
+    this.contact = CONTACT;
   }
 }
 
 // Foods
 export class Food extends Item {
-  priceRange: string;
 
   constructor() {
     super();
-    this.priceRange = '';
     this.categories = ['gastronomy'];
   }
 }
 
 // Events
 export class Event extends Item {
-  price: string;
-  capacity: number;
-
-  isOnline: boolean;
-  isRecurring: boolean;
-  recurrenceType: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'unique';
-
-  // Unique
-  startDate: Date | null;
-  endDate: Date | null;
-
-  //weekly
-  recurrenceDays: null | {
-    monday: true,
-    tuesday: true,
-    wednesday: true,
-    thursday: true,
-    friday: true,
-    saturday: true,
-    sunday: true
-  };
-  recurrenceDates: number[] | null;
-  recurrenceMonths: number[] | null;
-
+  dates: any;
   location: any;
   contact: any;
 
   constructor() {
     super();
-    this.price = '';
-    this.capacity = 0;
-    this.endDate = new Date();
-    this.isOnline = false;
-    this.isRecurring = false;
-    this.recurrenceType = 'unique';
-
-    this.startDate = null;
-    this.endDate = null;
-    this.recurrenceDays = null;
-    this.recurrenceDates = null;
-    this.recurrenceMonths = null;
-
-    this.location = location;
-
     this.categories = ['experiences-activities', 'general-interest', 'recreation-musement'];
-    this.contact = {
-      available: true,
-      rrss: []
-    };
+    this.location = LOCATION;
+    this.contact = CONTACT;
+    this.dates = DATES;
   }
 }
 
@@ -167,24 +118,22 @@ export class Event extends Item {
 export class Hotel extends Item {
 
   location: any;
-
   schedule: any | null;
   contact: any;
 
   constructor() {
     super();
-    this.schedule = scheduleDays;
-    this.location = location;
-    this.contact = {
-      available: true,
-      rrss: []
-    };
+    this.categories = ['general-interest'];
+    this.schedule = SCHEDULE_DAYS;
+    this.location = LOCATION;
+    this.contact = CONTACT;
   }
 }
 
 //Schedule
-const scheduleDays: any = {
+export const SCHEDULE_DAYS: any = {
   available: false,
+  alwaysOpen: false,
   days: [
     {
       day: 'monday',
@@ -224,10 +173,72 @@ const scheduleDays: any = {
   ]
 }
 
-const location = {
+//Location
+export const LOCATION = {
   address: '',
   city: '',
   country: '',
   state: '',
   coords: null,
 };
+
+//Dates
+const RECURRENCY_DAYS = [
+  {
+    day: 'monday',
+    active: false
+  },
+  {
+    day: 'tuesday',
+    active: false
+  },
+  {
+    day: 'wednesday',
+    active: false
+  },
+  {
+    day: 'thursday',
+    active: false
+  },
+  {
+    day: 'friday',
+    active: false
+  },
+  {
+    day: 'saturday',
+    active: false
+  },
+  {
+    day: 'sunday',
+    active: false
+  }
+]
+
+export const DATES = {
+  recurrenceType: 'unique',
+  
+  //Unique
+  startDate: null,
+  endDate: null,
+
+  //weekly
+  recurrenceDays: RECURRENCY_DAYS
+}
+
+// Contact
+export const CONTACT = {
+  available: true,
+  rrss: []
+};
+
+//Dates
+export const RECURRENCY_DATE: any[] = [
+  {
+    id: 'unique',
+    label: 'Único'
+  },
+  {
+    id: 'weekly',
+    label: 'Semanal'
+  }
+];

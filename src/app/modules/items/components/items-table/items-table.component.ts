@@ -59,7 +59,7 @@ export class ItemsTableComponent implements OnInit {
   }
 
   public copyItemLink(id: string): void {
-    let urlBase: string = 'https://triblii.web.app/';
+    let urlBase: string = 'https://ucityhub.web.app/detail/';
     let param: string = `${this.moduleId}/${id}?entity-selected=${this.userData.entity.id}`;
 
     if (id) {

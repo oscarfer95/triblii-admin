@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SCHEDULE_DAYS } from 'src/app/modules/shared/models/item.model';
 import { getDayLabel } from 'src/app/modules/shared/utils/get-day-label.util';
 
 @Component({
@@ -27,6 +28,7 @@ export class ScheduleFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._verifyScheduleObject();
     this._initForm();
   }
 
@@ -53,6 +55,12 @@ export class ScheduleFormComponent implements OnInit {
     this.form.addControl('available', this._formBuilder.control(this.item.schedule?.available || false));
     this.form.addControl('alwaysOpen', this._formBuilder.control(this.item.schedule?.alwaysOpen || false));
     this.form.addControl('days', daysArray);
+  }
+  
+  private _verifyScheduleObject() {
+    if (!this.item.schedule) {
+      this.item.schedule = SCHEDULE_DAYS; 
+    }
   }
 
   get days(): FormArray {

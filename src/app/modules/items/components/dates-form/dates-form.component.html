@@ -1,0 +1,58 @@
+<article [formGroup]="form" class="sm:p-3 flex flex-column gap-3">
+  <section class="w-full">
+    <section class="flex flex-column gap-2">
+      <strong class="ss-txt--black">Recurrencia</strong>
+
+      <p-dropdown [options]="recurrencyDates" optionValue="id" optionLabel="label" formControlName="recurrenceType"
+        class="w-full" [placeholder]="'Seleccionar recurrencia'">
+      </p-dropdown>
+    </section>
+  </section>
+
+  <section class="w-full flex flex-column gap-3">
+    <section class="w-full flex gap-3">
+      <section class="w-6 md:w-3 flex flex-column gap-2">
+        <strong class="ss-txt--black">Fecha inicio</strong>
+        <p-calendar formControlName="startDate" [hourFormat]="'12'" [showTime]="false" placeholder="Seleccionar"
+          [minDate]="date"></p-calendar>
+      </section>
+
+      <section class="w-6 md:w-3 flex flex-column gap-2">
+        <strong class="ss-txt--black">Fecha fin</strong>
+        <p-calendar formControlName="endDate" [hourFormat]="'12'" [showTime]="false" placeholder="Seleccionar"
+          [minDate]="form.get('startDate').value"
+          [ngClass]="{'pointer-events-none': !form.get('startDate').value}"></p-calendar>
+      </section>
+    </section>
+
+    <section class="w-full flex gap-3">
+      <section class="w-6 md:w-3 flex flex-column gap-2">
+        <strong class="ss-txt--black">Hora inicio</strong>
+        <p-calendar formControlName="startHour" [timeOnly]="true" [hourFormat]="'12'" [showTime]="true"
+          placeholder="08:30 AM" [minDate]="date"></p-calendar>
+      </section>
+
+      <section class="w-6 md:w-3 flex flex-column gap-2">
+        <strong class="ss-txt--black">Hora fin</strong>
+        <p-calendar formControlName="endHour" [timeOnly]="true" [hourFormat]="'12'" [showTime]="true"
+          placeholder="08:30 PM" [minDate]="form.get('startHour').value"
+          [ngClass]="{'pointer-events-none': !form.get('startHour').value}"></p-calendar>
+      </section>
+    </section>
+
+    <section *ngIf="form.get('recurrenceType').value === 'weekly'" class="flex flex-column gap-2">
+      <strong class="ss-txt--black">Días</strong>
+
+      <section formArrayName="recurrenceDays" class="sm:w-fit ss-bg--grey-lighten border-round-xl p-3 flex flex-column gap-3">
+        <div class="w-full sm:w-10rem flex align-items-end justify-content-between gap-3" *ngFor="let date of recurrenceDays.controls; let i = index"
+          [formGroupName]="i">
+          <div>
+            {{ getDayLabel(date.value.day) }}
+          </div>
+
+          <p-inputSwitch formControlName="active"></p-inputSwitch>
+        </div>
+      </section>
+    </section>
+  </section>
+</article>

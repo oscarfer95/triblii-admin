@@ -161,7 +161,11 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
           break;
 
         case 'servicesForm':
-          formValue['services'] = subFormValue;
+          formValue['services'] = subFormValue.services;
+          break;        
+        
+        case 'datesForm':
+          formValue['dates'] = subFormValue;
           break;
 
         default:
@@ -171,16 +175,14 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     }
     const item: any = { ...this.item, ...formValue };
 
-    console.log(item);
-
-    // if (item.id) {
-    //   delete item.id;
-    //   item.entitiesId.includes(this.userDataModel.entity.id) ? null : item.entitiesId.push(this.userDataModel.entity.id);
-    //   this._editItem(item);
-    // } else {
-    //   item.entitiesId.push(this.userDataModel.entity.id);
-    //   this._createItem(item);
-    // }
+    if (item.id) {
+      delete item.id;
+      item?.entitiesId?.includes(this.userDataModel.entity.id) ? null : item?.entitiesId?.push(this.userDataModel.entity.id);
+      this._editItem(item);
+    } else {
+      item?.entitiesId?.push(this.userDataModel.entity.id);
+      this._createItem(item);
+    }
   }
 
   private _editItem(item: any): void {

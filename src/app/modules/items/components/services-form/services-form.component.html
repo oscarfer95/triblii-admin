@@ -1,0 +1,38 @@
+<article [formGroup]="form" class="sm:p-3 flex flex-column gap-5">
+  <section class="w-full">
+    <div class="w-full mt-2 mb-3 ss-txt--black-lighten text-sm">
+      Marca los servicios que ofrecen.
+    </div>
+
+    <section>
+      <p-multiSelect class="w-full" [options]="services" optionLabel="label" display="chip" optionValue="id"
+        formControlName="services" placeholder="Seleccionar servicios" (onChange)="markAsTouched()">
+        <ng-template let-selected pTemplate="selectedItems">
+          <div *ngFor="let item of form.get('services').value" class="p-multiselect-token">
+            <section class="w-fit flex align-items-center gap-1">
+              <i class="pi {{getService(item).iconClass}} text-xl"></i>
+  
+              <span class="p-multiselect-token-label">
+                {{getService(item).label}}
+              </span>
+            </section>
+
+            <span class="p-multiselect-token-icon pi pi-times-circle" (click)="removeItem(item)"></span>
+          </div>
+
+          <div *ngIf="form.get('services').value.length === 0"
+               class="country-placeholder">
+            Seleccionar servicios
+          </div>
+        </ng-template>
+
+        <ng-template let-item pTemplate="item">
+          <section class="w-full flex align-items-center gap-2 ss-txt--black text-lg">
+            <i class="pi {{item.iconClass}} text-2xl ss-txt--black-lighten"></i>
+            <span class=""> {{item.label}} </span>
+          </section>
+        </ng-template>
+      </p-multiSelect>
+    </section>
+  </section>
+</article>

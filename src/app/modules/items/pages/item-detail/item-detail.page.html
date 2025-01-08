@@ -90,16 +90,14 @@
     <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Servicios' }">
       <p-card *ngIf="servicesForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400"
         data-aos="fade-up" data-aos-delay="400">
-        Services form
-        <!-- PENDING -->
+        <services-form [form]="servicesForm" [item]="item" [userDataModel]="userDataModel"></services-form>
       </p-card>
     </section>
 
-    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Fechas' }">
+    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Fecha' }">
       <p-card *ngIf="datesForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400"
         data-aos="fade-up" data-aos-delay="400">
-        Dates form
-        <!-- PENDING -->
+        <dates-form [form]="datesForm" [item]="item" [userDataModel]="userDataModel"></dates-form>
       </p-card>
     </section>
   </section>

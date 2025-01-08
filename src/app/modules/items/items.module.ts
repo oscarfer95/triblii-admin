@@ -39,6 +39,8 @@ import { TagsTableComponent } from './components/tags-table/tags-table.component
 import { TagFormComponent } from './components/tag-form/tag-form.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { ServicesFormComponent } from './components/services-form/services-form.component';
+import { DatesFormComponent } from './components/dates-form/dates-form.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     TagsPage,
     TagsTableComponent,
     TagFormComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    ServicesFormComponent,
+    DatesFormComponent
   ],
   imports: [
     AccordionModule,
