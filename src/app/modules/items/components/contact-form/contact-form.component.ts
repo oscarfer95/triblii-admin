@@ -19,18 +19,18 @@ export class ContactFormComponent implements OnInit {
   @Input()
   public userDataModel!: any;
 
-  public types: any[] = [{ label: 'Link', value: 'LINK' }, { label: 'Teléfono', value: 'PHONE' }];
+  public types: any[] = [{ label: 'Teléfono', value: 'PHONE' }, { label: 'Link', value: 'LINK' }];
   public phoneOptions: any[] = [
-    { logoClass: 'pi-whatsapp', label: 'WhatsApp' },
-    { logoClass: 'pi-telegram', label: 'Telegram' },
     { logoClass: 'pi-phone', label: 'Teléfono' },
+    { logoClass: 'pi-whatsapp', label: 'WhatsApp' },
+    { logoClass: 'pi-telegram', label: 'Telegram' }
   ];
   public linkOptions: any[] = [
+    { logoClass: 'pi-link', label: 'Página web' },
     { logoClass: 'pi-facebook', label: 'Facebook' },
     { logoClass: 'pi-instagram', label: 'Instagram' },
     { logoClass: 'pi-twitter', label: 'Twitter/X' },
-    { logoClass: 'pi-link', label: 'Página web' },
-    { logoClass: 'pi-linkedin', label: 'LinkedIn' },
+    { logoClass: 'pi-linkedin', label: 'LinkedIn' }
   ];
 
   public itemList: any[] = [];
@@ -56,11 +56,11 @@ export class ContactFormComponent implements OnInit {
   public saveItemList(): void {
     this.itemList.push(this.contactForm.value);
     this.form.get('rrss').setValue(this.itemList);
-    
+
     setTimeout(() => {
       this.contactForm.get('available').setValue(true);
-      this.contactForm.get('type').setValue('LINK');
-      this.contactForm.get('logoClass').setValue('pi-link');
+      this.contactForm.get('type').setValue('PHONE');
+      this.contactForm.get('logoClass').setValue('pi-phone');
       this.contactForm.get('phone').setValue(null);
       this.contactForm.get('url').setValue('');
     }, 100);
@@ -90,8 +90,8 @@ export class ContactFormComponent implements OnInit {
 
   private _initContactForm(): void {
     this.contactForm.addControl('available', this._formBuilder.control(true, Validators.required));
-    this.contactForm.addControl('type', this._formBuilder.control('LINK', Validators.required));
-    this.contactForm.addControl('logoClass', this._formBuilder.control('pi-link', Validators.required));
+    this.contactForm.addControl('type', this._formBuilder.control('PHONE', Validators.required));
+    this.contactForm.addControl('logoClass', this._formBuilder.control('pi-phone', Validators.required));
     this.contactForm.addControl('phone', this._formBuilder.control(null));
     this.contactForm.addControl('url', this._formBuilder.control(''));
   }

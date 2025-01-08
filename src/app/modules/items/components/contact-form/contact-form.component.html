@@ -1,75 +1,29 @@
 <article class="sm:p-3 flex flex-column gap-3">
-  <div [formGroup]="form" class="w-full flex justify-content-between sm:justify-content-start align-items-center gap-3">
-    <strong>Mostrar contacto</strong>
+  <section class="w-full flex flex-column sm:flex-row justify-content-between gap-3">
+    <div [formGroup]="form" class="w-full flex justify-content-between sm:justify-content-start align-items-center gap-3">
+      <strong>Mostrar contacto</strong>
 
-    <p-inputSwitch formControlName="available"></p-inputSwitch>
-  </div>
+      <p-inputSwitch formControlName="available"></p-inputSwitch>
+    </div>
 
-  <p-divider class="p-divider--grey" styleClass="my-0">
-  </p-divider>
-
-  <div *ngIf="form.get('available').value" class="w-full flex flex-column gap-3" [formGroup]="contactForm">
-    <p-selectButton [options]="types" optionLabel="label" optionValue="value" formControlName="type"
-      (onChange)="changeOptions($event)">
-    </p-selectButton>
-
-    <section *ngIf="contactForm.get('type').value === 'LINK'" class="w-full flex align-items-center gap-3 fadein">
-      <section>
-        <p-dropdown [options]="linkOptions" optionValue="logoClass" optionLabel="label" formControlName="logoClass"
-          class="w-fit" [filter]="true">
-          <ng-template pTemplate="selectedItem">
-            <i class="pi {{contactForm.get('logoClass').value}} text-xl"></i>
-          </ng-template>
-
-          <ng-template let-item pTemplate="item">
-            <i class="pi {{item.logoClass}}"></i> <span> {{item.label}} </span>
-          </ng-template>
-        </p-dropdown>
-      </section>
-
-      <input class="w-full" type="text" pInputText placeholder="Ingresa un link" formControlName="url" />
-    </section>
-
-    <section *ngIf="contactForm.get('type').value === 'PHONE'" class="w-full flex align-items-center gap-3 fadein">
-      <section>
-        <p-dropdown [options]="phoneOptions" optionValue="logoClass" optionLabel="label" formControlName="logoClass"
-          class="w-fit" [filter]="true">
-          <ng-template pTemplate="selectedItem">
-            <i class="pi {{contactForm.get('logoClass').value}} text-xl"></i>
-          </ng-template>
-
-          <ng-template let-item pTemplate="item">
-            <i class="pi {{item.logoClass}}"></i> <span> {{item.label}} </span>
-          </ng-template>
-        </p-dropdown>
-      </section>
-
-      <ngx-intl-tel-input [cssClass]="'custom-ngx-input'" [preferredCountries]="[CountryISO.Bolivia]"
-        [enableAutoCountrySelect]="true" [enablePlaceholder]="false" [customPlaceholder]="'Ingresa un número'"
-        [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-        [phoneValidation]="true" formControlName="phone"
-        [ngClass]="{'pointer-events-none': userDataModel.role === 'MAINTAINER'}">
-      </ngx-intl-tel-input>
-    </section>
-
-    <section>
-      <button class="ss-button ss-button--small ss-button--black fadein" [ngClass]="{'ss-button--disabled': contactForm.invalid || !contactForm.touched}"
-        [disabled]="contactForm.invalid || !contactForm.touched" (click)="saveItemList()">
-        Agregar 
-      </button>
-    </section>
-  </div>
+    <button class="w-full md:w-fit ss-button ss-button--small ss-button--black fadein"
+      *ngIf="form.get('available').value" (click)="op.toggle($event)">
+      Agregar
+    </button>
+  </section>
 
   <p-divider class="p-divider--grey" styleClass="my-0">
   </p-divider>
 
-  <section class="w-full flex flex-column gap-3">
+  <section class="w-full flex flex-column gap-3"
+           [ngClass]="{'opacity-50': !form.get('available').value}">
     <section class="w-full p-3 border-round-xl ss-bg--grey-lighten flex align-items-center justify-content-between"
-             *ngFor="let item of itemList, index as i">
+      *ngFor="let item of itemList, index as i">
       <section class="w-11 flex flex-grow-1 text-md align-items-center gap-3 ss-txt--black">
         <i class="pi {{item.logoClass}} text-2xl ss-txt--primary"></i>
 
-        <div *ngIf="item.type === 'LINK'" class="w-full overflow-hidden max-w-full text-overflow-ellipsis white-space-nowrap">{{item.url}}</div>
+        <div *ngIf="item.type === 'LINK'"
+          class="w-full overflow-hidden max-w-full text-overflow-ellipsis white-space-nowrap">{{item.url}}</div>
         <div *ngIf="item.type === 'PHONE'" class="w-full overflow-hidden">{{item.phone.internationalNumber}}</div>
       </section>
 
@@ -79,3 +33,56 @@
     </section>
   </section>
 </article>
+
+<p-overlayPanel #op>
+  <div class="w-full flex flex-column gap-3" [formGroup]="contactForm">
+    <section class="w-full flex gap-3">
+      <p-selectButton [options]="types" optionLabel="label" optionValue="value" formControlName="type"
+        (onChange)="changeOptions($event)">
+      </p-selectButton>
+
+      <p-dropdown *ngIf="contactForm.get('type').value === 'LINK'" [options]="linkOptions" optionValue="logoClass"
+        optionLabel="label" formControlName="logoClass" class="w-fit" [filter]="true">
+        <ng-template pTemplate="selectedItem">
+          <i class="pi {{contactForm.get('logoClass').value}} text-xl"></i>
+        </ng-template>
+
+        <ng-template let-item pTemplate="item">
+          <i class="pi {{item.logoClass}}"></i> <span> {{item.label}} </span>
+        </ng-template>
+      </p-dropdown>
+
+      <p-dropdown *ngIf="contactForm.get('type').value === 'PHONE'" [options]="phoneOptions" optionValue="logoClass" optionLabel="label" formControlName="logoClass"
+        class="w-fit" [filter]="true">
+        <ng-template pTemplate="selectedItem">
+          <i class="pi {{contactForm.get('logoClass').value}} text-xl"></i>
+        </ng-template>
+
+        <ng-template let-item pTemplate="item">
+          <i class="pi {{item.logoClass}}"></i> <span> {{item.label}} </span>
+        </ng-template>
+      </p-dropdown>
+    </section>
+
+    <section *ngIf="contactForm.get('type').value === 'LINK'" class="w-full flex align-items-center gap-3 fadein">
+      <input class="w-full" type="text" pInputText placeholder="Ingresa un link" formControlName="url" />
+    </section>
+
+    <section *ngIf="contactForm.get('type').value === 'PHONE'" class="w-17rem flex align-items-center gap-3 fadein">
+      <ngx-intl-tel-input [cssClass]="'custom-ngx-input'" [preferredCountries]="[CountryISO.Bolivia]"
+        [enableAutoCountrySelect]="true" [enablePlaceholder]="false" [customPlaceholder]="'Ingresa un número'"
+        [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+        [phoneValidation]="true" formControlName="phone"
+        [ngClass]="{'pointer-events-none': userDataModel.role === 'MAINTAINER'}">
+      </ngx-intl-tel-input>
+    </section>
+
+    <section class="w-full flex justify-content-end">
+      <button class="w-full ss-button ss-button--small ss-button--black fadein"
+        [ngClass]="{'ss-button--disabled': contactForm.invalid || !contactForm.touched}"
+        [disabled]="contactForm.invalid || !contactForm.touched" (click)="saveItemList()">
+        Guardar
+      </button>
+    </section>
+  </div>
+</p-overlayPanel>

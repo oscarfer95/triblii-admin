@@ -65,6 +65,7 @@ export class Attraction extends Item {
   schedule: any | null;
   price: string;
   location: any;
+  contact: any;
 
   constructor() {
     super();
@@ -72,21 +73,28 @@ export class Attraction extends Item {
     this.price = '';
     this.location = location;
     this.categories = ['recreation-musement'];
+    this.contact = {
+      available: true,
+      rrss: []
+    };
   }
 }
 
 // Restaurants
 export class Restaurant extends Item {
   schedule: any | null;
-  delivery: any | null
   location: any;
+  contact: any;
 
   constructor() {
     super();
     this.categories = ['gastronomy'];
     this.schedule = scheduleDays;
-    this.delivery = null;
     this.location = location;
+    this.contact = {
+      available: true,
+      rrss: []
+    };
   }
 }
 
@@ -128,6 +136,7 @@ export class Event extends Item {
   recurrenceMonths: number[] | null;
 
   location: any;
+  contact: any;
 
   constructor() {
     super();
@@ -147,6 +156,10 @@ export class Event extends Item {
     this.location = location;
 
     this.categories = ['experiences-activities', 'general-interest', 'recreation-musement'];
+    this.contact = {
+      available: true,
+      rrss: []
+    };
   }
 }
 
@@ -156,11 +169,16 @@ export class Hotel extends Item {
   location: any;
 
   schedule: any | null;
+  contact: any;
 
   constructor() {
     super();
     this.schedule = scheduleDays;
     this.location = location;
+    this.contact = {
+      available: true,
+      rrss: []
+    };
   }
 }
 

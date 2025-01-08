@@ -15,9 +15,7 @@ export const ALL_TAB_ITEMS: TabItem[] = [
 
 export const TAB_CONFIG: Record<string, TabItem[]> = {
   attractions: ALL_TAB_ITEMS,
-  restaurants: insertTabs(ALL_TAB_ITEMS, [
-    { item: { label: 'Delivery', icon: 'pi pi-send' }, position: 4 }
-  ]),
+  restaurants: ALL_TAB_ITEMS,
   events: insertTabs(excludeTabs(ALL_TAB_ITEMS, ['Horario']), [
     { item: { label: 'Fechas', icon: 'pi pi-calendar' }, position: 2 }
   ]),

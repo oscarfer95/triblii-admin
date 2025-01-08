@@ -87,14 +87,6 @@
       </p-card>
     </section>
 
-    <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Delivery' }">
-      <p-card *ngIf="deliveryForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400"
-        data-aos="fade-up" data-aos-delay="400">
-        Delivery form
-        <!-- PENDING -->
-      </p-card>
-    </section>
-
     <section class="w-full flex-column gap-3 hidden" [ngClass]="{ 'flex': activeTab.label === 'Servicios' }">
       <p-card *ngIf="servicesForm" styleClass="p-card-shadow border-round-xl fadein animation-duration-400"
         data-aos="fade-up" data-aos-delay="400">

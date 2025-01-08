@@ -96,10 +96,6 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     return <FormGroup>this.itemForm?.get('contactForm');
   }
 
-  public get deliveryForm(): FormGroup {
-    return <FormGroup>this.itemForm?.get('deliveryForm');
-  }
-
   public get datesForm(): FormGroup {
     return <FormGroup>this.itemForm?.get('datesForm');
   }
@@ -158,14 +154,10 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
 
         case 'dateForm':
           formValue['dates'] = subFormValue;
-          break;    
+          break;
 
         case 'contactForm':
           formValue['contact'] = subFormValue;
-          break;
-
-        case 'deliveryForm':
-          formValue['delivery'] = subFormValue;
           break;
 
         case 'servicesForm':
@@ -180,7 +172,7 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     const item: any = { ...this.item, ...formValue };
 
     console.log(item);
-    
+
     // if (item.id) {
     //   delete item.id;
     //   item.entitiesId.includes(this.userDataModel.entity.id) ? null : item.entitiesId.push(this.userDataModel.entity.id);
