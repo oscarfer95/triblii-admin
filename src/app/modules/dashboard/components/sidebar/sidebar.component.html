@@ -16,84 +16,8 @@
 
     <section *ngIf="menuItems" class="overflow-auto mt-5">
       <article class="ss-sidebar-menu">
-        <section class="w-full flex flex-column gap-3">
-          <section *ngFor="let menuItem of getItemsById('home')" (click)="onClickMenuButton()">
-            <div>
-              <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
-                [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
-                <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
-              </a>
-            </div>
-          </section>
-
-          <details *ngIf="modulesList?.length > 0" class="accordion-details">
-            <summary class="cursor-pointer">
-              <span class="w-full ss-txt--black-lighten w-full px-3 text-lg flex gap-2 align-items-center">
-                <i class="pi pi-th-large text-xl"></i>
-                Módulos
-                <div class="w-full border-bottom-1 border-black-alpha-10"></div>
-                <i class="bi bi-caret-down text-xl show-arrow-outline"></i>
-                <i class="hidden bi bi-caret-down-fill text-xl show-arrow"></i>
-              </span>
-            </summary>
-
-            <section *ngFor="let menuItem of modulesList" (click)="onClickMenuButton()">
-              <div class="mt-3">
-                <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
-                  [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
-                  <i class="bi bi-arrow-return-right"></i><i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
-                </a>
-              </div>
-            </section>
-          </details>
-
-          <details *ngIf="userDataModel?.role !=='MAINTAINER' && adminModulesList?.length > 0" class="accordion-details">
-            <summary class="cursor-pointer">
-              <span class="w-full ss-txt--black-lighten w-full px-3 text-lg flex gap-2 align-items-center">
-                <i class="pi pi-key text-xl"></i>
-                Administrador
-                <div class="w-full border-bottom-1 border-black-alpha-10"></div>
-                <i class="bi bi-caret-down text-xl show-arrow-outline"></i>
-                <i class="hidden bi bi-caret-down-fill text-xl show-arrow"></i>
-              </span>
-            </summary>
-
-            <section *ngFor="let menuItem of adminModulesList" (click)="onClickMenuButton()">
-              <div class="mt-3">
-                <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
-                  [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
-                  <i class="bi bi-arrow-return-right"></i><i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
-                </a>
-              </div>
-            </section>
-          </details>
-
-          <section *ngFor="let menuItem of getItemsById('stats')" (click)="onClickMenuButton()">
-            <div>
-              <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
-                [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
-                <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
-              </a>
-            </div>
-          </section>
-
-          <section *ngFor="let menuItem of getItemsById('logs')" (click)="onClickMenuButton()">
-            <div>
-              <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
-                [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
-                <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
-              </a>
-            </div>
-          </section>
-
-          <section *ngFor="let menuItem of getItemsById('account')" (click)="onClickMenuButton()">
-            <div>
-              <a class="ss-sidebar-menu__button ss-button ss-button--clear ss-txt--black-lighten justify-content-start gap-2 w-full px-3"
-                [routerLink]="menuItem?.url" routerLinkActive="ss-sidebar-menu__button--active">
-                <i class="{{ menuItem?.icon }} text-xl"></i> {{ menuItem?.label }}
-              </a>
-            </div>
-          </section>
+        <section class="w-full flex flex-column gap-3 ss-panel-menu">
+          <p-panelMenu [model]="menuItems" [multiple]="false"></p-panelMenu>
         </section>
       </article>
     </section>

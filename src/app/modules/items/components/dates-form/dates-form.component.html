@@ -1,4 +1,4 @@
-<article [formGroup]="form" class="sm:p-3 flex flex-column gap-3">
+<article *ngIf="item" [formGroup]="form" class="sm:p-3 flex flex-column gap-3">
   <section class="w-full">
     <section class="flex flex-column gap-2">
       <strong class="ss-txt--black">Recurrencia</strong>
@@ -10,7 +10,7 @@
   </section>
 
   <section class="w-full flex flex-column gap-3">
-    <section class="w-full flex gap-3">
+    <section *ngIf="form.get('recurrenceType').value === 'unique'" class="w-full flex gap-3">
       <section class="w-6 md:w-3 flex flex-column gap-2">
         <strong class="ss-txt--black">Fecha inicio</strong>
         <p-calendar formControlName="startDate" [hourFormat]="'12'" [showTime]="false" placeholder="Seleccionar"

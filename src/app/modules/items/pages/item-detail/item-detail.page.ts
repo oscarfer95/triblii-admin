@@ -113,7 +113,7 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
   }
 
   public saveForm(): void {
-    // this._loaderService.show = true;
+    this._loaderService.show = true;
 
     const subFormNames = Object.keys(this.itemForm.controls);
     const formValue: any = {};
@@ -134,8 +134,8 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
           ];
 
           formValue['tags'] = subFormValue.tags || [];
-          formValue['isFeatured'] = subFormValue.available || false;
-          formValue['available'] = subFormValue.isFeatured || false;
+          formValue['isFeatured'] = subFormValue.isFeatured;
+          formValue['available'] = subFormValue.available;
 
           delete subFormValue.categories;
           delete subFormValue.mainCategories;

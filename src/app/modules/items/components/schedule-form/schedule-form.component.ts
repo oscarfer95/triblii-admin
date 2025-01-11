@@ -58,7 +58,7 @@ export class ScheduleFormComponent implements OnInit {
   }
   
   private _verifyScheduleObject() {
-    if (!this.item.schedule) {
+    if (!this.item?.schedule?.days) {
       this.item.schedule = SCHEDULE_DAYS; 
     }
   }

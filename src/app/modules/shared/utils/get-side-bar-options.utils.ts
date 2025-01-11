@@ -85,3 +85,67 @@ export function generateMenuItems(permissions: string[], role: string): any[] {
 export function getMenuItemById(id: string): any | null {
   return menuOptions[id] || null;
 }
+
+export function transformMenuItems(inputArray: any) {
+  const menuStructure = {
+    Inicio: [],
+    Módulos: [],
+    Administrador: [],
+    Estadísticas: [],
+    Historial: [],
+    Cuenta: [],
+  };
+
+  const categoryMap = {
+    home: 'Inicio',
+    attractions: 'Módulos',
+    restaurants: 'Módulos',
+    hotels: 'Módulos',
+    foods: 'Módulos',
+    events: 'Módulos',
+    banners: 'Módulos',
+    categories: 'Módulos',
+    tags: 'Módulos',
+    users: 'Administrador',
+    locations: 'Administrador',
+    entities: 'Administrador',
+    stats: 'Estadísticas',
+    logs: 'Historial',
+    account: 'Cuenta',
+  };
+
+  inputArray.forEach((item) => {
+    const category = categoryMap[item.id];
+    if (category in menuStructure) {
+      menuStructure[category].push({
+        label: item.label,
+        icon: item.icon,
+        routerLink: item.url,
+        routerLinkActive: 'ss-sidebar-menu--active'
+      });
+    }
+  });
+
+  const menuItems = [];
+
+  Object.entries(menuStructure).forEach(([key, value]) => {
+    if (value.length > 0) {
+      if (key === 'Inicio' || key === 'Estadísticas' || key === 'Historial' || key === 'Cuenta') {
+        menuItems.push({
+          label: key,
+          icon: value[0].icon,
+          routerLink: value[0].routerLink
+        });
+        
+      } else if (key === 'Módulos' || key === 'Administrador') {
+        menuItems.push({
+          label: key,
+          icon: key === 'Módulos' ? 'pi pi-th-large' : 'pi pi-key',
+          items: value
+        });
+      }
+    }
+  });
+
+  return menuItems;
+}

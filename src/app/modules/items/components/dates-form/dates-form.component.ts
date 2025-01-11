@@ -21,14 +21,13 @@ export class DatesFormComponent implements OnInit {
   public userDataModel!: any;
 
   public recurrencyDates: any[] = RECURRENCY_DATE;
-  public date: Date = new Date();
+  public date: Date;
 
   constructor(private _formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    console.log(this.item);
-    
+    this.date = new Date();
     this._initForm();
   }
 
@@ -56,10 +55,22 @@ export class DatesFormComponent implements OnInit {
     );
 
     this.form.addControl('recurrenceType', this._formBuilder.control(this.item?.dates?.recurrenceType, [Validators.required]));
-    this.form.addControl('startDate', this._formBuilder.control(this.item?.dates?.startDate, [Validators.required]));
-    this.form.addControl('endDate', this._formBuilder.control(this.item?.dates?.endDate, [Validators.required]));
-    this.form.addControl('startHour', this._formBuilder.control(this.item?.dates?.recurrenceDates, [Validators.required]));
-    this.form.addControl('endHour', this._formBuilder.control(this.item?.dates?.recurrenceMonths, [Validators.required]));
+    this.form.addControl('startDate', this._formBuilder.control(
+      this.item?.dates?.startDate ? new Date(this.item.dates.startDate.seconds * 1000) : null, 
+      [Validators.required]
+    ));
+    this.form.addControl('endDate', this._formBuilder.control(
+      this.item?.dates?.endDate ? new Date(this.item.dates.endDate.seconds * 1000) : null, 
+      [Validators.required]
+    ));
+    this.form.addControl('startHour', this._formBuilder.control(
+      this.item?.dates?.startDate ? new Date(this.item.dates.startHour.seconds * 1000) : null, 
+      [Validators.required]
+    ));
+    this.form.addControl('endHour', this._formBuilder.control(
+      this.item?.dates?.endDate ? new Date(this.item.dates.endHour.seconds * 1000) : null, 
+      [Validators.required]
+    ));    
     this.form.addControl('recurrenceDays', daysArray);
   }
 }

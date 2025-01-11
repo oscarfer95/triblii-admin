@@ -44,7 +44,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.itemList = this.item.contact?.rrss;
+    this.itemList = this.item?.contact?.rrss || [];
     this._initForm();
     this._initContactForm();
   }
@@ -85,7 +85,7 @@ export class ContactFormComponent implements OnInit {
 
   private _initForm(): void {
     this.form.addControl('available', this._formBuilder.control(this.item.contact?.available || false));
-    this.form.addControl('rrss', this._formBuilder.control(this.item.contact?.rrss || []));
+    this.form.addControl('rrss', this._formBuilder.control(this.item?.contact?.rrss || []));
   }
 
   private _initContactForm(): void {

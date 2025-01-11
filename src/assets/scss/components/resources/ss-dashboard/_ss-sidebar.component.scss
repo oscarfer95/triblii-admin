@@ -3,51 +3,6 @@
     background-color: rgba(var(--#{$app-prefix}-color-red-rgb), 0.1) !important;
     color: var(--#{$app-prefix}-color-red) !important;
   }
-
-  details {
-    border-left: 1px solid var(--#{$app-prefix}-color-grey) !important;
-  }
-
-  summary {
-    height: 45px;
-    display: flex;
-    align-items: center;
-
-    &:hover {
-      background-color: rgba(
-        var(--#{$app-prefix}-color-primary-rgb),
-        0.1
-      ) !important;
-      border-radius: 0px !important;
-      border-top-right-radius: .5rem !important;
-      border-bottom-right-radius: .5rem !important;
-
-      span,
-      i {
-        color: var(--#{$app-prefix}-color-primary) !important;
-      }
-    }
-  }
-
-  details.accordion-details[open] summary {
-    border-radius: 0px !important;
-    border-top-right-radius: .5rem !important;
-    border-bottom-right-radius: .5rem !important;
-    background-color: rgba(var(--#{$app-prefix}-color-primary-rgb), 0.1) !important;
-    border-left: 2px solid var(--#{$app-prefix}-color-grey) !important;
-
-    span,
-    i {
-      color: var(--#{$app-prefix}-color-primary) !important;
-    }
-
-    .show-arrow {
-      display: flex !important;
-    }
-    .show-arrow-outline {
-      display: none !important;
-    }
-  }
 }
 
 .#{$app-prefix}-sidebar-menu {
@@ -58,23 +13,11 @@
         0.1
       ) !important;
       color: var(--#{$app-prefix}-color-primary) !important;
-      border-left: 3px solid var(--#{$app-prefix}-color-primary) !important;
-      border-radius: 0px !important;
-      border-top-right-radius: .5rem !important;
-      border-bottom-right-radius: .5rem !important;
       font-weight: bold;
 
       i {
         color: var(--#{$app-prefix}-color-primary) !important;
       }
-    }
-
-    &.#{$app-prefix}-button--clear:hover {
-      background-color: rgba(
-        var(--#{$app-prefix}-color-primary-rgb),
-        0.1
-      ) !important;
-      color: var(--#{$app-prefix}-color-primary) !important;
     }
   }
 }

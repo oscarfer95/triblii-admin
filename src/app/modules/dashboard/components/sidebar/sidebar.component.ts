@@ -6,8 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../../auth/service/auth.service';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
-import { generateMenuItems } from '../../../shared/utils/get-side-bar-options.utils';
-import { ADMIN_MODULES_LIST, MODULES_LIST } from 'src/app/modules/shared/constants/modules.constant';
+import { generateMenuItems, transformMenuItems } from '../../../shared/utils/get-side-bar-options.utils';
 
 @Component({
   selector: 'admin-sidebar',
@@ -21,8 +20,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   public userDataModel: UserDataModel | null = null;
   public menuItems: any = null;
-  public modulesList: any = null;
-  public adminModulesList: any = null;
 
   private _unsubscribe: Subject<void>;
 
@@ -43,7 +40,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
-  public onClickMenuButton(): void {
+  public onClickMenuButton(event: any): void {
     this.clickMenuButton.emit();
   }
 
@@ -66,24 +63,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     window.open(whatsAppBaseUrl + numberUrl + messageUrl + encodeURIComponent(message));
   }
 
-  public isModuleIdInList(searchId: string): boolean {
-    return MODULES_LIST.some(module => module.id === searchId);
-  }
-
-  public isModuleIdInAdminList(searchId: string): boolean {
-    return ADMIN_MODULES_LIST.some(module => module.id === searchId);
-  }
-
-  public getItemsById(id: string): any[] {
-    return this.menuItems.filter(item => item.id === id);
-  }
-
-  private _filterList(list: any, idList: any[]) {
-    return list.filter((menuItem: any) =>
-      idList.some(module => module.id === menuItem.id)
-    );
-  }
-
   private _userDataModelListener() {
     this._userDataModelService.userDataModelListener()
       .pipe(
@@ -92,9 +71,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       .subscribe((userDataModel: UserDataModel) => {
         if (userDataModel.accountId) {
           this.userDataModel = userDataModel;
-          this.menuItems = generateMenuItems(this.userDataModel.permissions, this.userDataModel.role);
-          this.modulesList = this._filterList(this.menuItems, MODULES_LIST);
-          this.adminModulesList = this._filterList(this.menuItems, ADMIN_MODULES_LIST);
+          this.menuItems = transformMenuItems(generateMenuItems(this.userDataModel.permissions, this.userDataModel.role));
         }
 
         this._cdr.markForCheck();
