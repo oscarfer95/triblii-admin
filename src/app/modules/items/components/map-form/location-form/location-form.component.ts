@@ -27,6 +27,9 @@ export class LocationFormComponent implements OnInit {
   public itemLocation: any;
 
   @Input()
+  public isFood: boolean = false;
+
+  @Input()
   public form!: FormGroup;
 
   @Input()
@@ -62,10 +65,15 @@ export class LocationFormComponent implements OnInit {
   }
 
   private _initForm() {
-    this.form.addControl('coords', this._formBuilder.control(this.itemLocation?.coords || null, [Validators.required]));
-    this.form.addControl('address', this._formBuilder.control(this.itemLocation?.address || '', [Validators.required, Validators.minLength(5)]));
-    this.form.addControl('number', this._formBuilder.control(this.itemLocation?.number || '', [Validators.maxLength(10)]));
-    this.form.addControl('reference', this._formBuilder.control(this.itemLocation?.reference || '', [Validators.maxLength(50)]));
+    if (!this.isFood) {
+      this.form.addControl('coords', this._formBuilder.control(this.itemLocation?.coords || null, [Validators.required]));
+      this.form.addControl('address', this._formBuilder.control(this.itemLocation?.address || '', [Validators.required, Validators.minLength(5)]));
+      this.form.addControl('number', this._formBuilder.control(this.itemLocation?.number || '', [Validators.maxLength(10)]));
+      this.form.addControl('reference', this._formBuilder.control(this.itemLocation?.reference || '', [Validators.maxLength(50)]));
+    } else {
+      this.location = this.userDataModel?.entity?.location;
+    }
+
     this.form.addControl(
       'country',
       this._formBuilder.control(
@@ -87,6 +95,9 @@ export class LocationFormComponent implements OnInit {
       [Validators.required]
       )
     );
+
+    console.log(this.form.value);
+
   }
 
   public async getLocation() {

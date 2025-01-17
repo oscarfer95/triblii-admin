@@ -51,7 +51,7 @@
       [ngClass]="{ 'flex': activeTab.label === 'Ubicación' }">
       <p-card styleClass="p-card-shadow border-round-xl fadein animation-duration-400">
         <app-location-form [form]="locationForm" [itemLocation]="item.location"
-          [userDataModel]="userDataModel"></app-location-form>
+          [userDataModel]="userDataModel" [isFood]="moduleId === 'foods'"></app-location-form>
       </p-card>
     </section>
 

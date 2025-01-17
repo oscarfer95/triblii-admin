@@ -120,6 +120,7 @@ export class Hotel extends Item {
   location: any;
   schedule: any | null;
   contact: any;
+  services: any | null;
 
   constructor() {
     super();
@@ -127,6 +128,7 @@ export class Hotel extends Item {
     this.schedule = SCHEDULE_DAYS;
     this.location = LOCATION;
     this.contact = CONTACT;
+    this.categories = [];
   }
 }
 
@@ -216,7 +218,7 @@ const RECURRENCY_DAYS = [
 
 export const DATES = {
   recurrenceType: 'unique',
-  
+
   //Unique
   startDate: null,
   endDate: null,

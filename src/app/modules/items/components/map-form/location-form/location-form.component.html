@@ -1,5 +1,5 @@
 <article class="w-full flex flex-column gap-3 relative">
-  <section class="fadein animation-duration-500">
+  <section *ngIf="!isFood" class="fadein animation-duration-500">
     <button *ngIf="!location" class="w-full ss-button ss-bg--warning ss-txt--black" (click)="getLocation()">
       <i class="bi bi-pin-map text-lg mr-3"></i>
       Activar ubicación
@@ -47,7 +47,7 @@
       {{userDataModel?.entity?.location?.stateIds[0]}}
     </p>
 
-    <section class="flex flex-column">
+    <section *ngIf="!isFood" class="flex flex-column">
       <section class="w-full flex align-items-center justify-content-between overflow-hidden">
         <span class="font-semibold">Dirección</span>
 
@@ -64,7 +64,7 @@
         formControlName="address" />
     </section>
 
-    <details>
+    <details *ngIf="!isFood">
       <summary class="mb-3 ss-txt--black-lighten cursor-pointer">
         Opcional
       </summary>

@@ -117,7 +117,7 @@ export function transformMenuItems(inputArray: any) {
   inputArray.forEach((item) => {
     const category = categoryMap[item.id];
     if (category in menuStructure) {
-      menuStructure[category].push({
+      menuStructure[category]?.push({
         label: item.label,
         icon: item.icon,
         routerLink: item.url,
@@ -136,7 +136,7 @@ export function transformMenuItems(inputArray: any) {
           icon: value[0].icon,
           routerLink: value[0].routerLink
         });
-        
+
       } else if (key === 'Módulos' || key === 'Administrador') {
         menuItems.push({
           label: key,

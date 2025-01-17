@@ -4,7 +4,7 @@ const FORM_GROUPS_CONFIG: Record<string, string[]> = {
   attractions: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm', 'scheduleForm', 'contactForm'],
   restaurants: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'foodsForm', 'scheduleForm', 'contactForm'],
   hotels: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm', 'scheduleForm', 'contactForm', 'servicesForm'],
-  foods: ['galleryForm', 'informationForm', 'optionsForm'],
+  foods: ['galleryForm', 'informationForm', 'optionsForm', 'locationForm'],
   events: ['galleryForm', 'informationForm', 'contactForm', 'optionsForm', 'locationForm', 'foodsForm', 'datesForm'],
 };
 

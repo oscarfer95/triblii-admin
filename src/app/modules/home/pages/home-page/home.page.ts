@@ -22,6 +22,7 @@ export class HomePage implements OnInit, OnDestroy {
   public logByActionData!: any;
   public menuItems: any = null;
   public logList: any[] | null;
+  public items: any[];
   public swiperConfig: SwiperOptions;
 
   private _unsubscribe: Subject<void>;
@@ -49,6 +50,40 @@ export class HomePage implements OnInit, OnDestroy {
         disableOnInteraction: true
       }
     };
+
+    this.items = [
+      {
+        label: 'Lugares',
+        icon: 'pi pi-map-marker',
+        command: () => {}
+      },
+      {
+        label: 'Restaurantes',
+        icon: 'bi bi-shop',
+        command: () => {}
+      },
+      {
+        label: 'Hoteles',
+        icon: 'pi pi-building',
+        command: () => {}
+      },
+      {
+        label: 'Eventos',
+        icon: 'pi pi-calendar',
+        command: () => {}
+      },
+      {separator: true},
+      {
+        label: 'Descargar BD',
+        icon: 'pi pi-download',
+        command: () => {}
+      },
+      {
+        label: 'Descargar plantilla',
+        icon: 'pi pi-file',
+        command: () => {}
+      }
+  ];
 
     this._userDataModelListener();
   }
@@ -96,7 +131,7 @@ export class HomePage implements OnInit, OnDestroy {
       this._getLogsByMonth(logs);
       this._getLogsByAction(logs);
 
-      this.logList = logs.length > 4? logs.slice(0, 5) : logs;
+      this.logList = logs.length > 4 ? logs.slice(0, 5) : logs;
     } catch (error) {
       console.error('Error al obtener los logs:', error);
     } finally {

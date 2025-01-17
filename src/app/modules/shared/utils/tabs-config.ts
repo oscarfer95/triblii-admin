@@ -19,7 +19,7 @@ export const TAB_CONFIG: Record<string, TabItem[]> = {
   events: insertTabs(excludeTabs(ALL_TAB_ITEMS, ['Horario']), [
     { item: { label: 'Fecha', icon: 'pi pi-calendar' }, position: 2 }
   ]),
-  foods: excludeTabs(ALL_TAB_ITEMS, ['Ubicación', 'Contacto', 'Horario', 'Comidas']),
+  foods: excludeTabs(ALL_TAB_ITEMS, ['Contacto', 'Horario', 'Comidas']),
   hotels: insertTabs(excludeTabs(ALL_TAB_ITEMS, ['Comidas']), [
     { item: { label: 'Servicios', icon: 'pi pi-fw pi-bell' }, position: 5 }
   ])

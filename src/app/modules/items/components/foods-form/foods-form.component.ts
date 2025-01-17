@@ -71,7 +71,7 @@ export class FoodsFormComponent implements OnInit {
     };
 
     if (this.userDataModel.role !== 'SUPERADMIN') {
-      configList.queryList.push({
+      configList?.queryList?.push({
           field: 'entitiesId',
           operation: 'array-contains-any',
           value: [this.userDataModel.entity.id]

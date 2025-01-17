@@ -162,8 +162,8 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
 
         case 'servicesForm':
           formValue['services'] = subFormValue.services;
-          break;        
-        
+          break;
+
         case 'datesForm':
           formValue['dates'] = subFormValue;
           break;
@@ -373,7 +373,7 @@ export class ItemDetail implements CanDeactivateComponent, OnInit, OnDestroy {
     actualImageUrlList.forEach(
       (actualImageUrlList: string) => {
         if (!oldImageUrlList.includes(actualImageUrlList)) {
-          imageUrlList.push(actualImageUrlList);
+          imageUrlList?.push(actualImageUrlList);
         }
       }
     );

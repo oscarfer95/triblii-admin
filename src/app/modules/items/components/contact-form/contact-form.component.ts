@@ -54,7 +54,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   public saveItemList(): void {
-    this.itemList.push(this.contactForm.value);
+    this.itemList?.push(this.contactForm.value);
     this.form.get('rrss').setValue(this.itemList);
 
     setTimeout(() => {
