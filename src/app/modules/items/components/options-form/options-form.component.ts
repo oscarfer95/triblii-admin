@@ -79,7 +79,7 @@ export class OptionsFormComponent implements OnInit, OnDestroy {
     this.form.addControl('categories', this._formBuilder.control(this._removeIdsFromArray(this.item.categories || [], this.mainCategories), [Validators.required]));
     this.form.addControl('tags', this._formBuilder.control(this._removeIdsFromArray(this.item.tags || [], this.tags) || [], [Validators.required]));
     this.form.addControl('isFeatured', this._formBuilder.control(this.item.isFeatured || false, [Validators.required]));
-    this.form.addControl('available', this._formBuilder.control(this.item.available || true, [Validators.required]));
+    this.form.addControl('available', this._formBuilder.control(this.item.available || false, [Validators.required]));
   }
 
   private async _getMainCategories(): Promise<any[]> {

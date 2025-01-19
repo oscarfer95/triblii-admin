@@ -95,9 +95,6 @@ export class LocationFormComponent implements OnInit {
       [Validators.required]
       )
     );
-
-    console.log(this.form.value);
-
   }
 
   public async getLocation() {

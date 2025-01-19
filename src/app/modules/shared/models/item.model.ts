@@ -128,7 +128,7 @@ export class Hotel extends Item {
     this.schedule = SCHEDULE_DAYS;
     this.location = LOCATION;
     this.contact = CONTACT;
-    this.categories = [];
+    this.services = [];
   }
 }
 

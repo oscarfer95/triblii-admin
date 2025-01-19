@@ -1,14 +1,19 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MenuItem, MessageService } from 'primeng/api';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { MODULES_LIST } from 'src/app/modules/shared/constants/modules.constant';
+import { Item } from 'src/app/modules/shared/models/item.model';
 import { UserDataModel } from 'src/app/modules/shared/models/user-data-model.model';
+import { LoaderService } from 'src/app/modules/shared/services/loader.service';
 import { LogsRepositoryService } from 'src/app/modules/shared/services/logs.repository-service';
+import { RepositoryFactoryService } from 'src/app/modules/shared/services/repository-factory.service';
 import { getSingularActionLabel, getSingularModuleLabel } from 'src/app/modules/shared/utils/get-label-text.util';
 import { generateMenuItems } from 'src/app/modules/shared/utils/get-side-bar-options.utils';
 import { getLogsByAction, getLogsByMonth } from 'src/app/modules/shared/utils/get-stadistics.utils';
 import { ConfigList } from 'src/framework/repository/config-list.model';
 import { SwiperOptions } from 'swiper';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'home-page',
@@ -23,15 +28,19 @@ export class HomePage implements OnInit, OnDestroy {
   public userDataModel!: UserDataModel | any;
   public interactionData!: any;
   public logByActionData!: any;
+  public uploadModuleFiles!: string;
   public menuItems: any = null;
   public logList: any[] | null;
-  public items: any[];
+  public items: MenuItem[];
   public swiperConfig: SwiperOptions;
 
   private _unsubscribe: Subject<void>;
 
   constructor(private _logsRepositoryService: LogsRepositoryService,
+    private _repositoryService: RepositoryFactoryService,
     private _userDataModelService: UserDataModelService,
+    private _loaderService: LoaderService,
+    private _toastService: MessageService,
     private _cdr: ChangeDetectorRef) {
     this._unsubscribe = new Subject<void>();
   }
@@ -56,39 +65,123 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.items = [
       {
-        label: 'Lugares',
-        icon: 'pi pi-map-marker',
-        command: () => {
-          this.inputFile.nativeElement.click();
-        }
+        label: 'Subir archivo',
+        icon: 'pi pi-fw pi-upload',
+        items: [
+          {
+            label: 'Módulos'
+          },
+          {
+            separator: true
+          },
+          {
+            label: 'Lugares',
+            icon: 'pi pi-map-marker',
+            command: () => {
+              this.inputFile.nativeElement.click();
+              this.uploadModuleFiles = 'attractions';
+            }
+          },
+          {
+            label: 'Restaurantes',
+            icon: 'bi bi-shop',
+            command: () => {
+              this.inputFile.nativeElement.click();
+              this.uploadModuleFiles = 'restaurants';
+            }
+          },
+          {
+            label: 'Comidas',
+            icon: 'bi bi-cup-straw',
+            command: () => {
+              this.inputFile.nativeElement.click();
+              this.uploadModuleFiles = 'foods';
+            }
+          },
+          {
+            label: 'Hoteles',
+            icon: 'pi pi-building',
+            command: () => {
+              this.inputFile.nativeElement.click();
+              this.uploadModuleFiles = 'hotels';
+            }
+          },
+          {
+            label: 'Eventos',
+            icon: 'pi pi-calendar',
+            command: () => {
+              this.inputFile.nativeElement.click();
+              this.uploadModuleFiles = 'events';
+            }
+          }
+        ]
       },
       {
-        label: 'Restaurantes',
-        icon: 'bi bi-shop',
-        command: () => {}
+        label: 'Descargar',
+        icon: 'pi pi-fw pi-file',
+        items: [
+          {
+            label: 'Plantillas'
+          },
+          {
+            separator: true
+          },
+          {
+            label: 'Lugares',
+            icon: 'pi pi-map-marker',
+            command: () => {
+              this.uploadModuleFiles = 'attractions';
+              this._downloadTemplate();
+            }
+          },
+          {
+            label: 'Restaurantes',
+            icon: 'bi bi-shop',
+            command: () => {
+              this.uploadModuleFiles = 'restaurants';
+              this._downloadTemplate();
+            }
+          },
+          {
+            label: 'Comidas',
+            icon: 'bi bi-cup-straw',
+            command: () => {
+              this.uploadModuleFiles = 'foods';
+              this._downloadTemplate();
+            }
+          },
+          {
+            label: 'Hoteles',
+            icon: 'pi pi-building',
+            command: () => {
+              this.uploadModuleFiles = 'hotels';
+              this._downloadTemplate();
+            }
+          },
+          {
+            label: 'Eventos',
+            icon: 'pi pi-calendar',
+            command: () => {
+              this.uploadModuleFiles = 'events';
+              this._downloadTemplate();
+            }
+          }
+        ]
       },
       {
-        label: 'Hoteles',
-        icon: 'pi pi-building',
-        command: () => {}
+        separator: true
       },
       {
-        label: 'Eventos',
-        icon: 'pi pi-calendar',
-        command: () => {}
-      },
-      {separator: true},
-      {
-        label: 'Descargar BD',
-        icon: 'pi pi-download',
-        command: () => {}
-      },
-      {
-        label: 'Descargar plantilla',
-        icon: 'pi pi-file',
-        command: () => {}
+        label: 'Información',
+        icon: 'pi pi-info-circle',
+        command: () => { }
       }
-  ];
+      // {
+      //   label: 'Descargar BD',
+      //   icon: 'pi pi-download',
+      //   command: () => { }
+      // }
+    ];
 
     this._userDataModelListener();
   }
@@ -120,6 +213,187 @@ export class HomePage implements OnInit, OnDestroy {
 
   public getModuleLabel(action: string): string {
     return getSingularModuleLabel(action);
+  }
+
+  public onSelectFiles(event: any): void {
+    const fileInput = event.target;
+    const file = event.target.files[0];
+    if (!file) { return; }
+
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      if (!e.target.result) { return; }
+
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const customProps = workbook.Custprops;
+
+      if (!customProps || Object.keys(customProps).length === 0) {
+        this._showErrorMessage('No tiene propiedades personalizadas válidas, descarga la plantilla e intenta nuevamente.');
+        return;
+      }
+
+      const templateID = customProps['templateID'];
+      const userId = customProps['userId'];
+      const genDate = customProps['genDate'];
+
+      if (templateID !== 'TRIBLII-TEMPLATE') {
+        this._showErrorMessage('El archivo NO corresponde a una plantilla oficial, descarga la plantilla e intenta nuevamente.');
+        return;
+      }
+
+      if (userId !== this.userDataModel.id) {
+        this._showErrorMessage('El archivo NO corresponde a una plantilla generada por tí, descarga la plantilla e intenta nuevamente.');
+        return;
+      }
+
+      if (new Date(genDate) >= new Date()) {
+        this._showErrorMessage('La fecha de generación del archivo es inválida, descarga una nueva plantilla e intenta nuevamente.');
+        return;
+      }
+
+      this._uploadItemsFromFile(workbook);
+      fileInput.value = '';
+    };
+
+    reader.onerror = (err) => {
+      console.error('Error al leer el archivo:', err);
+    };
+
+    reader.readAsArrayBuffer(file);
+  }
+
+  private _showErrorMessage(text: string) {
+    this._toastService.add({
+      severity: 'error',
+      summary: 'Archivo inválido',
+      detail: text,
+      life: 6000
+    });
+  }
+
+  private async _uploadItemsFromFile(workbook: any) {
+    try {
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      if (!sheet) {
+        throw new Error('No se pudo obtener la hoja del archivo Excel.');
+      }
+
+      const item: any = Item.createInstance(this.uploadModuleFiles);
+      item.location = this.userDataModel.entity.location;
+
+      const objects = this._parseExcelToObjects(sheet, item);
+      this._saveItems(objects);
+    } catch (error) {
+      console.error('Error al procesar el archivo Excel:', error);
+      this._showErrorMessage('Ocurrió un error al procesar el archivo. Intenta nuevamente.');
+    }
+  }
+
+  private _saveItems(objects: any[]) {
+    if (objects.length > 0) {
+      this._loaderService.show = true;
+      const service: any = this._repositoryService.getServiceById(this.uploadModuleFiles);
+
+      service.createMany(objects)
+          .then(() => {
+              this._toastService.add({
+                  severity: 'success',
+                  summary: 'Importación exitosa',
+                  detail: 'Se guardaron correctamente los elementos del archivo.',
+                  life: 3000
+              });
+              this._loaderService.show = false;
+          })
+          .catch((error: any) => {
+              console.error('Error al guardar los items:', error);
+
+              this._toastService.add({
+                  severity: 'error',
+                  summary: 'Error en la importación',
+                  detail: 'Ocurrió un error al intentar importar los items. Por favor, inténtalo nuevamente.',
+                  life: 3000
+              });
+              this._loaderService.show = false;
+          });
+    } else {
+      this._showErrorMessage('No hay elementos que subir.');
+    }
+  }
+
+  private _generateTemplateFile(): XLSX.WorkBook {
+    const wb = XLSX.utils.book_new();
+    wb.Props = {
+      Title: 'Oficial template',
+      Author: this.userDataModel.name,
+      Company: 'TRIBLII'
+    };
+
+    wb.Custprops = {
+      'templateID': 'TRIBLII-TEMPLATE',
+      'userId': this.userDataModel.id,
+      'genDate': new Date(),
+    };
+
+    let item = Item.createInstance(this.uploadModuleFiles);
+    let options = this._getItemOptions();
+    const dataSheetData = this._generateColumns(item, options);
+    const dataSheet = XLSX.utils.aoa_to_sheet(dataSheetData);
+    XLSX.utils.book_append_sheet(wb, dataSheet, 'Data');
+
+    return wb;
+  }
+
+  private _getItemOptions() {
+    return {
+      exclude: ['contact', 'coverUrl', 'schedule', 'isFeatured', 'order', 'location', 'foods', 'entitiesId', 'content', 'categories', 'tags', 'rating', 'gallery', 'dates', 'available']
+    };
+  }
+
+  private _downloadTemplate(): void {
+    const workbook = this._generateTemplateFile();
+    XLSX.writeFile(workbook, 'triblii-template-' + this.uploadModuleFiles + '.xlsx');
+  }
+
+  private _generateColumns(obj: any, options: any = {}) {
+    const columns: string[] = [];
+
+    this._flatten(obj, '', columns, options);
+
+    return [columns];
+  }
+
+  private _flatten(obj: any, parentKey: string, columns: string[], options: any): void {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const newKey = parentKey ? `${parentKey}.${key}` : key;
+
+        if (options.exclude && options.exclude.some(k => newKey.startsWith(k))) {
+          continue;
+        }
+
+        if (Array.isArray(obj[key])) {
+          this._handleArray(obj[key], newKey, columns, options);
+        } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+          this._flatten(obj[key], newKey, columns, options);
+        } else {
+          columns.push(newKey);
+        }
+      }
+    }
+  }
+
+  private _handleArray(array: any[], parentKey: string, columns: string[], options: any): void {
+    if (array.length === 0) {
+      columns.push(parentKey);
+    } else if (typeof array[0] === 'object') {
+      array.forEach((item: any, index: number) => {
+        this._flatten(item, `${parentKey}[${index}]`, columns, options);
+      });
+    } else {
+      columns.push(parentKey);
+    }
   }
 
   private _filterList(list: any, idList: any[]) {
@@ -162,6 +436,28 @@ export class HomePage implements OnInit, OnDestroy {
     };
 
     return configList;
+  }
+
+  private _parseExcelToObjects(sheet: XLSX.WorkSheet, template: Item): Item[] {
+    const rows: any[][] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+    if (rows.length < 1) {
+      throw new Error('El archivo Excel no contiene encabezados.');
+    }
+
+    const headers = rows[0];
+    const dataRows = rows.slice(1);
+
+    return dataRows.map(row => {
+      const obj: Item = { ...template };
+
+      headers.forEach((header: string, index: number) => {
+        if (obj.hasOwnProperty(header)) {
+          obj[header] = row[index] = row[index];
+        }
+      });
+
+      return obj;
+    });
   }
 
   private _userDataModelListener() {
