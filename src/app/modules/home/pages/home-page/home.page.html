@@ -9,10 +9,11 @@
 
     <section *ngIf="userDataModel" class="w-full flex flex-column lg:flex-row gap-3">
       <section class="w-full lg:w-9 flex flex-column gap-3">
-        <p-card *ngIf="menuItems.length > 0" styleClass="border-round-xl fadein animation-duration-500 shadow-none">
+        <p-card *ngIf="menuItems.length > 0 && userDataModel.role !== 'MAINTAINER'" styleClass="border-round-xl fadein animation-duration-500 shadow-none">
           <section class="w-full flex justify-content-end align-items-center md:p-3 gap-3">
             <p-splitButton label="Importar datos" [model]="this.items"></p-splitButton>
             <i class="pi pi-info-circle text-xl ss-txt--grey cursor-pointer"></i>
+            <input class="hidden" type="file" #inputFile>
           </section>
         </p-card>
 

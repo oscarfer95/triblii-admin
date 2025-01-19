@@ -91,3 +91,7 @@ export const CATEGORY_MODULES_LIST: any[] = [
     singular: 'Evento'
   }
 ]
+
+export function getModuleList(excludeModules: string[]): any[] {
+  return MODULES_LIST.filter((item: any) => !excludeModules.includes(item.id));
+}

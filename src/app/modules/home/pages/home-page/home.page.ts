@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { UserDataModelService } from 'src/app/modules/auth/storage/user-data-model.service';
 import { MODULES_LIST } from 'src/app/modules/shared/constants/modules.constant';
@@ -16,6 +16,9 @@ import { SwiperOptions } from 'swiper';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePage implements OnInit, OnDestroy {
+
+  @ViewChild('inputFile')
+  public inputFile: ElementRef<HTMLInputElement>;
 
   public userDataModel!: UserDataModel | any;
   public interactionData!: any;
@@ -55,7 +58,9 @@ export class HomePage implements OnInit, OnDestroy {
       {
         label: 'Lugares',
         icon: 'pi pi-map-marker',
-        command: () => {}
+        command: () => {
+          this.inputFile.nativeElement.click();
+        }
       },
       {
         label: 'Restaurantes',

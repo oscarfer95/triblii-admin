@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { MODULES_LIST } from 'src/app/modules/shared/constants/modules.constant';
+import { getModuleList } from 'src/app/modules/shared/constants/modules.constant';
 import { EntitiesRepositoryService } from 'src/app/modules/shared/services/entities.repository-service';
 import { getActionLabel } from 'src/app/modules/shared/utils/get-label-text.util';
 import { ConfigList } from 'src/framework/repository/config-list.model';
@@ -25,7 +25,7 @@ export class UserFormComponent implements OnInit {
 
   public roleList!: any[];
   public entityList!: any[];
-  public moduleList: any[] = MODULES_LIST;
+  public moduleList: any[] = getModuleList([]);
 
   constructor(private _entitiesRepositoryService: EntitiesRepositoryService,
     private _formBuilder: FormBuilder,
@@ -78,14 +78,15 @@ export class UserFormComponent implements OnInit {
     if (this.userDataModel.role === 'SUPERADMIN') {
       this.roleList.push(superAdminObj);
       this.entityList = await this._getEntities();
-    } else[
+    } else {
+      this.moduleList = getModuleList(['tags', 'categories']);
       this.entityList = [
         {
           id: this.userDataModel.entity.id,
           name: this.userDataModel.entity.name
         }
       ]
-    ];
+    };
 
     this._cdr.markForCheck();
   }
