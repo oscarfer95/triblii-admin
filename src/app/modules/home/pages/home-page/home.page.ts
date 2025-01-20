@@ -281,7 +281,9 @@ export class HomePage implements OnInit, OnDestroy {
       }
 
       const item: any = Item.createInstance(this.uploadModuleFiles);
-      item.location = this.userDataModel.entity.location;
+      item.location.state = this.userDataModel.entity.location.stateIds[0] || '';
+      item.location.city = this.userDataModel.entity.location.cityIds[0] || '';
+      item.location.country = this.userDataModel.entity.location.countryIds[0] || '';
       item.entitiesId = this.userDataModel.role !== 'SUPERADMIN'? [this.userDataModel.entity.id, 'triblii-app']: ['triblii-app'];
 
       const objects = this._parseExcelToObjects(sheet, item);
@@ -484,5 +486,4 @@ export class HomePage implements OnInit, OnDestroy {
   private _getLogsByAction(logs: any[]): any {
     this.logByActionData = getLogsByAction(logs);
   }
-
 }

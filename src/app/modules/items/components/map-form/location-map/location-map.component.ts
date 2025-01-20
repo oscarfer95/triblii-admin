@@ -53,7 +53,7 @@ export class LocationMapComponent implements AfterViewInit, OnChanges {
 
     this._map = L.map(this.mapId, {
       zoomAnimation: true,
-      minZoom: 8,
+      minZoom: 12,
       center: [lat, lng],
       zoom: 18
     });
