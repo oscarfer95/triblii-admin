@@ -282,6 +282,7 @@ export class HomePage implements OnInit, OnDestroy {
 
       const item: any = Item.createInstance(this.uploadModuleFiles);
       item.location = this.userDataModel.entity.location;
+      item.entitiesId = this.userDataModel.role !== 'SUPERADMIN'? [this.userDataModel.entity.id, 'triblii-app']: ['triblii-app'];
 
       const objects = this._parseExcelToObjects(sheet, item);
       this._saveItems(objects);
